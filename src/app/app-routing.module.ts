@@ -4,7 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
-const homeChildRoutes: Routes = [
+const adminChildRoutes: Routes = [
   {
     path: '',
     component: DashboardComponent
@@ -28,7 +28,7 @@ const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
-    children: homeChildRoutes,
+    children: adminChildRoutes,
   },
   {
     path: 'login',
