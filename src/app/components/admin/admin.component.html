@@ -9,32 +9,15 @@
             </mat-toolbar-row>
 
             <mat-toolbar-row>
-                <button mat-button (click)="isDarkTheme = !isDarkTheme" class="app-sidebar-button">TOGGLE THEME</button>
-            </mat-toolbar-row>
-
-            <mat-toolbar-row>
                 <span>Account</span>
                 <span class="app-toolbar-filler"></span>
                 <mat-icon class="example-icon">account_circle</mat-icon>
             </mat-toolbar-row>
 
             <mat-toolbar-row>
-                <button mat-raised-button color="accent" class="app-sidebar-button">
-                    <mat-icon class="example-icon">verified_user</mat-icon>
-                    Login
-                </button>
-            </mat-toolbar-row>
-
-            <mat-toolbar-row>
-                <span>Favorites</span>
-                <span class="app-toolbar-filler"></span>
-                <mat-icon class="example-icon">favorite</mat-icon>
-            </mat-toolbar-row>
-
-            <mat-toolbar-row>
                 <button mat-raised-button color="warn" class="app-sidebar-button">
                     <mat-icon class="example-icon">delete</mat-icon>
-                    Delete
+                    Logout
                 </button>
             </mat-toolbar-row>
 
@@ -51,3 +34,5 @@
     <div class="app-content">
         <router-outlet></router-outlet>
     </div>
+
+</mat-sidenav-container>

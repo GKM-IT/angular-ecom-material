@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -23,11 +22,9 @@ import {
   MatTabsModule,
   MatListModule
 } from '@angular/material';
-
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
     MatButtonModule,
     MatCheckboxModule,
     MatToolbarModule,
@@ -74,4 +71,4 @@ import {
     MatListModule
   ]
 })
-export class MaterialModule { }
+export class AppMaterialModule { }
