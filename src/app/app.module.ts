@@ -13,8 +13,6 @@ import { AdminComponent } from './components/admin/admin.component';
 import { PhonePipe } from './pipes/phone.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
 
-import { MatButtonModule } from '@angular/material';
-
 
 @NgModule({
   declarations: [
@@ -28,8 +26,7 @@ import { MatButtonModule } from '@angular/material';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatButtonModule,
-    // AppMaterialModule,
+    AppMaterialModule,
     BrowserAnimationsModule
   ],
   providers: [],

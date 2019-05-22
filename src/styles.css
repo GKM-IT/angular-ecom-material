@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-container > * {
+  width: 100%;
+}
+
+.login-container .mat-card{
+  max-width: 400px;
+}
+
+.login-container form {
+  margin-bottom: 20px;
+}
+
+.login-container form > * {
+  margin: 5px 0;
+}
