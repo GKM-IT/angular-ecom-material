@@ -1,4 +1,53 @@
-<h1>Header</h1>
-<h1>Sidebar</h1>
-<router-outlet></router-outlet>
-<h1>Footer</h1>
+<mat-sidenav-container [class.m2app-dark]="isDarkTheme">
+
+    <mat-sidenav #sidenav mode="over" class="app-sidenav" color="primary">
+        <mat-toolbar>
+            <mat-toolbar-row>
+                <span>Settings</span>
+                <span class="app-toolbar-filler"></span>
+                <mat-icon class="example-icon">build</mat-icon>
+            </mat-toolbar-row>
+
+            <mat-toolbar-row>
+                <button mat-button (click)="isDarkTheme = !isDarkTheme" class="app-sidebar-button">TOGGLE THEME</button>
+            </mat-toolbar-row>
+
+            <mat-toolbar-row>
+                <span>Account</span>
+                <span class="app-toolbar-filler"></span>
+                <mat-icon class="example-icon">account_circle</mat-icon>
+            </mat-toolbar-row>
+
+            <mat-toolbar-row>
+                <button mat-raised-button color="accent" class="app-sidebar-button">
+                    <mat-icon class="example-icon">verified_user</mat-icon>
+                    Login
+                </button>
+            </mat-toolbar-row>
+
+            <mat-toolbar-row>
+                <span>Favorites</span>
+                <span class="app-toolbar-filler"></span>
+                <mat-icon class="example-icon">favorite</mat-icon>
+            </mat-toolbar-row>
+
+            <mat-toolbar-row>
+                <button mat-raised-button color="warn" class="app-sidebar-button">
+                    <mat-icon class="example-icon">delete</mat-icon>
+                    Delete
+                </button>
+            </mat-toolbar-row>
+
+        </mat-toolbar>
+    </mat-sidenav>
+
+    <mat-toolbar color="primary">
+        <button mat-button class="app-menu-button" (click)="sidenav.toggle()">
+            <i class="material-icons">menu</i>
+        </button>
+        <span class="title">Angular Material Demo</span>
+    </mat-toolbar>
+
+    <div class="app-content">
+        <router-outlet></router-outlet>
+    </div>
