@@ -1,38 +1,44 @@
-<mat-sidenav-container [class.m2app-dark]="isDarkTheme">
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<mat-sidenav-container class="app-container" autosize>
 
     <mat-sidenav #sidenav mode="over" class="app-sidenav" color="primary">
         <mat-toolbar>
             <mat-toolbar-row>
-                <span>Settings</span>
-                <span class="app-toolbar-filler"></span>
-                <mat-icon class="example-icon">build</mat-icon>
-            </mat-toolbar-row>
-
-            <mat-toolbar-row>
-                <span>Account</span>
+                <span>Admin Dashboard</span>
                 <span class="app-toolbar-filler"></span>
                 <mat-icon class="example-icon">account_circle</mat-icon>
-            </mat-toolbar-row>
-            <mat-toolbar-row>
-                <span>Users</span>
-                <span class="app-toolbar-filler"></span>
-                <mat-icon class="example-icon">account_circle</mat-icon>
-            </mat-toolbar-row>
-
-            <mat-toolbar-row>
-                <button mat-raised-button color="warn" class="app-sidebar-button">
-                    <mat-icon class="example-icon">delete</mat-icon>
-                    Logout
-                </button>
             </mat-toolbar-row>
         </mat-toolbar>
+
+        <app-admin-sidebar></app-admin-sidebar>
+
     </mat-sidenav>
 
     <mat-toolbar color="primary">
         <button mat-button class="app-menu-button" (click)="sidenav.toggle()">
             <i class="material-icons">menu</i>
         </button>
-        <span class="title">Angular Material Demo</span>
+        <span class="title">Angular Material</span>
+        <span class="menu-fill-remaining-space"></span>
+
+        <button mat-button [matMenuTriggerFor]="languageMenu">
+            <i class="material-icons">language</i>
+        </button>
+        <mat-menu #languageMenu="matMenu" xPosition="before">
+            <button mat-menu-item>English</button>
+            <button mat-menu-item>French</button>
+        </mat-menu>
+
+
+
+        <button mat-button [matMenuTriggerFor]="accountMenu">
+            <i class="material-icons">more_vert</i>
+        </button>
+        <mat-menu #accountMenu="matMenu" xPosition="before">
+            <button mat-menu-item>Edit Account</button>
+            <button mat-menu-item>Change Password</button>
+            <button mat-menu-item>Logout</button>
+        </mat-menu>
     </mat-toolbar>
 
     <div class="app-content">

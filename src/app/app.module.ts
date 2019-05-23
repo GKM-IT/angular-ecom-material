@@ -15,7 +15,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { PhonePipe } from './pipes/phone.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
-
+import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     DashboardComponent,
     AdminComponent,
     PhonePipe,
-    FilterPipe
+    FilterPipe,
+    AdminSidebarComponent,
   ],
   imports: [
     BrowserModule,
