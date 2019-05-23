@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-admin',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
   isLoading: boolean;
-  constructor() { }
+  constructor(
+    public userService: UserService
+  ) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -15,13 +18,16 @@ export class AdminComponent implements OnInit {
   }
 
   checkIfLoaded() {
-    const self = this;
     window.addEventListener('load', (event) => {
       console.log('All resources finished loading!');
-      self.isLoading = false;
     });
+
+    this.isLoading = false;
   }
 
+  logout() {
+    this.userService.logout();
+  }
 
 
 }
