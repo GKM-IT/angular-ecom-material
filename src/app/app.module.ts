@@ -16,6 +16,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { PhonePipe } from './pipes/phone.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
 import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-si
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AppMaterialModule
+    AppMaterialModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
