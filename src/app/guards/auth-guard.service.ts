@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  Router,
+  CanActivateChild
+} from '@angular/router';
+import { UserService } from '../services/user/user.service';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -7,14 +15,31 @@ import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from
 })
 export class AuthGuardService {
 
-  constructor(private router: Router) { }
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (localStorage.getItem('userData')) {
-      return true;
-    } else {
-      this.router.navigate(['/login']);
-      return false;
-    }
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    const url: string = state.url;
+    return this.checkLogin(url);
   }
+
+  canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    return Boolean(this.canActivate(route, state));
+  }
+
+  checkLogin(url: string) {
+    if (this.userService.isLoggedIn) {
+      return true;
+    }
+    this.userService.redirectUrl = url;
+    this.router.navigate(['/login'], { queryParams: { returnUrl: url } });
+  }
+
 }

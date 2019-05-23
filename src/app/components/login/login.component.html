@@ -1,26 +1,31 @@
 <div class="main-div">
+
   <mat-card class="z-depth center" flex="50">
-    <mat-card-header>
-      <mat-card-title>{{pageHeading}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <mat-card-header>
+        <mat-card-title>{{pageHeading}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
         <p>
           <mat-form-field class="full-width">
             <input matInput placeholder="Username" formControlName="username" required>
+            <mat-icon matSuffix>lock</mat-icon>
             <mat-error *ngIf="formErrors.username">{{formErrors.username}}</mat-error>
           </mat-form-field>
         </p>
         <p>
           <mat-form-field class="full-width">
-            <input matInput placeholder="Password" type="password" formControlName="password" required>
+            <input matInput placeholder="Password" formControlName="password" required
+              [type]="hide ? 'password' : 'text'">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             <mat-error *ngIf="formErrors.password">{{formErrors.password}}</mat-error>
           </mat-form-field>
         </p>
-      </form>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary">Login</button>
-    </mat-card-actions>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button type="submit" color="primary">Login</button>
+      </mat-card-actions>
+    </form>
   </mat-card>
+
 </div>

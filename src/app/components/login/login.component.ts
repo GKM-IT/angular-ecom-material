@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   public status;
   public message;
   public messageTitle;
-
+  hide = true;
   public username;
   public password;
 
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required]],
     });
 
     this.form.valueChanges.subscribe(data => {
