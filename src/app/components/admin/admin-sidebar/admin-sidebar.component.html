@@ -1,86 +1,35 @@
 <mat-accordion>
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        User Module
-      </mat-panel-title>
-      <mat-panel-description>
-        <mat-icon>account_circle</mat-icon>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <mat-list>
-      <mat-list-item [routerLink]="['/user-groups']">User Groups</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item [routerLink]="['/users']">Users List</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>User Setting</mat-list-item>
-    </mat-list>
-  </mat-expansion-panel>
+  <div *ngFor="let menu of menuData">
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Employee Module
-      </mat-panel-title>
-      <mat-panel-description>
-        <mat-icon>add_shopping_cart</mat-icon>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <mat-list>
-      <mat-list-item>Employee Groups</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Employee List</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Employee Setting</mat-list-item>
-    </mat-list>
-  </mat-expansion-panel>
-
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Product Module
-      </mat-panel-title>
-      <mat-panel-description>
-        <mat-icon>business</mat-icon>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <mat-list>
-      <mat-list-item>Categories</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Products</mat-list-item>
-    </mat-list>
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Inventory Module
-      </mat-panel-title>
-      <mat-panel-description>
-        <mat-icon>note</mat-icon>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <mat-list>
-      <mat-list-item>Categories</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Products</mat-list-item>
-    </mat-list>
-
-    <mat-expansion-panel>
+    <mat-expansion-panel *ngIf="menu.chidren">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Product Module
+          <mat-icon>{{menu.icon}}</mat-icon>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {{menu.name}}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-list>
-        <mat-list-item>Categories</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>Products</mat-list-item>
+        <div *ngFor="let chidren of menu.chidren">
+          <mat-list-item [routerLink]="chidren.link">{{chidren.name}}
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </div>
       </mat-list>
     </mat-expansion-panel>
 
-  </mat-expansion-panel>
+
+
+    <div *ngIf="!menu.chidren">
+      <mat-toolbar-row [routerLink]="menu.link">
+        &nbsp;&nbsp;&nbsp;
+        <mat-icon>{{menu.icon}}</mat-icon>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>{{menu.name}}</span>
+      </mat-toolbar-row>
+    </div>
+
+  </div>
 
 </mat-accordion>
