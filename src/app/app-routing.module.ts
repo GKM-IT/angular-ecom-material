@@ -8,22 +8,10 @@ import { AdminComponent } from './components/admin/admin.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const adminChildRoutes: Routes = [
-  {
-    path: '',
-    component: DashboardComponent
-  },
-  {
-    path: 'add',
-    component: DashboardComponent
-  },
-  {
-    path: 'update/:id',
-    component: DashboardComponent
-  },
-  {
-    path: 'detail/:id',
-    component: DashboardComponent
-  }
+  { path: '', component: DashboardComponent },
+  { path: 'users', component: DashboardComponent },
+  { path: 'user-groups', component: DashboardComponent },
+  { path: 'user/:id', component: DashboardComponent }
 ];
 
 
