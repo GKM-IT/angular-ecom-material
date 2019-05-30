@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CountryService } from '../country.service';
-
+import { SelectionModel } from '@angular/cdk/collections';
 @Component({
   selector: 'app-country-list',
   templateUrl: './country-list.component.html',
@@ -9,8 +9,9 @@ import { CountryService } from '../country.service';
 
 export class CountryListComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'iso_code_2', 'iso_code_3'];
-  dataSource;
+  displayedColumns: string[] = ['select', 'id', 'name', 'iso_code_2', 'iso_code_3'];
+  selection = new SelectionModel<any>(true, []);
+  dataSource: any[] = [];
   filterData = {
     length: 0,
     pageSize: 10,
@@ -33,7 +34,7 @@ export class CountryListComponent implements OnInit {
   getData() {
     this.countryService.list(this.filterData).subscribe(response => {
       this.dataSource = response.data;
-      this.filterData.length = response.recordsTotal;
+      this.filterData.length = response.recordsFiltered;
     });
   }
 
@@ -43,18 +44,42 @@ export class CountryListComponent implements OnInit {
   }
 
   changePage(event) {
-    console.log(event);
     this.filterData.pageIndex = event.pageIndex;
     this.filterData.pageSize = event.pageSize;
     this.getData();
   }
 
   sortData(event) {
-    console.log(event);
     this.filterData.sort_by = event.active;
     this.filterData.sort_dir = event.direction;
+    this.filterData.pageIndex = 0;
     this.getData();
   }
 
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  deleteAll() {
+    console.log(this.selection.selected);
+  }
 
 }

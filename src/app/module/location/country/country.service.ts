@@ -21,7 +21,6 @@ export class CountryService {
   }
 
   public list(data: any) {
-    console.log(data);
     this.formData = new FormData();
 
     if (data.search) {
