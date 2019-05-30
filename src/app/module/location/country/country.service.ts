@@ -79,7 +79,7 @@ export class CountryService {
   public save(data: any, id: any) {
     this.formData = new FormData();
     this.url = `${this.configService.url}location/countries/save`;
-    if (id) {
+    if (id && id !== 'new') {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);

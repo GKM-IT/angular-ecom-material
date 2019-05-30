@@ -14,3 +14,19 @@ body {
 .mat-drawer-container {
     position: inherit !important;    
 }
+
+.center{
+  width: 50%;
+  margin: 10px auto;
+}
+
+.main-div{
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.full-width {
+  width: 100%;
+}

@@ -44,6 +44,16 @@ export class AdminSidebarComponent implements OnInit {
         }
       ]
     });
+    this.menuData.push({
+      name: 'Location Module',
+      icon: 'account_circle',
+      chidren: [
+        {
+          name: 'All Countries',
+          link: '/countries',
+        }
+      ]
+    });
   }
 
 }

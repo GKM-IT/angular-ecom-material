@@ -6,19 +6,25 @@ import { CountryFormComponent } from './country/country-form/country-form.compon
 import { ZoneListComponent } from './zone/zone-list/zone-list.component';
 import { ZoneFormComponent } from './zone/zone-form/zone-form.component';
 import { AppMaterialModule } from '../../app-material/app-material.module';
-// import { ConfirmDialogComponent } from '../../components/common/confirm-dialog/confirm-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
 @NgModule({
   declarations: [
     CountryListComponent,
     CountryFormComponent,
     ZoneListComponent,
     ZoneFormComponent,
-    // ConfirmDialogComponent
   ],
   imports: [
     CommonModule,
     NgxDatatableModule,
-    AppMaterialModule
+    AppMaterialModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+
   ]
 })
 export class LocationModule { }

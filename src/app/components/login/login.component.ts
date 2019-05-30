@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormService } from '../../services/form/form.service';
 import { UserService } from '../../services/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private formService: FormService,
     private router: Router,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -56,21 +57,21 @@ export class LoginComponent implements OnInit {
       this.masterService.login(this.form.value).subscribe(
         response => {
           if (!response.status) {
-            this.message = response.message;
-            this.messageTitle = 'Warning!';
             if (response.result) {
               response.result.forEach(element => {
                 this.formErrors[`${element.id}`] = element.text;
               });
             }
           } else {
-            this.message = response.message;
-            this.messageTitle = 'Sucess!';
             this.form.reset();
             this.masterService.setData(response.data);
             this.router.navigate(['/']);
             // window.location.replace('/');
           }
+
+          this.snackBar.open(response.message, 'X', {
+            duration: 2000,
+          });
         },
         err => {
           console.error(err);
