@@ -6,8 +6,15 @@ import { CountryFormComponent } from './country/country-form/country-form.compon
 import { ZoneListComponent } from './zone/zone-list/zone-list.component';
 import { ZoneFormComponent } from './zone/zone-form/zone-form.component';
 import { AppMaterialModule } from '../../app-material/app-material.module';
+// import { ConfirmDialogComponent } from '../../components/common/confirm-dialog/confirm-dialog.component';
 @NgModule({
-  declarations: [CountryListComponent, CountryFormComponent, ZoneListComponent, ZoneFormComponent],
+  declarations: [
+    CountryListComponent,
+    CountryFormComponent,
+    ZoneListComponent,
+    ZoneFormComponent,
+    // ConfirmDialogComponent
+  ],
   imports: [
     CommonModule,
     NgxDatatableModule,

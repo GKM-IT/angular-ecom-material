@@ -20,6 +20,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 import { LocationModule } from './module/location/location.module';
+import { ConfirmDialogComponent } from './components/common/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,10 @@ import { LocationModule } from './module/location/location.module';
     PhonePipe,
     FilterPipe,
     AdminSidebarComponent,
+    ConfirmDialogComponent,
+  ],
+  entryComponents: [
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

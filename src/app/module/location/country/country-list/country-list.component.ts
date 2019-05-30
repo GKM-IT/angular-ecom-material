@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CountryService } from '../country.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../../components/common/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-country-list',
@@ -86,17 +87,22 @@ export class CountryListComponent implements OnInit {
   deleteAll() {
     console.log(this.selection.selected);
   }
+
   delete(row) {
-    console.log(row);
-    // const dialogRef = this.dialog.open('');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: { title: 'Delete confirmation', content: `Are you sure want to delete ${row.name} ?` }
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.countryService.delete(row.id).subscribe(response => {
 
-    // this.countryService.delete(row.id).subscribe(response => {
+        });
+      }
+    });
 
-    // });
   }
   edit(row) {
     console.log(row);
