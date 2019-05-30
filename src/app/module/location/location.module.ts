@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CountryListComponent } from './country/country-list/country-list.component';
 import { CountryFormComponent } from './country/country-form/country-form.component';
 import { ZoneListComponent } from './zone/zone-list/zone-list.component';
@@ -19,7 +18,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    NgxDatatableModule,
     AppMaterialModule,
     HttpClientModule,
     FormsModule,

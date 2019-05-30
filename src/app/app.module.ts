@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -44,7 +43,6 @@ import { ConfirmDialogComponent } from './components/common/confirm-dialog/confi
     FormsModule,
     ReactiveFormsModule,
     AppMaterialModule,
-    NgxDatatableModule,
     LocationModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
