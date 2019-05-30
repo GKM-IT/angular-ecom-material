@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CountryService } from '../country.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-country-list',
   templateUrl: './country-list.component.html',
@@ -23,7 +25,10 @@ export class CountryListComponent implements OnInit {
 
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
-  constructor(private countryService: CountryService) {
+  constructor(
+    private countryService: CountryService,
+    public dialog: MatDialog
+  ) {
 
   }
 
@@ -83,6 +88,15 @@ export class CountryListComponent implements OnInit {
   }
   delete(row) {
     console.log(row);
+    // const dialogRef = this.dialog.open('');
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
+
+    // this.countryService.delete(row.id).subscribe(response => {
+
+    // });
   }
   edit(row) {
     console.log(row);
