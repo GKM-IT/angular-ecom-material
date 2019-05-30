@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from '../../../services/config/config.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, retry, map } from 'rxjs/operators';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -68,7 +67,6 @@ export class CountryService {
     const selected = data.map(row => (
       row.id
     ));
-
     this.formData = new FormData();
     this.formData.append('list', JSON.stringify(selected));
     this.url = `${this.configService.url}location/countries/delete_all`;

@@ -8,12 +8,15 @@ import { AdminComponent } from './components/admin/admin.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 import { CountryListComponent } from './module/location/country/country-list/country-list.component';
+import { CountryFormComponent } from './module/location/country/country-form/country-form.component';
 
 const adminChildRoutes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'users', component: CountryListComponent },
   { path: 'user-groups', component: DashboardComponent },
-  { path: 'user/:id', component: DashboardComponent }
+  { path: 'user/:id', component: DashboardComponent },
+  { path: 'countries', component: CountryListComponent },
+  { path: 'country/:id', component: CountryFormComponent }
 ];
 
 const routes: Routes = [

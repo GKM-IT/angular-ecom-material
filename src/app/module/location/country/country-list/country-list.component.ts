@@ -4,6 +4,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../components/common/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-country-list',
@@ -30,7 +31,8 @@ export class CountryListComponent implements OnInit {
   constructor(
     private countryService: CountryService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router,
   ) {
 
   }
@@ -64,21 +66,18 @@ export class CountryListComponent implements OnInit {
     this.getData();
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.length;
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.forEach(row => this.selection.select(row));
   }
 
-  /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
@@ -126,12 +125,13 @@ export class CountryListComponent implements OnInit {
     });
 
   }
+
   edit(row) {
-    console.log(row);
+    this.router.navigate(['/country/', row.id]);
   }
 
   add() {
-
+    this.router.navigate(['/country/', 'new']);
   }
 
 }
