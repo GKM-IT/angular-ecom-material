@@ -3,6 +3,7 @@ import { CountryService } from '../country.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../components/common/confirm-dialog/confirm-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-country-list',
@@ -28,7 +29,8 @@ export class CountryListComponent implements OnInit {
 
   constructor(
     private countryService: CountryService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
 
   }
@@ -85,7 +87,26 @@ export class CountryListComponent implements OnInit {
   }
 
   deleteAll() {
-    console.log(this.selection.selected);
+    if (this.selection.selected.length) {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '300px',
+        data: { title: 'Delete confirmation', content: `Are you sure want to delete selected ${this.selection.selected.length} records ?` }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.countryService.deleteAll(this.selection.selected).subscribe(response => {
+            this.snackBar.open(response.message, 'X', {
+              duration: 2000,
+            });
+          });
+        }
+      });
+    } else {
+      this.snackBar.open('Please select rows', 'X', {
+        duration: 2000,
+      });
+    }
   }
 
   delete(row) {
@@ -95,10 +116,11 @@ export class CountryListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
       if (result) {
         this.countryService.delete(row.id).subscribe(response => {
-
+          this.snackBar.open(response.message, 'X', {
+            duration: 2000,
+          });
         });
       }
     });
