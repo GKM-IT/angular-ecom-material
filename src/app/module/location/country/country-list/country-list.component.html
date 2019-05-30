@@ -1,7 +1,16 @@
 <div class="mat-elevation-z8">
+
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
+
+  <button mat-button (click)="add()">
+    <i class="material-icons">add</i>
+  </button>
+  <button mat-button (click)="deleteAll()">
+    <i class="material-icons">delete</i>
+  </button>
+
 
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
 
@@ -19,28 +28,33 @@
       </td>
     </ng-container>
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-
-    <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
-    <!-- Weight Column -->
+
     <ng-container matColumnDef="iso_code_2">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> iso code 2 </th>
       <td mat-cell *matCellDef="let element"> {{element.iso_code_2}} </td>
     </ng-container>
 
-    <!-- Symbol Column -->
+
     <ng-container matColumnDef="iso_code_3">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> iso code 3 </th>
       <td mat-cell *matCellDef="let element"> {{element.iso_code_3}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-button (click)="edit(row)">
+          <i class="material-icons">edit</i>
+        </button>
+        <button mat-button (click)="delete(row)">
+          <i class="material-icons">delete</i>
+        </button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

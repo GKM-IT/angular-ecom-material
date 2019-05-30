@@ -9,7 +9,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 
 export class CountryListComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'id', 'name', 'iso_code_2', 'iso_code_3'];
+  displayedColumns: string[] = ['select', 'name', 'iso_code_2', 'iso_code_3', 'action'];
   selection = new SelectionModel<any>(true, []);
   dataSource: any[] = [];
   filterData = {
@@ -80,6 +80,16 @@ export class CountryListComponent implements OnInit {
 
   deleteAll() {
     console.log(this.selection.selected);
+  }
+  delete(row) {
+    console.log(row);
+  }
+  edit(row) {
+    console.log(row);
+  }
+
+  add() {
+
   }
 
 }
