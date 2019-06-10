@@ -43,6 +43,10 @@ export class CountryFormComponent implements OnInit {
     return id;
   }
 
+  goBack(){
+    this.router.navigate(['/countries']);
+  }
+
   ngOnInit() {
 
     if (this.getId() !== 'new') {
