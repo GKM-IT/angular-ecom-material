@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CountryService } from '../country.service';
+import { CountryService } from 'src/app/providers/location/country.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../../../components/common/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 

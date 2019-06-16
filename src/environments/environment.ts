@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  name: 'Dev Erp',
   url: 'http://localhost/ci/ci-ecom/'
 };
 

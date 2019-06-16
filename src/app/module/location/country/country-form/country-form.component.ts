@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormService } from '../../../../providers/form/form.service';
-import { CountryService } from '../country.service';
+import { FormService } from 'src/app/providers/form/form.service';
+import { CountryService } from 'src/app/providers/location/country.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -43,7 +43,7 @@ export class CountryFormComponent implements OnInit {
     return id;
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/countries']);
   }
 

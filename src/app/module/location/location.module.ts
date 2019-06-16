@@ -8,7 +8,6 @@ import { AppMaterialModule } from '../../app-material/app-material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [
     CountryListComponent,
