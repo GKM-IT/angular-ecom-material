@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ConfigService } from '../../../services/config/config.service';
+import { ConfigService } from '../../../providers/config/config.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, retry, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
