@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../providers/user/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin',
@@ -8,9 +9,12 @@ import { UserService } from '../../providers/user/user.service';
 })
 export class AdminComponent implements OnInit {
   isLoading: boolean;
+  appTitle;
   constructor(
     public userService: UserService
-  ) { }
+  ) {
+    this.appTitle = environment.name;
+  }
 
   ngOnInit() {
     this.isLoading = true;
