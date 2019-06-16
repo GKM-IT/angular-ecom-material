@@ -9,10 +9,8 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ConfigService {
-  url: string;
+
   constructor() {
-    this.url = 'http://localhost/ci/ci-ecom/';
-    // this.url = 'http://ecom.xeronesoft.com/';
   }
 
   public handleError(error: HttpErrorResponse) {

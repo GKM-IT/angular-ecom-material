@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from '../../../services/config/config.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, retry, map } from 'rxjs/operators';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +16,6 @@ export class CountryService {
     public http: HttpClient,
     private configService: ConfigService
   ) {
-    this.url = this.configService.url;
   }
 
   public list(data: any) {
@@ -38,7 +37,7 @@ export class CountryService {
       this.formData.append('sort_dir', data.sort_dir);
     }
 
-    this.url = `${this.configService.url}location/countries`;
+    this.url = `${environment.url}location/countries`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -48,7 +47,7 @@ export class CountryService {
   public detail(id: any) {
     this.formData = new FormData();
 
-    this.url = `${this.configService.url}location/countries/detail`;
+    this.url = `${environment.url}location/countries/detail`;
     this.formData.append('id', id);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -57,7 +56,7 @@ export class CountryService {
   }
 
   public delete(id: any) {
-    this.url = `${this.configService.url}location/countries/delete/${id}`;
+    this.url = `${environment.url}location/countries/delete/${id}`;
     return this.http.get<any>(this.url).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -69,7 +68,7 @@ export class CountryService {
     ));
     this.formData = new FormData();
     this.formData.append('list', JSON.stringify(selected));
-    this.url = `${this.configService.url}location/countries/delete_all`;
+    this.url = `${environment.url}location/countries/delete_all`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -78,7 +77,7 @@ export class CountryService {
 
   public save(data: any, id: any) {
     this.formData = new FormData();
-    this.url = `${this.configService.url}location/countries/save`;
+    this.url = `${environment.url}location/countries/save`;
     if (id && id !== 'new') {
       this.formData.append('id', id);
     }

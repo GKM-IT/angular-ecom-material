@@ -4,6 +4,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, retry, map } from 'rxjs/operators';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,10 +21,9 @@ export class UserService {
   isLoggedIn = false;
   redirectUrl: string;
 
-  constructor(public http: HttpClient, public configService: ConfigService, private router: Router) {
+  constructor(public http: HttpClient, public configService: ConfigService, private router: Router, ) {
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
-
     if (this.getData()) {
       this.isLoggedIn = true;
     }
@@ -30,7 +31,7 @@ export class UserService {
 
   public login(data: any) {
     this.formData = new FormData();
-    this.url = `${this.configService.url}user/user_login`;
+    this.url = `${environment.url}user/user_login`;
 
     this.formData.append('username', data.username);
     this.formData.append('password', data.password);
@@ -88,7 +89,7 @@ export class UserService {
       this.formData.append('order[0][dir]', data.order[0].dir);
     }
 
-    this.url = `${this.configService.url}user/users`;
+    this.url = `${environment.url}user/users`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -98,7 +99,7 @@ export class UserService {
   public detail(id: any) {
     this.formData = new FormData();
 
-    this.url = `${this.configService.url}user/users/detail`;
+    this.url = `${environment.url}user/users/detail`;
     this.formData.append('id', id);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -107,7 +108,7 @@ export class UserService {
   }
 
   public delete(id: any) {
-    this.url = `${this.configService.url}user/users/delete/${id}`;
+    this.url = `${environment.url}user/users/delete/${id}`;
     return this.http.get<any>(this.url).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -116,7 +117,7 @@ export class UserService {
 
   public imageUpload(image: File) {
     this.formData = new FormData();
-    this.url = `${this.configService.url}user/users/image_upload`;
+    this.url = `${environment.url}user/users/image_upload`;
     this.formData.append('userfile', image);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -126,7 +127,7 @@ export class UserService {
 
   public save(data: any, id: any) {
     this.formData = new FormData();
-    this.url = `${this.configService.url}user/users/save`;
+    this.url = `${environment.url}user/users/save`;
     if (id) {
       this.formData.append('id', id);
     }
