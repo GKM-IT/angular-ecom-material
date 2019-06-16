@@ -20,7 +20,7 @@ export class AuthService {
   isLoggedIn = false;
   redirectUrl: string;
 
-  constructor(public http: HttpClient, public configService: ConfigService, private router: Router, ) {
+  constructor(public http: HttpClient, public configService: ConfigService, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
     if (this.getData()) {
