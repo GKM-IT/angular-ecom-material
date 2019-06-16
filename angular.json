@@ -9,6 +9,14 @@
       "projectType": "application",
       "prefix": "app",
       "schematics": {
+        "@schematics/angular": {
+          "component": {
+            "spec": false
+          },
+          "service": {
+            "spec": false
+          }
+        },
         "@schematics/angular:component": {
           "style": "css"
         }
