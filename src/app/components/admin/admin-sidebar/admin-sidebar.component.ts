@@ -30,6 +30,7 @@ export class AdminSidebarComponent implements OnInit {
         }
       ]
     });
+
     this.menuData.push({
       name: 'Employee Module',
       icon: 'account_circle',
@@ -44,6 +45,7 @@ export class AdminSidebarComponent implements OnInit {
         }
       ]
     });
+
     this.menuData.push({
       name: 'Location Module',
       icon: 'account_circle',
@@ -51,6 +53,10 @@ export class AdminSidebarComponent implements OnInit {
         {
           name: 'All Countries',
           link: '/countries',
+        },
+        {
+          name: 'All Zones',
+          link: '/zones',
         }
       ]
     });

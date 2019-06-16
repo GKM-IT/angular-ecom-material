@@ -10,13 +10,18 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CountryListComponent } from './module/location/country/country-list/country-list.component';
 import { CountryFormComponent } from './module/location/country/country-form/country-form.component';
 
+import { ZoneListComponent } from './module/location/zone/zone-list/zone-list.component';
+import { ZoneFormComponent } from './module/location/zone/zone-form/zone-form.component';
+
 const adminChildRoutes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'users', component: CountryListComponent },
   { path: 'user-groups', component: DashboardComponent },
   { path: 'user/:id', component: DashboardComponent },
   { path: 'countries', component: CountryListComponent },
-  { path: 'country/:id', component: CountryFormComponent }
+  { path: 'country/:id', component: CountryFormComponent },
+  { path: 'zones', component: ZoneListComponent },
+  { path: 'zone/:id', component: ZoneFormComponent },
 ];
 
 const routes: Routes = [

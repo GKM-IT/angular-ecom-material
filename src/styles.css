@@ -12,7 +12,7 @@ body {
     position: inherit !important;    
 }
 
-.center{
+.center{  
   width: 50%;
   margin: 10px auto;
 }
@@ -25,5 +25,9 @@ body {
 }
 
 .full-width {
+  width: 100%;
+}
+
+table {
   width: 100%;
 }

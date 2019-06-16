@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CountryService } from 'src/app/providers/location/country.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-
+import { CountryService } from 'src/app/providers/location/country.service';
+import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog/confirm-dialog.component';
 @Component({
   selector: 'app-country-list',
   templateUrl: './country-list.component.html',
@@ -29,7 +28,7 @@ export class CountryListComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
   constructor(
-    private countryService: CountryService,
+    private masterService: CountryService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router,
@@ -42,7 +41,7 @@ export class CountryListComponent implements OnInit {
   }
 
   getData() {
-    this.countryService.list(this.filterData).subscribe(response => {
+    this.masterService.list(this.filterData).subscribe(response => {
       this.dataSource = response.data;
       this.filterData.length = response.recordsFiltered;
     });
@@ -95,7 +94,7 @@ export class CountryListComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.countryService.deleteAll(this.selection.selected).subscribe(response => {
+          this.masterService.deleteAll(this.selection.selected).subscribe(response => {
             this.snackBar.open(response.message, 'X', {
               duration: 2000,
             });
@@ -117,7 +116,7 @@ export class CountryListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.countryService.delete(row.id).subscribe(response => {
+        this.masterService.delete(row.id).subscribe(response => {
           this.snackBar.open(response.message, 'X', {
             duration: 2000,
           });

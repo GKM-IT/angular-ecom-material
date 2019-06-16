@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormService } from 'src/app/providers/form/form.service';
-import { CountryService } from 'src/app/providers/location/country.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormService } from 'src/app/providers/form/form.service';
+import { CountryService } from 'src/app/providers/location/country.service';
 
 @Component({
   selector: 'app-country-form',
@@ -19,14 +19,14 @@ export class CountryFormComponent implements OnInit {
   public messageTitle: string;
   hide = true;
   name;
-  iso_code_2;
-  iso_code_3;
+  isoCode2;
+  isoCode3;
 
   public form: FormGroup;
   public formErrors = {
     name: '',
-    iso_code_2: '',
-    iso_code_3: '',
+    isoCode2: '',
+    isoCode3: '',
   };
 
   constructor(
@@ -55,8 +55,8 @@ export class CountryFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: [this.name, Validators.required],
-      iso_code_2: [this.iso_code_2, [Validators.required]],
-      iso_code_3: [this.iso_code_3, [Validators.required]],
+      isoCode2: [this.isoCode2, [Validators.required]],
+      isoCode3: [this.isoCode3, [Validators.required]],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -73,8 +73,8 @@ export class CountryFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.name = response.data.name;
-          this.iso_code_2 = response.data.iso_code_2;
-          this.iso_code_3 = response.data.iso_code_3;
+          this.isoCode2 = response.data.iso_code_2;
+          this.isoCode3 = response.data.iso_code_3;
         }
       },
       err => {

@@ -1,3 +1,50 @@
-<p>
-  zone-form works!
-</p>
+<div class="main-div">
+
+  <mat-card class="z-depth center" flex="100">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <mat-card-header>
+        <mat-card-title>
+          <button mat-button (click)="goBack()">
+            <i class="material-icons">keyboard_backspace</i>
+          </button>
+          {{pageHeading}}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Country" formControlName="country" required [matAutocomplete]="auto" [(ngModel)]="country">
+            <mat-error *ngIf="formErrors.country">{{formErrors.country}}</mat-error>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngIf="isLoading" class="is-loading">
+                <mat-spinner diameter="50"></mat-spinner>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let option of countries" [value]="option">
+                  {{option.name}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
+            <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="code" formControlName="code" [(ngModel)]="code" required>
+            <mat-error *ngIf="formErrors.code">{{formErrors.code}}</mat-error>
+          </mat-form-field>
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button type="submit" color="primary">Save</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+
+</div>

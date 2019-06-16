@@ -24,6 +24,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -51,7 +53,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatExpansionModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatButtonModule,
@@ -78,7 +81,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatExpansionModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatAutocompleteModule
   ]
 })
 export class AppMaterialModule { }

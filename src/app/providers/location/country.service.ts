@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-
-import { ConfigService } from '../../providers/config/config.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, retry, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ConfigService } from 'src/app/providers/config/config.service';
+import { isString } from 'util';
+
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
-
-
   private url;
-  private dataList: any[] = [];
   private formData: FormData = new FormData();
 
   constructor(
@@ -23,7 +21,7 @@ export class CountryService {
   public list(data: any) {
     this.formData = new FormData();
 
-    if (data.search) {
+    if (data.search && isString(data.search)) {
       this.formData.append('search', data.search);
     }
     if (data.pageSize) {
@@ -64,6 +62,7 @@ export class CountryService {
       catchError(this.configService.handleError)
     );
   }
+
   public deleteAll(data: any) {
     const selected = data.map(row => (
       row.id
@@ -84,11 +83,12 @@ export class CountryService {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);
-    this.formData.append('iso_code_2', data.iso_code_2);
-    this.formData.append('iso_code_3', data.iso_code_3);
+    this.formData.append('iso_code_2', data.isoCode2);
+    this.formData.append('iso_code_3', data.isoCode3);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
     );
   }
+
 }
