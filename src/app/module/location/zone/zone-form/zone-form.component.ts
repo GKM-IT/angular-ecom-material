@@ -23,7 +23,6 @@ export class ZoneFormComponent implements OnInit {
   public messageTitle: string;
   hide = true;
   country;
-  countryId;
   name;
   code;
   countries;
@@ -47,8 +46,6 @@ export class ZoneFormComponent implements OnInit {
   ) {
 
   }
-
-
 
   getId() {
     const id = this.activatedRoute.snapshot.paramMap.get('id') ? this.activatedRoute.snapshot.paramMap.get('id') : 'new';
@@ -123,7 +120,7 @@ export class ZoneFormComponent implements OnInit {
   }
 
 
-  public onSubmit() {
+  onSubmit() {
     // mark all fields as touched
     this.formService.markFormGroupTouched(this.form);
     if (this.form.valid) {

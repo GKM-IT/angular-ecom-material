@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormService } from '../../providers/form/form.service';
-import { UserService } from '../../providers/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/providers/user/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   };
 
   constructor(
-    public masterService: UserService,
+    public masterService: AuthService,
     private formBuilder: FormBuilder,
     private formService: FormService,
     private router: Router,
