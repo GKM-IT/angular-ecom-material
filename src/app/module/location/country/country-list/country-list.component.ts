@@ -50,6 +50,7 @@ export class CountryListComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.filterData.search = filterValue.trim().toLowerCase();
+    this.filterData.pageIndex = 0;
     this.getData();
   }
 
