@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../providers/user/user.service';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/providers/user/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -11,7 +11,7 @@ export class AdminComponent implements OnInit {
   isLoading: boolean;
   appTitle;
   constructor(
-    public userService: UserService
+    public authService: AuthService
   ) {
     this.appTitle = environment.name;
   }
@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout();
+    this.authService.logout();
   }
 
 
