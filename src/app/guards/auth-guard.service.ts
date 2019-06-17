@@ -6,8 +6,8 @@ import {
   Router,
   CanActivateChild
 } from '@angular/router';
-import { UserService } from '../providers/user/user.service';
 import { Observable } from 'rxjs';
+import { AuthService } from '../providers/user/auth.service';
 
 
 @Injectable({
@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
 export class AuthGuardService {
 
   constructor(
-    private userService: UserService,
+    private authService: AuthService,
     private router: Router
   ) { }
 
@@ -35,10 +35,10 @@ export class AuthGuardService {
   }
 
   checkLogin(url: string) {
-    if (this.userService.isLoggedIn) {
+    if (this.authService.isLoggedIn) {
       return true;
     }
-    this.userService.redirectUrl = url;
+    this.authService.redirectUrl = url;
     this.router.navigate(['/login'], { queryParams: { returnUrl: url } });
   }
 
