@@ -19,6 +19,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 import { LocationModule } from './module/location/location.module';
+import { UserModule } from './module/user/user.module';
+
 import { ConfirmDialogComponent } from './components/common/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
@@ -44,6 +46,7 @@ import { ConfirmDialogComponent } from './components/common/confirm-dialog/confi
     ReactiveFormsModule,
     AppMaterialModule,
     LocationModule,
+    UserModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
