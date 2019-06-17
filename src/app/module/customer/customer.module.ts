@@ -8,11 +8,18 @@ import { CustomerWishlistComponent } from './customer-wishlist/customer-wishlist
 import { CustomerWishlistFormComponent } from './customer-wishlist/customer-wishlist-form/customer-wishlist-form.component';
 import { CustomerAddressListComponent } from './customer-address/customer-address-list/customer-address-list.component';
 import { CustomerAddressFormComponent } from './customer-address/customer-address-form/customer-address-form.component';
+import { AppMaterialModule } from 'src/app/app-material/app-material.module';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [CustomerListComponent, CustomerFormComponent, CustomerGroupListComponent, CustomerGroupFormComponent, CustomerWishlistComponent, CustomerWishlistFormComponent, CustomerAddressListComponent, CustomerAddressFormComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    AppMaterialModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class CustomerModule { }

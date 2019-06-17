@@ -6,11 +6,18 @@ import { ContactTypeListComponent } from './contact-type/contact-type-list/conta
 import { ContactTypeFormComponent } from './contact-type/contact-type-form/contact-type-form.component';
 import { ContactListComponent } from './contact/contact-list/contact-list.component';
 import { ContactFormComponent } from './contact/contact-form/contact-form.component';
+import { AppMaterialModule } from 'src/app/app-material/app-material.module';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [InformationListComponent, InformationFormComponent, ContactTypeListComponent, ContactTypeFormComponent, ContactListComponent, ContactFormComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    AppMaterialModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class InformationModule { }

@@ -8,11 +8,18 @@ import { OrderStatusListComponent } from './order-status/order-status-list/order
 import { OrderStatusFormComponent } from './order-status/order-status-form/order-status-form.component';
 import { OrderCartListComponent } from './order-cart/order-cart-list/order-cart-list.component';
 import { OrderCartFormComponent } from './order-cart/order-cart-form/order-cart-form.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AppMaterialModule } from 'src/app/app-material/app-material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [OrderListComponent, OrderFormComponent, OrderTypeListComponent, OrderTypeFormComponent, OrderStatusListComponent, OrderStatusFormComponent, OrderCartListComponent, OrderCartFormComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    AppMaterialModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class OrderModule { }

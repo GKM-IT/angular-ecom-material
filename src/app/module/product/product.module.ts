@@ -11,11 +11,18 @@ import { ProductReviewFormComponent } from './product-review/product-review-form
 import { AttributeListComponent } from './attribute/attribute-list/attribute-list.component';
 import { AttributeFormComponent } from './attribute/attribute-form/attribute-form.component';
 import { AttributeGroupFormComponent } from './attribute-group/attribute-group-form/attribute-group-form.component';
+import { AppMaterialModule } from 'src/app/app-material/app-material.module';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [CategoryListComponent, CategoryFormComponent, ProductListComponent, ProductFormComponent, ManufactureListComponent, ManufactureFormComponent, ProductReviewListComponent, ProductReviewFormComponent, AttributeListComponent, AttributeFormComponent, AttributeGroupFormComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    AppMaterialModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class ProductModule { }

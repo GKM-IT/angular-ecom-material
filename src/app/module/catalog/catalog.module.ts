@@ -8,11 +8,18 @@ import { BannerListComponent } from './banner/banner-list/banner-list.component'
 import { BannerFormComponent } from './banner/banner-form/banner-form.component';
 import { RatingListComponent } from './rating/rating-list/rating-list.component';
 import { RatingFormComponent } from './rating/rating-form/rating-form.component';
+import { AppMaterialModule } from 'src/app/app-material/app-material.module';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [CurrencyListComponent, CurrencyFormComponent, TypeListComponent, TypeFormComponent, BannerListComponent, BannerFormComponent, RatingListComponent, RatingFormComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    AppMaterialModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class CatalogModule { }
