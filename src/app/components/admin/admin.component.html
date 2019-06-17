@@ -1,7 +1,7 @@
 <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-<mat-sidenav-container class="app-container" autosize>
+<mat-drawer-container class="app-container" autosize>
 
-    <mat-sidenav #sidenav mode="over" class="app-sidenav" color="primary">
+    <mat-drawer #drawer mode="push" color="primary">
         <mat-toolbar>
             <mat-toolbar-row>
                 <span>Admin Dashboard</span>
@@ -12,10 +12,16 @@
 
         <app-admin-sidebar></app-admin-sidebar>
 
-    </mat-sidenav>
+        <mat-list>
+            <mat-list-item (click)="drawer.toggle()">
+                Close
+            </mat-list-item>
+        </mat-list>
+        
+    </mat-drawer>
 
     <mat-toolbar color="primary">
-        <button mat-button class="app-menu-button" (click)="sidenav.toggle()">
+        <button mat-button class="app-menu-button" (click)="drawer.toggle()">
             <i class="material-icons">menu</i>
         </button>
         <span class="title">{{appTitle}}</span>
@@ -45,4 +51,4 @@
         <router-outlet></router-outlet>
     </div>
 
-</mat-sidenav-container>
+</mat-drawer-container>

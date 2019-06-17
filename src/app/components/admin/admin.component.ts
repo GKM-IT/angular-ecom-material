@@ -11,22 +11,16 @@ export class AdminComponent implements OnInit {
   isLoading: boolean;
   appTitle;
   constructor(
-    public authService: AuthService
+    public authService: AuthService,
   ) {
     this.appTitle = environment.name;
   }
 
   ngOnInit() {
     this.isLoading = true;
-    this.checkIfLoaded();
-  }
-
-  checkIfLoaded() {
-    window.addEventListener('load', (event) => {
-      console.log('All resources finished loading!');
-    });
-
-    this.isLoading = false;
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000);
   }
 
   logout() {

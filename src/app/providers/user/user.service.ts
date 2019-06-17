@@ -9,13 +9,8 @@ import { environment } from 'src/environments/environment';
 })
 export class UserService {
 
-
   public formData: FormData = new FormData();
-  public responseData: any;
   private url;
-  errorData: {};
-  isLoggedIn = false;
-  redirectUrl: string;
 
   constructor(public http: HttpClient, public configService: ConfigService) {
 
