@@ -22,6 +22,14 @@ import { LocationModule } from './module/location/location.module';
 import { UserModule } from './module/user/user.module';
 
 import { ConfirmDialogComponent } from './components/common/confirm-dialog/confirm-dialog.component';
+import { CatalogModule } from './module/catalog/catalog.module';
+import { CustomerModule } from './module/customer/customer.module';
+import { InformationModule } from './module/information/information.module';
+import { OrderModule } from './module/order/order.module';
+import { ProductModule } from './module/product/product.module';
+import { PurchaseModule } from './module/purchase/purchase.module';
+import { TaxModule } from './module/tax/tax.module';
+import { UnitModule } from './module/unit/unit.module';
 
 @NgModule({
   declarations: [
@@ -45,7 +53,15 @@ import { ConfirmDialogComponent } from './components/common/confirm-dialog/confi
     FormsModule,
     ReactiveFormsModule,
     AppMaterialModule,
+    CatalogModule,
+    CustomerModule,
+    InformationModule,
     LocationModule,
+    OrderModule,
+    ProductModule,
+    PurchaseModule,
+    TaxModule,
+    UnitModule,
     UserModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

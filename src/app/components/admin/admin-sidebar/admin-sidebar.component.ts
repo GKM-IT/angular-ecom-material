@@ -49,7 +49,7 @@ export class AdminSidebarComponent implements OnInit {
         },
         {
           name: 'Customer Wishlist',
-          link: '/customer-wishlist',
+          link: '/customer-wishlists',
         },
       ]
     });

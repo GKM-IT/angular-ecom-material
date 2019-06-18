@@ -73,6 +73,8 @@ import { UserListComponent } from './module/user/user/user-list/user-list.compon
 import { UserFormComponent } from './module/user/user/user-form/user-form.component';
 import { UserGroupListComponent } from './module/user/user-group/user-group-list/user-group-list.component';
 import { UserGroupFormComponent } from './module/user/user-group/user-group-form/user-group-form.component';
+import { LocationListComponent } from './module/location/location/location-list/location-list.component';
+import { LocationFormComponent } from './module/location/location/location-form/location-form.component';
 
 
 const adminChildRoutes: Routes = [
@@ -105,6 +107,8 @@ const adminChildRoutes: Routes = [
   { path: 'zone/:id', component: ZoneFormComponent },
   { path: 'cities', component: CityListComponent },
   { path: 'city/:id', component: CityFormComponent },
+  { path: 'locations', component: LocationListComponent },
+  { path: 'location/:id', component: LocationFormComponent },
   { path: 'orders', component: OrderListComponent },
   { path: 'order/:id', component: OrderFormComponent },
   { path: 'order-carts', component: OrderCartListComponent },
@@ -115,7 +119,7 @@ const adminChildRoutes: Routes = [
   { path: 'order-type/:id', component: OrderTypeFormComponent },
   { path: 'attributes', component: AttributeListComponent },
   { path: 'attribute/:id', component: AttributeFormComponent },
-  { path: 'attribute-groups', component: AttributeGroupService },
+  { path: 'attribute-groups', component: AttributeGroupFormComponent },
   { path: 'attribute-group/:id', component: AttributeGroupFormComponent },
   { path: 'categories', component: CategoryListComponent },
   { path: 'category/:id', component: CategoryFormComponent },
