@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../config/config.service';
 import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService {
+export class BannerService {
 
   public formData: FormData = new FormData();
   private url;
@@ -40,7 +40,7 @@ export class EmployeeService {
       this.formData.append('order[0][dir]', data.order[0].dir);
     }
 
-    this.url = `${environment.url}employee/employees`;
+    this.url = `${environment.url}common/banners`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -50,7 +50,7 @@ export class EmployeeService {
   public detail(id: any) {
     this.formData = new FormData();
 
-    this.url = `${environment.url}employee/employees/detail`;
+    this.url = `${environment.url}common/banners/detail`;
     this.formData.append('id', id);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -59,7 +59,7 @@ export class EmployeeService {
   }
 
   public delete(id: any) {
-    this.url = `${environment.url}employee/employees/delete/${id}`;
+    this.url = `${environment.url}common/banners/delete/${id}`;
     return this.http.get<any>(this.url).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -69,7 +69,7 @@ export class EmployeeService {
 
   public save(data: any, id: any) {
     this.formData = new FormData();
-    this.url = `${environment.url}employee/employees/save`;
+    this.url = `${environment.url}common/banners/save`;
     if (id) {
       this.formData.append('id', id);
     }
