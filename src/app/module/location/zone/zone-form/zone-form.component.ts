@@ -85,7 +85,7 @@ export class ZoneFormComponent implements OnInit {
       .valueChanges
       .pipe(
         startWith(''),
-        debounceTime(600),
+        debounceTime(1000),
         tap(() => this.isLoading = true),
         switchMap(value => this.countryService.list({ search: value, pageSize: 5, pageIndex: 0, sort_by: 'name' })
           .pipe(
@@ -98,6 +98,7 @@ export class ZoneFormComponent implements OnInit {
   }
 
   displayFn(country: any): string {
+    console.log(country);
     return country ? country.name : country;
   }
 

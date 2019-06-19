@@ -20,7 +20,7 @@ export class TypeService {
   public list(data: any) {
     this.formData = new FormData();
 
-    if (data.search && isString(data.search)) {
+    if (data.search && typeof data.search === 'string') {
       this.formData.append('search', data.search);
     }
     if (data.pageSize) {
@@ -78,10 +78,11 @@ export class TypeService {
   public save(data: any, id: any) {
     this.formData = new FormData();
     this.url = `${environment.url}common/types/save`;
-    if (id) {
+    if (id !== 'new') {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);
+    this.formData.append('sort_order', data.sortOrder);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

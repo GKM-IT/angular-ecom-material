@@ -3,6 +3,7 @@
   <mat-card class="z-depth center" flex="100">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
       <mat-card-header>
+
         <mat-card-title>
           <button mat-button (click)="goBack()">
             <i class="material-icons">keyboard_backspace</i>
@@ -13,7 +14,8 @@
       <mat-card-content>
         <p>
           <mat-form-field class="full-width">
-            <input matInput placeholder="Country" formControlName="country" required [matAutocomplete]="auto" [(ngModel)]="country">
+            <input matInput placeholder="Country" formControlName="country" required [matAutocomplete]="auto"
+              [(ngModel)]="country">
             <mat-error *ngIf="formErrors.country">{{formErrors.country}}</mat-error>
             <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option *ngIf="isLoading" class="is-loading">
