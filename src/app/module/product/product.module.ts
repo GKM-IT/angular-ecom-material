@@ -14,9 +14,10 @@ import { AttributeGroupFormComponent } from './attribute-group/attribute-group-f
 import { AppMaterialModule } from 'src/app/app-material/app-material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AttributeGroupListComponent } from './attribute-group/attribute-group-list/attribute-group-list.component';
 
 @NgModule({
-  declarations: [CategoryListComponent, CategoryFormComponent, ProductListComponent, ProductFormComponent, ManufactureListComponent, ManufactureFormComponent, ProductReviewListComponent, ProductReviewFormComponent, AttributeListComponent, AttributeFormComponent, AttributeGroupFormComponent],
+  declarations: [CategoryListComponent, CategoryFormComponent, ProductListComponent, ProductFormComponent, ManufactureListComponent, ManufactureFormComponent, ProductReviewListComponent, ProductReviewFormComponent, AttributeListComponent, AttributeFormComponent, AttributeGroupFormComponent, AttributeGroupListComponent],
   imports: [
     CommonModule,
     AppMaterialModule,

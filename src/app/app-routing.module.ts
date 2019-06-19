@@ -43,7 +43,7 @@ import { OrderTypeListComponent } from './module/order/order-type/order-type-lis
 import { OrderTypeFormComponent } from './module/order/order-type/order-type-form/order-type-form.component';
 import { AttributeListComponent } from './module/product/attribute/attribute-list/attribute-list.component';
 import { AttributeFormComponent } from './module/product/attribute/attribute-form/attribute-form.component';
-import { AttributeGroupService } from './providers/product/attribute-group.service';
+import { AttributeGroupListComponent } from './module/product/attribute-group/attribute-group-list/attribute-group-list.component';
 import { AttributeGroupFormComponent } from './module/product/attribute-group/attribute-group-form/attribute-group-form.component';
 import { CategoryListComponent } from './module/product/category/category-list/category-list.component';
 import { CategoryFormComponent } from './module/product/category/category-form/category-form.component';
@@ -75,6 +75,7 @@ import { UserGroupListComponent } from './module/user/user-group/user-group-list
 import { UserGroupFormComponent } from './module/user/user-group/user-group-form/user-group-form.component';
 import { LocationListComponent } from './module/location/location/location-list/location-list.component';
 import { LocationFormComponent } from './module/location/location/location-form/location-form.component';
+
 
 
 const adminChildRoutes: Routes = [
@@ -119,7 +120,7 @@ const adminChildRoutes: Routes = [
   { path: 'order-type/:id', component: OrderTypeFormComponent },
   { path: 'attributes', component: AttributeListComponent },
   { path: 'attribute/:id', component: AttributeFormComponent },
-  { path: 'attribute-groups', component: AttributeGroupFormComponent },
+  { path: 'attribute-groups', component: AttributeGroupListComponent },
   { path: 'attribute-group/:id', component: AttributeGroupFormComponent },
   { path: 'categories', component: CategoryListComponent },
   { path: 'category/:id', component: CategoryFormComponent },
