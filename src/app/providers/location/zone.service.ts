@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, retry, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ConfigService } from 'src/app/providers/config/config.service';
+import { isString } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class ZoneService {
   public list(data: any) {
     this.formData = new FormData();
 
-    if (data.search) {
+    if (data.search && isString(data.search)) {
       this.formData.append('search', data.search);
     }
     if (data.pageSize) {

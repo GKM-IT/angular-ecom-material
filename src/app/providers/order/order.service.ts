@@ -3,6 +3,7 @@ import { ConfigService } from '../config/config.service';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { isString } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -19,27 +20,21 @@ export class OrderService {
   public list(data: any) {
     this.formData = new FormData();
 
-    if (data.draw) {
-      this.formData.append('draw', data.draw);
+    if (data.search && isString(data.search)) {
+      this.formData.append('search', data.search);
     }
-
-    if (data.length) {
-      this.formData.append('length', data.length);
+    if (data.pageSize) {
+      this.formData.append('length', data.pageSize);
     }
-
-    if (data.start) {
-      this.formData.append('start', data.start);
+    if (data.pageIndex) {
+      this.formData.append('start', data.pageIndex);
     }
-
-    if (data.search) {
-      this.formData.append('search', data.search.value);
+    if (data.sort_by) {
+      this.formData.append('sort_by', data.sort_by);
     }
-
-    if (data.order) {
-      this.formData.append('order[0][column]', data.order[0].column);
-      this.formData.append('order[0][dir]', data.order[0].dir);
+    if (data.sort_dir) {
+      this.formData.append('sort_dir', data.sort_dir);
     }
-
     this.url = `${environment.url}order/orders`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
