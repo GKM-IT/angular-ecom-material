@@ -66,6 +66,18 @@ export class LocationService {
     );
   }
 
+  public deleteAll(data: any) {
+    const selected = data.map(row => (
+      row.id
+    ));
+    this.formData = new FormData();
+    this.formData.append('list', JSON.stringify(selected));
+    this.url = `${environment.url}location/locations/delete_all`;
+    return this.http.post<any>(this.url, this.formData).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.configService.handleError)
+    );
+  }
 
   public save(data: any, id: any) {
     this.formData = new FormData();

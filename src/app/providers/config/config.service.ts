@@ -1,16 +1,69 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { trigger, state, animate, style, transition } from '@angular/animations';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, retry, map } from 'rxjs/operators';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { catchError } from 'rxjs/operators';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { ValidatorFn, AbstractControl } from '@angular/forms';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
+  public formData: FormData = new FormData();
+  private url;
 
-  constructor() {
+  constructor(public http: HttpClient) {
+  }
+
+  public list(url: string, data: any) {
+    this.url = `${environment.url}${url}`;
+    return this.http.post<any>(this.url, data).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.handleError)
+    );
+  }
+
+
+  public detail(url: string, id: any) {
+    this.formData = new FormData();
+
+    this.url = `${environment.url}${url}`;
+    this.formData.append('id', id);
+    return this.http.post<any>(this.url, this.formData).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.handleError)
+    );
+  }
+
+  public delete(url: string, id: any) {
+    this.url = `${environment.url}${url}/${id}`;
+    return this.http.get<any>(this.url).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.handleError)
+    );
+  }
+
+  public deleteAll(url: string, data: any) {
+    const selected = data.map(row => (
+      row.id
+    ));
+    this.formData = new FormData();
+    this.formData.append('list', JSON.stringify(selected));
+    this.url = `${environment.url}${url}`;
+    return this.http.post<any>(this.url, this.formData).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.handleError)
+    );
+  }
+
+  public save(url: string, data: any) {
+    this.formData = new FormData();
+    this.url = `${environment.url}${url}`;
+    return this.http.post<any>(this.url, data).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.handleError)
+    );
   }
 
   public handleError(error: HttpErrorResponse) {

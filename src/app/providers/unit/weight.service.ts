@@ -40,7 +40,7 @@ export class WeightService {
       this.formData.append('order[0][dir]', data.order[0].dir);
     }
 
-    this.url = `${environment.url}unit/lweight_classes`;
+    this.url = `${environment.url}unit/weight_classes`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -50,7 +50,7 @@ export class WeightService {
   public detail(id: any) {
     this.formData = new FormData();
 
-    this.url = `${environment.url}unit/lweight_classes/detail`;
+    this.url = `${environment.url}unit/weight_classes/detail`;
     this.formData.append('id', id);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -59,17 +59,29 @@ export class WeightService {
   }
 
   public delete(id: any) {
-    this.url = `${environment.url}unit/lweight_classes/delete/${id}`;
+    this.url = `${environment.url}unit/weight_classes/delete/${id}`;
     return this.http.get<any>(this.url).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
     );
   }
 
+  public deleteAll(data: any) {
+    const selected = data.map(row => (
+      row.id
+    ));
+    this.formData = new FormData();
+    this.formData.append('list', JSON.stringify(selected));
+    this.url = `${environment.url}unit/weight_classes/delete_all`;
+    return this.http.post<any>(this.url, this.formData).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.configService.handleError)
+    );
+  }
 
   public save(data: any, id: any) {
     this.formData = new FormData();
-    this.url = `${environment.url}unit/lweight_classes/save`;
+    this.url = `${environment.url}unit/weight_classes/save`;
     if (id) {
       this.formData.append('id', id);
     }

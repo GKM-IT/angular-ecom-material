@@ -66,6 +66,19 @@ export class UserService {
     );
   }
 
+  public deleteAll(data: any) {
+    const selected = data.map(row => (
+      row.id
+    ));
+    this.formData = new FormData();
+    this.formData.append('list', JSON.stringify(selected));
+    this.url = `${environment.url}user/users/delete_all`;
+    return this.http.post<any>(this.url, this.formData).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.configService.handleError)
+    );
+  }
+
   public imageUpload(image: File) {
     this.formData = new FormData();
     this.url = `${environment.url}user/users/image_upload`;
