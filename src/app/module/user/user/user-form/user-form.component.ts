@@ -56,6 +56,8 @@ export class UserFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: [this.name, Validators.required],
+      email: [this.email, Validators.required],
+      contact: [this.contact, Validators.required],
     });
 
     this.form.valueChanges.subscribe(data => {

@@ -20,13 +20,10 @@ export class TaxClassFormComponent implements OnInit {
   public messageTitle: string;
   hide = true;
   name;
-  sortOrder;
-
 
   public form: FormGroup;
   public formErrors = {
     name: '',
-    sortOrder: '',
   };
 
   constructor(
@@ -55,7 +52,6 @@ export class TaxClassFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: [this.name, Validators.required],
-      sortOrder: [this.sortOrder, Validators.required],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -72,7 +68,6 @@ export class TaxClassFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.name = response.data.name;
-          this.sortOrder = response.data.sort_order;
         }
       },
       err => {
