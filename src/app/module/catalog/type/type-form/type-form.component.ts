@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class TypeFormComponent implements OnInit {
 
 
-  public pageHeading = 'Rating Form';
+  public pageHeading = 'Type Form';
   public data: any;
   public status: any;
   public message: any;

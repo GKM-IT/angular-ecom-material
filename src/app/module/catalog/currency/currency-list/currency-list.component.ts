@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog/confirm-dialog.component';
+import { Constant } from 'src/app/helper/constant';
 
 @Component({
   selector: 'app-currency-list',
@@ -13,7 +14,7 @@ import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog
 })
 export class CurrencyListComponent implements OnInit {
 
-  
+
   displayedColumns: string[] = ['select', 'name', 'updated_at', 'action'];
   selection = new SelectionModel<any>(true, []);
   dataSource: any[] = [];
@@ -26,7 +27,7 @@ export class CurrencyListComponent implements OnInit {
     sort_dir: 'asc'
   };
 
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions;
 
   constructor(
     private masterService: CurrencyService,
@@ -34,7 +35,8 @@ export class CurrencyListComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
   ) {
-
+    const constant = new Constant();
+    this.pageSizeOptions = constant.pageSizeOptions;
   }
 
   ngOnInit() {

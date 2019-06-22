@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog/confirm-dialog.component';
+import { Constant } from 'src/app/helper/constant';
 
 @Component({
   selector: 'app-type-list',
@@ -25,7 +26,7 @@ export class TypeListComponent implements OnInit {
     sort_dir: 'asc'
   };
 
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions;
 
   constructor(
     private masterService: TypeService,
@@ -33,7 +34,8 @@ export class TypeListComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
   ) {
-
+    const constant = new Constant();
+    this.pageSizeOptions = constant.pageSizeOptions;
   }
 
   ngOnInit() {

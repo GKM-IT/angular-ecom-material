@@ -41,7 +41,7 @@ export class InformationService {
       this.formData.append('order[0][dir]', data.order[0].dir);
     }
 
-    this.url = `${environment.url}common/informations`;
+    this.url = `${environment.url}information/informations`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -51,7 +51,7 @@ export class InformationService {
   public detail(id: any) {
     this.formData = new FormData();
 
-    this.url = `${environment.url}common/informations/detail`;
+    this.url = `${environment.url}information/informations/detail`;
     this.formData.append('id', id);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -60,7 +60,7 @@ export class InformationService {
   }
 
   public delete(id: any) {
-    this.url = `${environment.url}common/informations/delete/${id}`;
+    this.url = `${environment.url}information/informations/delete/${id}`;
     return this.http.get<any>(this.url).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -73,7 +73,7 @@ export class InformationService {
     ));
     this.formData = new FormData();
     this.formData.append('list', JSON.stringify(selected));
-    this.url = `${environment.url}common/informations/delete_all`;
+    this.url = `${environment.url}information/informations/delete_all`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -83,7 +83,7 @@ export class InformationService {
 
   public save(data: any, id: any) {
     this.formData = new FormData();
-    this.url = `${environment.url}common/informations/save`;
+    this.url = `${environment.url}information/informations/save`;
     if (id) {
       this.formData.append('id', id);
     }

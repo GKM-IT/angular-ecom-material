@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CountryService } from 'src/app/providers/location/country.service';
 import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog/confirm-dialog.component';
+import { Constant } from 'src/app/helper/constant';
 @Component({
   selector: 'app-country-list',
   templateUrl: './country-list.component.html',
@@ -25,7 +26,7 @@ export class CountryListComponent implements OnInit {
     sort_dir: 'asc'
   };
 
-  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageSizeOptions;
 
   constructor(
     private masterService: CountryService,
@@ -33,7 +34,8 @@ export class CountryListComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
   ) {
-
+    const constant = new Constant();
+    this.pageSizeOptions = constant.pageSizeOptions;
   }
 
   ngOnInit() {
