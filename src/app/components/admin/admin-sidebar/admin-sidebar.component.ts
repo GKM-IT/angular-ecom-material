@@ -197,8 +197,8 @@ export class AdminSidebarComponent implements OnInit {
           link: '/length-classes',
         },
         {
-          name: 'Weight Rates',
-          link: '/weight-rates',
+          name: 'Weight Classes',
+          link: '/weight-classes',
         },
       ]
     });
