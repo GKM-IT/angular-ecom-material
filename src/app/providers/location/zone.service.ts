@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, retry, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ConfigService } from 'src/app/providers/config/config.service';
@@ -56,8 +56,19 @@ export class ZoneService {
   }
 
   public delete(id: any) {
-    this.url = `${environment.url}location/zones/delete/${id}`;
-    return this.http.get<any>(this.url).pipe(
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT');
+    headers.append('Accept', 'application/json');
+    headers.append('Access-Control-Allow-Headers', '*');
+
+    this.url = `${environment.url}location/zones/${id}`;
+    const options = {
+      headers,
+      body: {}
+    }
+    return this.http.delete<any>(this.url, options).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
     );
