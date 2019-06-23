@@ -1,3 +1,30 @@
-<p>
-  manufacture-form works!
-</p>
+<div class="main-div">
+
+  <mat-card class="z-depth center" flex="50">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <mat-card-header>
+        <mat-card-title>
+          <button mat-button (click)="goBack()">
+            <i class="material-icons">keyboard_backspace</i>
+          </button>
+          {{pageHeading}}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
+            <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+          </mat-form-field>
+        </p>
+
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button type="submit" color="primary">Save</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+
+</div>
