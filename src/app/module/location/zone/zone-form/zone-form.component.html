@@ -16,8 +16,10 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="Country" formControlName="country" required [matAutocomplete]="auto"
               [(ngModel)]="country">
+            <input type="hidden" formControlName="countryId" [(ngModel)]="countryId">
             <mat-error *ngIf="formErrors.country">{{formErrors.country}}</mat-error>
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+              (optionSelected)="onSelectionChanged($event)">
               <mat-option *ngIf="isLoading" class="is-loading">
                 <mat-spinner diameter="50"></mat-spinner>
               </mat-option>

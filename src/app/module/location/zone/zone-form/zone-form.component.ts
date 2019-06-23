@@ -7,6 +7,7 @@ import { ZoneService } from 'src/app/providers/location/zone.service';
 import { CountryService } from 'src/app/providers/location/country.service';
 import { Observable } from 'rxjs';
 import { map, startWith, debounceTime, switchMap, tap, finalize } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-zone-form',
@@ -23,6 +24,7 @@ export class ZoneFormComponent implements OnInit {
   public messageTitle: string;
   hide = true;
   country;
+  countryId;
   name;
   code;
   countries;
@@ -63,6 +65,7 @@ export class ZoneFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       country: [this.country, Validators.required],
+      countryId: [this.countryId],
       name: [this.name, Validators.required],
       code: [this.code, [Validators.required]],
     });
@@ -93,12 +96,19 @@ export class ZoneFormComponent implements OnInit {
           )
         )
       ).subscribe(res => {
-        this.countries = res.data;
+        if (res.status) {
+          this.countries = res.data;
+        }
       });
   }
 
+
+
+  onSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.countryId.setValue(event.option.value.id);
+  }
+
   displayFn(country: any): string {
-    console.log(country);
     return country ? country.name : country;
   }
 
@@ -110,6 +120,7 @@ export class ZoneFormComponent implements OnInit {
             id: response.data.country_id,
             name: response.data.country,
           };
+          this.countryId = response.data.country_id;
           this.name = response.data.name;
           this.code = response.data.code;
         }

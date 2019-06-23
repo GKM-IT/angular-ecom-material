@@ -35,8 +35,6 @@ import { InformationListComponent } from './module/information/information/infor
 import { InformationFormComponent } from './module/information/information/information-form/information-form.component';
 import { OrderListComponent } from './module/order/order/order-list/order-list.component';
 import { OrderFormComponent } from './module/order/order/order-form/order-form.component';
-import { OrderCartListComponent } from './module/order/order-cart/order-cart-list/order-cart-list.component';
-import { OrderCartFormComponent } from './module/order/order-cart/order-cart-form/order-cart-form.component';
 import { OrderStatusListComponent } from './module/order/order-status/order-status-list/order-status-list.component';
 import { OrderStatusFormComponent } from './module/order/order-status/order-status-form/order-status-form.component';
 import { OrderTypeListComponent } from './module/order/order-type/order-type-list/order-type-list.component';
@@ -55,8 +53,6 @@ import { ProductReviewListComponent } from './module/product/product-review/prod
 import { ProductReviewFormComponent } from './module/product/product-review/product-review-form/product-review-form.component';
 import { PurchaseListComponent } from './module/purchase/purchase/purchase-list/purchase-list.component';
 import { PurchaseFormComponent } from './module/purchase/purchase/purchase-form/purchase-form.component';
-import { PurchaseCartListComponent } from './module/purchase/purchase-cart/purchase-cart-list/purchase-cart-list.component';
-import { PurchaseCartFormComponent } from './module/purchase/purchase-cart/purchase-cart-form/purchase-cart-form.component';
 import { PurchaseStatusListComponent } from './module/purchase/purchase-status/purchase-status-list/purchase-status-list.component';
 import { PurchaseStatusFormComponent } from './module/purchase/purchase-status/purchase-status-form/purchase-status-form.component';
 import { PurchaseTypeListComponent } from './module/purchase/purchase-type/purchase-type-list/purchase-type-list.component';
@@ -112,8 +108,6 @@ const adminChildRoutes: Routes = [
   { path: 'location/:id', component: LocationFormComponent },
   { path: 'orders', component: OrderListComponent },
   { path: 'order/:id', component: OrderFormComponent },
-  { path: 'order-carts', component: OrderCartListComponent },
-  { path: 'order-cart/:id', component: OrderCartFormComponent },
   { path: 'order-statuses', component: OrderStatusListComponent },
   { path: 'order-status/:id', component: OrderStatusFormComponent },
   { path: 'order-types', component: OrderTypeListComponent },
@@ -132,8 +126,6 @@ const adminChildRoutes: Routes = [
   { path: 'product-review/:id', component: ProductReviewFormComponent },
   { path: 'purchases', component: PurchaseListComponent },
   { path: 'purchase/:id', component: PurchaseFormComponent },
-  { path: 'purchase-carts', component: PurchaseCartListComponent },
-  { path: 'purchase-cart/:id', component: PurchaseCartFormComponent },
   { path: 'purchase-statuses', component: PurchaseStatusListComponent },
   { path: 'purchase-status/:id', component: PurchaseStatusFormComponent },
   { path: 'purchase-types', component: PurchaseTypeListComponent },

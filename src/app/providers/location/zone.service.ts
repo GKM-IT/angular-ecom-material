@@ -82,7 +82,7 @@ export class ZoneService {
     if (id && id !== 'new') {
       this.formData.append('id', id);
     }
-    this.formData.append('country_id', data.country.id);
+    this.formData.append('country_id', data.countryId);
     this.formData.append('name', data.name);
     this.formData.append('code', data.code);
     return this.http.post<any>(this.url, this.formData).pipe(
