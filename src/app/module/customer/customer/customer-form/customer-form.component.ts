@@ -4,6 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Constant } from 'src/app/helper/constant';
+import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { CustomerGroupService } from 'src/app/providers/customer/customer-group.service';
 
 @Component({
   selector: 'app-customer-form',
@@ -19,13 +23,16 @@ export class CustomerFormComponent implements OnInit {
   public messageTitle: string;
   hide = true;
   group;
+  groupId;
   name;
   email;
   contact;
-
+  groups;
+  isLoading = false;
 
   public form: FormGroup;
   public formErrors = {
+    group: '',
     name: '',
     email: '',
     contact: '',
@@ -33,6 +40,7 @@ export class CustomerFormComponent implements OnInit {
 
   constructor(
     public masterService: CustomerService,
+    public customerGroupService: CustomerGroupService,
     private formBuilder: FormBuilder,
     private formService: FormService,
     private router: Router,
@@ -56,6 +64,8 @@ export class CustomerFormComponent implements OnInit {
     }
 
     this.form = this.formBuilder.group({
+      group: [this.group, Validators.required],
+      groupId: [this.groupId],
       name: [this.name, Validators.required],
       email: [this.email, Validators.required],
       contact: [this.contact, Validators.required],
@@ -68,6 +78,39 @@ export class CustomerFormComponent implements OnInit {
         true
       );
     });
+
+    this.getAutocomplete();
+  }
+
+  getAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('group')
+      .valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => this.isLoading = true),
+        switchMap(value =>
+          this.customerGroupService.list({ search: value, pageSize: constant.autocompleteListSize, pageIndex: 0, sort_by: 'name' }
+          )
+            .pipe(
+              finalize(() => this.isLoading = false),
+            )
+        )
+      ).subscribe(res => {
+        if (res.status) {
+          this.groups = res.data;
+        }
+      });
+  }
+
+  onSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.groupId.setValue(event.option.value.id);
+  }
+
+  displayFn(data: any): string {
+    return data ? data.name : data;
   }
 
   getDetail(id) {
@@ -77,6 +120,11 @@ export class CustomerFormComponent implements OnInit {
           this.name = response.data.name;
           this.email = response.data.email;
           this.contact = response.data.contact;
+          this.group = {
+            id: response.data.group_id,
+            name: response.data.group_name,
+          };
+          this.groupId = response.data.group_id;
         }
       },
       err => {

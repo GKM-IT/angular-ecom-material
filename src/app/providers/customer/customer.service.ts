@@ -82,7 +82,7 @@ export class CustomerService {
     if (id) {
       this.formData.append('id', id);
     }
-    this.formData.append('group_id', '1');
+    this.formData.append('group_id', data.groupId);
     this.formData.append('name', data.name);
     this.formData.append('email', data.email);
     this.formData.append('contact', data.contact);
