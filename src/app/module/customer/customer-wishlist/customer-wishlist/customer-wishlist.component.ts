@@ -14,7 +14,7 @@ import { Constant } from 'src/app/helper/constant';
 })
 export class CustomerWishlistComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'customer', 'product', 'updated_at', 'action'];
+  displayedColumns: string[] = ['select', 'customer_name', 'product_name', 'updated_at', 'action'];
   selection = new SelectionModel<any>(true, []);
   dataSource: any[] = [];
   filterData = {

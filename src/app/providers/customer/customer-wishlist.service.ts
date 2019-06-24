@@ -79,10 +79,11 @@ export class CustomerWishlistService {
   public save(data: any, id: any) {
     this.formData = new FormData();
     this.url = `${environment.url}customer/customer_wishlists/save`;
-    if (id) {
+    if (id !== 'new') {
       this.formData.append('id', id);
     }
-    this.formData.append('name', data.name);
+    this.formData.append('customer_id', data.customerId);
+    this.formData.append('product_id', data.productId);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

@@ -1,0 +1,61 @@
+<div class="main-div">
+
+    <mat-card class="z-depth center" flex="50">
+        <form (ngSubmit)="onSubmit()" [formGroup]="form">
+            <mat-card-header>
+                <mat-card-title>
+                    <button mat-button (click)="goBack()">
+                        <i class="material-icons">keyboard_backspace</i>
+                    </button>
+                    {{pageHeading}}
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="customer" formControlName="customer" required
+                            [matAutocomplete]="autoCustomer" [(ngModel)]="customer">
+                        <input type="hidden" formControlName="customerId" [(ngModel)]="customerId">
+                        <mat-error *ngIf="formErrors.customer">{{formErrors.customer}}</mat-error>
+                        <mat-autocomplete #autoCustomer="matAutocomplete" [displayWith]="displayFn"
+                            (optionSelected)="onCustomerSelectionChanged($event)">
+                            <mat-option *ngIf="isLoading" class="is-loading">
+                                <mat-spinner diameter="50"></mat-spinner>
+                            </mat-option>
+                            <ng-container *ngIf="!isLoading">
+                                <mat-option *ngFor="let option of customers" [value]="option">
+                                    {{option.name}}
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="product" formControlName="product" required
+                            [matAutocomplete]="autoProduct" [(ngModel)]="product">
+                        <input type="hidden" formControlName="productId" [(ngModel)]="productId">
+                        <mat-error *ngIf="formErrors.product">{{formErrors.product}}</mat-error>
+                        <mat-autocomplete #autoProduct="matAutocomplete" [displayWith]="displayFn"
+                            (optionSelected)="onProductSelectionChanged($event)">
+                            <mat-option *ngIf="isLoading" class="is-loading">
+                                <mat-spinner diameter="50"></mat-spinner>
+                            </mat-option>
+                            <ng-container *ngIf="!isLoading">
+                                <mat-option *ngFor="let option of products" [value]="option">
+                                    {{option.name}}
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </p>
+
+
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button type="submit" color="primary">Save</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+
+</div>
