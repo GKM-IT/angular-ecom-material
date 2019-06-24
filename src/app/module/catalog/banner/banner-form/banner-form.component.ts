@@ -4,6 +4,10 @@ import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BannerService } from 'src/app/providers/catalog/banner.service';
+import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { TypeService } from 'src/app/providers/catalog/type.service';
+import { Constant } from 'src/app/helper/constant';
 
 @Component({
   selector: 'app-banner-form',
@@ -18,19 +22,23 @@ export class BannerFormComponent implements OnInit {
   public message: any;
   public messageTitle: string;
   hide = true;
-  name;
   type;
+  typeId;
+  name;
+
+  types;
+  isLoading = false;
 
 
   public form: FormGroup;
   public formErrors = {
     name: '',
-    isoCode2: '',
-    isoCode3: '',
+    type: '',
   };
 
   constructor(
     public masterService: BannerService,
+    public typeService: TypeService,
     private formBuilder: FormBuilder,
     private formService: FormService,
     private router: Router,
@@ -55,6 +63,8 @@ export class BannerFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: [this.name, Validators.required],
+      typeId: [this.typeId],
+      type: [this.type, Validators.required],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -64,6 +74,39 @@ export class BannerFormComponent implements OnInit {
         true
       );
     });
+
+    this.getAutocomplete();
+  }
+
+  getAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('type')
+      .valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => this.isLoading = true),
+        switchMap(value =>
+          this.typeService.list({ search: value, pageSize: constant.autocompleteListSize, pageIndex: 0, sort_by: 'name' }
+          )
+            .pipe(
+              finalize(() => this.isLoading = false),
+            )
+        )
+      ).subscribe(res => {
+        if (res.status) {
+          this.types = res.data;
+        }
+      });
+  }
+
+  onSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.typeId.setValue(event.option.value.id);
+  }
+
+  displayFn(data: any): string {
+    return data ? data.name : data;
   }
 
   getDetail(id) {
@@ -71,6 +114,11 @@ export class BannerFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.name = response.data.name;
+          this.type = {
+            id: response.data.type_id,
+            name: response.data.type,
+          };
+          this.typeId = response.data.type_id;
         }
       },
       err => {

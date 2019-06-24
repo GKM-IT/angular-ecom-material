@@ -8,6 +8,7 @@ import { CountryService } from 'src/app/providers/location/country.service';
 import { Observable } from 'rxjs';
 import { map, startWith, debounceTime, switchMap, tap, finalize } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { Constant } from 'src/app/helper/constant';
 
 @Component({
   selector: 'app-zone-form',
@@ -78,11 +79,12 @@ export class ZoneFormComponent implements OnInit {
       );
     });
 
-    this.countryAutocomplete();
+    this.getAutocomplete();
   }
 
 
-  countryAutocomplete() {
+  getAutocomplete() {
+    const constant = new Constant();
     this.form
       .get('country')
       .valueChanges
@@ -90,10 +92,12 @@ export class ZoneFormComponent implements OnInit {
         startWith(''),
         debounceTime(1000),
         tap(() => this.isLoading = true),
-        switchMap(value => this.countryService.list({ search: value, pageSize: 5, pageIndex: 0, sort_by: 'name' })
-          .pipe(
-            finalize(() => this.isLoading = false),
+        switchMap(value =>
+          this.countryService.list({ search: value, pageSize: constant.autocompleteListSize, pageIndex: 0, sort_by: 'name' }
           )
+            .pipe(
+              finalize(() => this.isLoading = false),
+            )
         )
       ).subscribe(res => {
         if (res.status) {
@@ -102,14 +106,12 @@ export class ZoneFormComponent implements OnInit {
       });
   }
 
-
-
   onSelectionChanged(event: MatAutocompleteSelectedEvent) {
     this.form.controls.countryId.setValue(event.option.value.id);
   }
 
-  displayFn(country: any): string {
-    return country ? country.name : country;
+  displayFn(data: any): string {
+    return data ? data.name : data;
   }
 
   getDetail(id) {

@@ -83,7 +83,7 @@ export class BannerService {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);
-    this.formData.append('type_id', '1');
+    this.formData.append('type_id', data.typeId);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
