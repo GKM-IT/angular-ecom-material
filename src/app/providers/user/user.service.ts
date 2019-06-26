@@ -88,7 +88,7 @@ export class UserService {
   public save(data: any, id: any) {
     this.formData = new FormData();
     this.url = `${environment.url}user/users/save`;
-    if (id) {
+    if (id !== 'new') {
       this.formData.append('id', id);
     }
     this.formData.append('type_id', data.type_id);

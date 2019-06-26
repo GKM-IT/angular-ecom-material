@@ -79,7 +79,7 @@ export class LengthService {
   public save(data: any, id: any) {
     this.formData = new FormData();
     this.url = `${environment.url}unit/length_classes/save`;
-    if (id) {
+    if (id !== 'new') {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);

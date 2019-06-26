@@ -78,7 +78,7 @@ export class CurrencyService {
   public save(data: any, id: any) {
     this.formData = new FormData();
     this.url = `${environment.url}common/currencies/save`;
-    if (id) {
+    if (id !== 'new') {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);

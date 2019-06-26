@@ -79,7 +79,7 @@ export class CustomerService {
   public save(data: any, id: any) {
     this.formData = new FormData();
     this.url = `${environment.url}customer/customers/save`;
-    if (id) {
+    if (id !== 'new') {
       this.formData.append('id', id);
     }
     this.formData.append('group_id', data.groupId);

@@ -84,7 +84,7 @@ export class InformationService {
   public save(data: any, id: any) {
     this.formData = new FormData();
     this.url = `${environment.url}information/informations/save`;
-    if (id) {
+    if (id !== 'new') {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);
