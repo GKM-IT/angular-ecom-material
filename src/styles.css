@@ -31,3 +31,10 @@ body {
 table {
   width: 100%;
 }
+
+.invisible{
+    display: block;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}

@@ -25,6 +25,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [],
@@ -42,6 +43,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatDialogModule,
     MatSnackBarModule,
     MatSelectModule,
+    MatFormFieldModule,
     MatInputModule,
     MatSidenavModule,
     MatCardModule,
@@ -70,6 +72,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatDialogModule,
     MatSnackBarModule,
     MatSelectModule,
+    MatFormFieldModule,
     MatInputModule,
     MatSidenavModule,
     MatCardModule,
