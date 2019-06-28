@@ -45,7 +45,7 @@
         <mat-card formArrayName="images">
           <mat-card-title>Images</mat-card-title>
           <mat-divider></mat-divider>
-          <div *ngFor="let control of form.controls.images.controls; let i = index;">
+          <div *ngFor="let control of formData; let i = index;">
             <div [formGroupName]="i">
 
 

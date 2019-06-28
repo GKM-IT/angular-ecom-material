@@ -1,16 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormArray,
+  FormControl
+} from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BannerService } from 'src/app/providers/catalog/banner.service';
-import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import {
+  startWith,
+  debounceTime,
+  tap,
+  switchMap,
+  finalize
+} from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { TypeService } from 'src/app/providers/catalog/type.service';
 import { Constant } from 'src/app/helper/constant';
 
 class ImageSnippet {
-  constructor(public src: string, public file: File) { }
+  constructor(public src: string, public file: File) {}
 }
 
 @Component({
@@ -19,7 +31,6 @@ class ImageSnippet {
   styleUrls: ['./banner-form.component.css']
 })
 export class BannerFormComponent implements OnInit {
-
   public pageHeading = 'Banner Form';
   public data: any;
   public status: any;
@@ -35,11 +46,10 @@ export class BannerFormComponent implements OnInit {
   types;
   isLoading = false;
 
-
   public form: FormGroup;
   public formErrors = {
     name: '',
-    type: '',
+    type: ''
   };
 
   constructor(
@@ -49,11 +59,17 @@ export class BannerFormComponent implements OnInit {
     private formService: FormService,
     private router: Router,
     public activatedRoute: ActivatedRoute,
-    private snackBar: MatSnackBar,
-  ) { }
+    private snackBar: MatSnackBar
+  ) {}
+
+  get formData() {    
+    return (this.form.get('images') as FormArray).controls;
+  }
 
   getId() {
-    const id = this.activatedRoute.snapshot.paramMap.get('id') ? this.activatedRoute.snapshot.paramMap.get('id') : 'new';
+    const id = this.activatedRoute.snapshot.paramMap.get('id')
+      ? this.activatedRoute.snapshot.paramMap.get('id')
+      : 'new';
     return id;
   }
 
@@ -61,22 +77,19 @@ export class BannerFormComponent implements OnInit {
     this.router.navigate(['/banners']);
   }
 
-  createImage(name, image, image_thumb, link, sort_order): FormGroup {
+  createImage(name, image, imageThumb, link, sortOrder): FormGroup {
     return this.formBuilder.group({
       name: new FormControl(name),
       image: new FormControl(image),
-      image_thumb: new FormControl(image_thumb),
+      image_thumb: new FormControl(imageThumb),
       link: new FormControl(link),
-      sort_order: new FormControl(sort_order),
+      sort_order: new FormControl(sortOrder)
     });
-
-
   }
 
   addImage(): void {
     this.imageGroup = <FormArray>this.form.controls['images'];
     this.imageGroup.push(this.createImage('', '', '', '', ''));
-
 
     console.log(this.form.controls.images);
   }
@@ -87,7 +100,6 @@ export class BannerFormComponent implements OnInit {
   }
 
   ngOnInit() {
-
     if (this.getId() !== 'new') {
       this.getDetail(this.getId());
     }
@@ -114,19 +126,22 @@ export class BannerFormComponent implements OnInit {
     const constant = new Constant();
     this.form
       .get('type')
-      .valueChanges
-      .pipe(
+      .valueChanges.pipe(
         startWith(''),
         debounceTime(1000),
-        tap(() => this.isLoading = true),
+        tap(() => (this.isLoading = true)),
         switchMap(value =>
-          this.typeService.list({ search: value, pageSize: constant.autocompleteListSize, pageIndex: 0, sort_by: 'name' }
-          )
-            .pipe(
-              finalize(() => this.isLoading = false),
-            )
+          this.typeService
+            .list({
+              search: value,
+              pageSize: constant.autocompleteListSize,
+              pageIndex: 0,
+              sort_by: 'name'
+            })
+            .pipe(finalize(() => (this.isLoading = false)))
         )
-      ).subscribe(res => {
+      )
+      .subscribe(res => {
         if (res.status) {
           this.types = res.data;
         }
@@ -148,7 +163,7 @@ export class BannerFormComponent implements OnInit {
           this.name = response.data.name;
           this.type = {
             id: response.data.type_id,
-            name: response.data.type,
+            name: response.data.type
           };
           this.typeId = response.data.type_id;
 
@@ -156,7 +171,15 @@ export class BannerFormComponent implements OnInit {
 
           if (response.data.images) {
             response.data.images.forEach(element => {
-              this.imageGroup.push(this.createImage(element.name, element.image, element.image_thumb, element.link, element.sort_order));
+              this.imageGroup.push(
+                this.createImage(
+                  element.name,
+                  element.image,
+                  element.image_thumb,
+                  element.link,
+                  element.sort_order
+                )
+              );
             });
           }
         }
@@ -167,7 +190,6 @@ export class BannerFormComponent implements OnInit {
     );
   }
 
-
   public onSubmit() {
     console.log(this.form.value);
     // mark all fields as touched
@@ -177,7 +199,7 @@ export class BannerFormComponent implements OnInit {
         response => {
           if (!response.status) {
             if (response.result) {
-              response.result.forEach((element: { id: any; text: any; }) => {
+              response.result.forEach((element: { id: any; text: any }) => {
                 this.formErrors[`${element.id}`] = element.text;
               });
             }
@@ -187,7 +209,7 @@ export class BannerFormComponent implements OnInit {
           }
 
           this.snackBar.open(response.message, 'X', {
-            duration: 2000,
+            duration: 2000
           });
         },
         err => {
@@ -203,7 +225,6 @@ export class BannerFormComponent implements OnInit {
     }
   }
 
-
   uploadImage(e: any, control: any) {
     const file: File = e.target.files[0];
     const reader = new FileReader();
@@ -211,16 +232,16 @@ export class BannerFormComponent implements OnInit {
     reader.addEventListener('load', (event: any) => {
       this.selectedFile = new ImageSnippet(event.target.result, file);
       this.masterService.imageUpload(this.selectedFile.file).subscribe(
-        (res) => {
+        res => {
           control.value.image = res.data.base_path;
           control.value.image_thumb = res.data.full_path;
         },
-        (err) => {
+        err => {
           console.log(err);
-        });
+        }
+      );
     });
 
     reader.readAsDataURL(file);
   }
-
 }
