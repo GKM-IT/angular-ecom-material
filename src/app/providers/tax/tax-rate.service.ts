@@ -82,7 +82,10 @@ export class TaxRateService {
     if (id !== 'new') {
       this.formData.append('id', id);
     }
+    this.formData.append('tax_class_id', data.taxClassId);
     this.formData.append('name', data.name);
+    this.formData.append('rate', data.rate);
+    this.formData.append('type', data.type);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

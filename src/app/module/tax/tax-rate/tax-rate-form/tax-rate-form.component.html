@@ -14,11 +14,50 @@
 
         <p>
           <mat-form-field class="full-width">
+            <input matInput placeholder="taxClass" formControlName="taxClass" required [matAutocomplete]="auto"
+              [(ngModel)]="taxClass">
+            <input type="hidden" formControlName="taxClassId" [(ngModel)]="taxClassId">
+            <mat-error *ngIf="formErrors.taxClass">{{formErrors.taxClass}}</mat-error>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+              (optionSelected)="onSelectionChanged($event)">
+              <mat-option *ngIf="isLoading" class="is-loading">
+                <mat-spinner diameter="50"></mat-spinner>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let option of taxClasses" [value]="option">
+                  {{option.name}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field class="full-width">
             <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
             <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
           </mat-form-field>
         </p>
-        
+
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="rate" formControlName="rate" [(ngModel)]="rate" required>
+            <mat-error *ngIf="formErrors.rate">{{formErrors.rate}}</mat-error>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field class="full-width">
+
+            <mat-label>type</mat-label>
+            <select matNativeControl placeholder="type" formControlName="type" [(ngModel)]="type" required>
+              <option value="F">Fixed</option>
+              <option value="P">Percentage</option>
+            </select>
+            <mat-error *ngIf="formErrors.type">{{formErrors.type}}</mat-error>
+          </mat-form-field>
+        </p>
+
 
 
       </mat-card-content>

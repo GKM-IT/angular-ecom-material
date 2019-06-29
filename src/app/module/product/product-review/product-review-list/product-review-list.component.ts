@@ -14,7 +14,7 @@ import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog
 })
 export class ProductReviewListComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'name', 'updated_at', 'action'];
+  displayedColumns: string[] = ['select', 'product', 'customer', 'rating', 'updated_at', 'action'];
   selection = new SelectionModel<any>(true, []);
   dataSource: any[] = [];
   filterData = {
@@ -22,8 +22,8 @@ export class ProductReviewListComponent implements OnInit {
     pageSize: 10,
     pageIndex: 0,
     search: '',
-    sort_by: 'name',
-    sort_dir: 'asc'
+    sort_by: 'updated_at',
+    sort_dir: 'desc'
   };
 
   pageSizeOptions;

@@ -14,11 +14,70 @@
 
         <p>
           <mat-form-field class="full-width">
-            <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
-            <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+            <input matInput placeholder="product" formControlName="product" required [matAutocomplete]="productAuto"
+              [(ngModel)]="product">
+            <input type="hidden" formControlName="productId" [(ngModel)]="productId">
+            <mat-error *ngIf="formErrors.product">{{formErrors.product}}</mat-error>
+            <mat-autocomplete #productAuto="matAutocomplete" [displayWith]="displayFn"
+              (optionSelected)="onProductSelectionChanged($event)">
+              <mat-option *ngIf="isLoading" class="is-loading">
+                <mat-spinner diameter="50"></mat-spinner>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let option of products" [value]="option">
+                  {{option.name}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
           </mat-form-field>
         </p>
 
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="customer" formControlName="customer" required [matAutocomplete]="customerAuto"
+              [(ngModel)]="customer">
+            <input type="hidden" formControlName="customerId" [(ngModel)]="customerId">
+            <mat-error *ngIf="formErrors.customer">{{formErrors.customer}}</mat-error>
+            <mat-autocomplete #customerAuto="matAutocomplete" [displayWith]="displayFn"
+              (optionSelected)="onCustomerSelectionChanged($event)">
+              <mat-option *ngIf="isLoading" class="is-loading">
+                <mat-spinner diameter="50"></mat-spinner>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let option of customers" [value]="option">
+                  {{option.name}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="rating" formControlName="rating" required [matAutocomplete]="ratingAuto"
+              [(ngModel)]="rating">
+            <input type="hidden" formControlName="ratingId" [(ngModel)]="ratingId">
+            <mat-error *ngIf="formErrors.rating">{{formErrors.rating}}</mat-error>
+            <mat-autocomplete #ratingAuto="matAutocomplete" [displayWith]="displayFn"
+              (optionSelected)="onRatingSelectionChanged($event)">
+              <mat-option *ngIf="isLoading" class="is-loading">
+                <mat-spinner diameter="50"></mat-spinner>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let option of ratings" [value]="option">
+                  {{option.name}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </mat-form-field>
+        </p>        
+
+        <p>
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="text" formControlName="text" [(ngModel)]="text" required></textarea>
+            <mat-error *ngIf="formErrors.text">{{formErrors.text}}</mat-error>
+          </mat-form-field>
+        </p>
 
       </mat-card-content>
       <mat-card-actions>

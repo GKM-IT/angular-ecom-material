@@ -14,7 +14,7 @@ import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog
 })
 export class LengthListComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'name', 'updated_at', 'action'];
+  displayedColumns: string[] = ['select', 'name', 'unit', 'value', 'updated_at', 'action'];
   selection = new SelectionModel<any>(true, []);
   dataSource: any[] = [];
   filterData = {

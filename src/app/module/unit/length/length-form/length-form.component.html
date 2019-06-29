@@ -1,36 +1,48 @@
 <div class="main-div">
 
-  <mat-card class="z-depth center" flex="50">
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
-      <mat-card-header>
-        <mat-card-title>
-          <button mat-button (click)="goBack()">
-            <i class="material-icons">keyboard_backspace</i>
-          </button>
-          {{pageHeading}}
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        
-        <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
-            <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="sort order" formControlName="sortOrder" [(ngModel)]="sortOrder" required>
-            <mat-error *ngIf="formErrors.sortOrder">{{formErrors.sortOrder}}</mat-error>
-          </mat-form-field>
-        </p>
-
-
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button type="submit" color="primary">Save</button>
-      </mat-card-actions>
-    </form>
-  </mat-card>
-
-</div>
+    <mat-card class="z-depth center" flex="50">
+      <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <mat-card-header>
+          <mat-card-title>
+            <button mat-button (click)="goBack()">
+              <i class="material-icons">keyboard_backspace</i>
+            </button>
+            {{pageHeading}}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+  
+          <p>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
+              <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="unit" formControlName="unit" [(ngModel)]="unit" required>
+              <mat-error *ngIf="formErrors.unit">{{formErrors.unit}}</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="value" formControlName="value" [(ngModel)]="value" required>
+              <mat-error *ngIf="formErrors.value">{{formErrors.value}}</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="sort order" formControlName="sortOrder" [(ngModel)]="sortOrder" required>
+              <mat-error *ngIf="formErrors.sortOrder">{{formErrors.sortOrder}}</mat-error>
+            </mat-form-field>
+          </p>
+  
+  
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button type="submit" color="primary">Save</button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  
+  </div>

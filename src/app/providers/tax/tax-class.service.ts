@@ -82,6 +82,7 @@ export class TaxClassService {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);
+    this.formData.append('description', data.description);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

@@ -20,12 +20,16 @@ export class WeightFormComponent implements OnInit {
   public messageTitle: string;
   hide = true;
   name;
+  unit;
+  value;
   sortOrder;
 
 
   public form: FormGroup;
   public formErrors = {
     name: '',
+    unit: '',
+    value: '',
     sortOrder: '',
   };
 
@@ -55,6 +59,8 @@ export class WeightFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: [this.name, Validators.required],
+      unit: [this.unit, Validators.required],
+      value: [this.value, Validators.required],
       sortOrder: [this.sortOrder, Validators.required],
     });
 
@@ -72,6 +78,8 @@ export class WeightFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.name = response.data.name;
+          this.unit = response.data.unit;
+          this.value = response.data.value;
           this.sortOrder = response.data.sort_order;
         }
       },

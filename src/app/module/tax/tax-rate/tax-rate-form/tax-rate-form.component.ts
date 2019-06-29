@@ -4,6 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Constant } from 'src/app/helper/constant';
+import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { TaxClassService } from 'src/app/providers/tax/tax-class.service';
 
 @Component({
   selector: 'app-tax-rate-form',
@@ -19,17 +23,26 @@ export class TaxRateFormComponent implements OnInit {
   public message: any;
   public messageTitle: string;
   hide = true;
+  taxClassId;
+  taxClass;
+  taxClasses;
   name;
-
+  rate;
+  type;
+  isLoading = false;
 
 
   public form: FormGroup;
   public formErrors = {
+    taxtClass: '',
     name: '',
+    rate: '',
+    type: '',
   };
 
   constructor(
     public masterService: TaxRateService,
+    public taxClassService: TaxClassService,
     private formBuilder: FormBuilder,
     private formService: FormService,
     private router: Router,
@@ -53,7 +66,10 @@ export class TaxRateFormComponent implements OnInit {
     }
 
     this.form = this.formBuilder.group({
+      taxClass: [this.taxClass, Validators.required],
       name: [this.name, Validators.required],
+      rate: [this.rate, Validators.required],
+      type: [this.type, Validators.required],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -63,13 +79,53 @@ export class TaxRateFormComponent implements OnInit {
         true
       );
     });
+
+    this.getAutocomplete();
+  }
+
+  getAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('taxClass')
+      .valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => this.isLoading = true),
+        switchMap(value =>
+          this.taxClassService.list({ search: value, pageSize: constant.autocompleteListSize, pageIndex: 0, sort_by: 'name' }
+          )
+            .pipe(
+              finalize(() => this.isLoading = false),
+            )
+        )
+      ).subscribe(res => {
+        if (res.status) {
+          this.taxClasses = res.data;
+        }
+      });
+  }
+
+  onSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.typeId.setValue(event.option.value.id);
+  }
+
+  displayFn(data: any): string {
+    return data ? data.name : data;
   }
 
   getDetail(id) {
     this.masterService.detail(id).subscribe(
       response => {
         if (response.status) {
+          this.taxClass = {
+            id: response.data.tax_class_id,
+            name: response.data.tax_class
+          };
+          this.taxClassId = response.data.tax_class_id;
           this.name = response.data.name;
+          this.rate = response.data.rate;
+          this.type = response.data.type;
         }
       },
       err => {

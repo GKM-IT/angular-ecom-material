@@ -20,6 +20,18 @@
         </p>
         <p>
           <mat-form-field class="full-width">
+            <input matInput placeholder="unit" formControlName="unit" [(ngModel)]="unit" required>
+            <mat-error *ngIf="formErrors.unit">{{formErrors.unit}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="value" formControlName="value" [(ngModel)]="value" required>
+            <mat-error *ngIf="formErrors.value">{{formErrors.value}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="full-width">
             <input matInput placeholder="sort order" formControlName="sortOrder" [(ngModel)]="sortOrder" required>
             <mat-error *ngIf="formErrors.sortOrder">{{formErrors.sortOrder}}</mat-error>
           </mat-form-field>

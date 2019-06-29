@@ -82,7 +82,11 @@ export class ProductReviewService {
     if (id !== 'new') {
       this.formData.append('id', id);
     }
+    this.formData.append('product_id', data.productId);
+    this.formData.append('customer_id', data.customerId);
+    this.formData.append('rating_id', data.ratingId);
     this.formData.append('name', data.name);
+    this.formData.append('text', data.text);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

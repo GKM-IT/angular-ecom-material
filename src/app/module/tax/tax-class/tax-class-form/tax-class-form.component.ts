@@ -20,10 +20,12 @@ export class TaxClassFormComponent implements OnInit {
   public messageTitle: string;
   hide = true;
   name;
+  description;
 
   public form: FormGroup;
   public formErrors = {
     name: '',
+    description: '',
   };
 
   constructor(
@@ -52,6 +54,7 @@ export class TaxClassFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: [this.name, Validators.required],
+      description: [this.description, Validators.required],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -68,6 +71,7 @@ export class TaxClassFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.name = response.data.name;
+          this.description = response.data.description;
         }
       },
       err => {
@@ -91,7 +95,7 @@ export class TaxClassFormComponent implements OnInit {
             }
           } else {
             this.form.reset();
-            this.router.navigate(['/tax-classess']);
+            this.router.navigate(['/tax-classes']);
           }
 
           this.snackBar.open(response.message, 'X', {

@@ -83,6 +83,9 @@ export class LengthService {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);
+    this.formData.append('unit', data.unit);
+    this.formData.append('value', data.value);
+    this.formData.append('sort_order', data.sortOrder);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
