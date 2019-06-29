@@ -105,10 +105,6 @@ export class AdminSidebarComponent implements OnInit {
           link: '/orders',
         },
         {
-          name: 'Order Cart',
-          link: '/order-carts',
-        },
-        {
           name: 'Order Statuses',
           link: '/order-statuses',
         },
@@ -157,10 +153,6 @@ export class AdminSidebarComponent implements OnInit {
         {
           name: 'Purchases',
           link: '/purchases',
-        },
-        {
-          name: 'Purchase Cart',
-          link: '/purchase-carts',
         },
         {
           name: 'Purchase Statuses',
