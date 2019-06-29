@@ -22,11 +22,12 @@ export class CustomerFormComponent implements OnInit {
   public message: any;
   public messageTitle: string;
   hide = true;
-  group;
-  groupId;
+
   name;
   email;
   contact;
+  group;
+  groupId;
   groups;
   isLoading = false;
 
