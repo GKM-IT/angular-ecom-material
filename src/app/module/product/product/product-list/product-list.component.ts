@@ -14,7 +14,7 @@ import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog
 })
 export class ProductListComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'name', 'updated_at', 'action'];
+  displayedColumns: string[] = ['select', 'type', 'manufacture', 'name', 'code', 'model', 'sku', 'price_type', 'price', 'updated_at', 'action'];
   selection = new SelectionModel<any>(true, []);
   dataSource: any[] = [];
   filterData = {

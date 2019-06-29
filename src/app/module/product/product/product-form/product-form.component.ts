@@ -18,12 +18,79 @@ export class ProductFormComponent implements OnInit {
   public message: any;
   public messageTitle: string;
   hide = true;
+  typeId;
+  type;
+  types;
+  manufactureId;
+  manufacture;
+  manufactures;
+  code;
+  model;
+  sku;
   name;
+  priceType;
+  priceTypes = [
+    {
+      value: 'FIXED',
+      text: 'Fixed',
+    },
+    {
+      value: 'WEIGHT',
+      text: 'Weight',
+    },
+    {
+      value: 'LENGTH',
+      text: 'Length',
+    },
+    {
+      value: 'HOUR',
+      text: 'Hour',
+    },
+  ];
+  price;
+  image;
+  description;
+  text;
+  taxClass;
+  taxClassId;
+  taxClasses;
+  lengthClass;
+  lengthClassId;
+  lengthClasses;
+  length;
+  width;
+  height;
+  weightClass;
+  weightClassId;
+  weightClasses;
+  weight;
+  minimum;
+  shipping;
+  inventory;
 
 
   public form: FormGroup;
   public formErrors = {
+    type: '',
+    manufacture: '',
+    code: '',
+    model: '',
+    sku: '',
     name: '',
+    priceType: '',
+    price: '',
+    description: '',
+    text: '',
+    taxClass: '',
+    lengthClass: '',
+    length: '',
+    width: '',
+    height: '',
+    weightClass: '',
+    weight: '',
+    minimum: '',
+    shipping: '',
+    inventory: '',
   };
 
   constructor(
@@ -51,7 +118,30 @@ export class ProductFormComponent implements OnInit {
     }
 
     this.form = this.formBuilder.group({
+      type: [this.type, Validators.required],
+      typeId: [this.typeId, Validators.required],
+      manufacture: [this.manufacture, Validators.required],
+      manufactureId: [this.manufactureId, Validators.required],
+      code: [this.code, Validators.required],
+      model: [this.model, Validators.required],
+      sku: [this.sku, Validators.required],
       name: [this.name, Validators.required],
+      priceType: [this.priceType, Validators.required],
+      price: [this.price, Validators.required],
+      description: [this.description, Validators.required],
+      text: [this.text, Validators.required],
+      taxClass: [this.taxClass, Validators.required],
+      taxClassId: [this.taxClassId, Validators.required],
+      lengthClass: [this.lengthClass, Validators.required],
+      length: [this.length, Validators.required],
+      width: [this.width, Validators.required],
+      height: [this.height, Validators.required],
+      weightClass: [this.weightClass, Validators.required],
+      weightClassId: [this.weightClassId, Validators.required],
+      weight: [this.weight, Validators.required],
+      minimum: [this.minimum, Validators.required],
+      shipping: [this.shipping, Validators.required],
+      inventory: [this.inventory, Validators.required],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -67,7 +157,27 @@ export class ProductFormComponent implements OnInit {
     this.masterService.detail(id).subscribe(
       response => {
         if (response.status) {
+          this.typeId = response.data.type_id;
+          this.manufactureId = response.data.manufacture_id;
+          this.code = response.data.code;
+          this.model = response.data.model;
+          this.sku = response.data.sku;
           this.name = response.data.name;
+          this.priceType = response.data.price_type;
+          this.price = response.data.price;
+          this.name = response.data.name;
+          this.description = response.data.description;
+          this.text = response.data.text;
+          this.taxClassId = response.data.tax_class_id;
+          this.lengthClassId = response.data.length_class_id;
+          this.length = response.data.length;
+          this.width = response.data.width;
+          this.height = response.data.height;
+          this.weightClassId = response.data.weight_class_id;
+          this.weight = response.data.weight;
+          this.minimum = response.data.minimum;
+          this.shipping = response.data.shipping ? true : false;
+          this.inventory = response.data.inventory ? true : false;
         }
       },
       err => {
@@ -78,6 +188,7 @@ export class ProductFormComponent implements OnInit {
 
 
   public onSubmit() {
+    console.log(this.form.value);
     // mark all fields as touched
     this.formService.markFormGroupTouched(this.form);
     if (this.form.valid) {

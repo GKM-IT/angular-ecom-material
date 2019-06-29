@@ -12,12 +12,68 @@
       </mat-card-header>
       <mat-card-content>
 
-        <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
-            <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
-          </mat-form-field>
-        </p>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="code" formControlName="code" [(ngModel)]="code" required>
+          <mat-error *ngIf="formErrors.code">{{formErrors.code}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="model" formControlName="model" [(ngModel)]="model" required>
+          <mat-error *ngIf="formErrors.model">{{formErrors.model}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="sku" formControlName="sku" [(ngModel)]="sku" required>
+          <mat-error *ngIf="formErrors.sku">{{formErrors.sku}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
+          <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>price type</mat-label>
+          <select matNativeControl placeholder="price type" formControlName="priceType" [(ngModel)]="priceType"
+            required>
+            <option *ngFor="let option of priceTypes" [value]="option.value">{{option.text}}</option>
+          </select>
+          <mat-error *ngIf="formErrors.priceType">{{formErrors.priceType}}</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="price" formControlName="price" [(ngModel)]="price" required>
+          <mat-error *ngIf="formErrors.price">{{formErrors.price}}</mat-error>
+        </mat-form-field>
+
+
+
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="description" formControlName="description" [(ngModel)]="description"
+            required></textarea>
+          <mat-error *ngIf="formErrors.description">{{formErrors.description}}</mat-error>
+        </mat-form-field>
+
+
+
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="text" formControlName="text" [(ngModel)]="text" required></textarea>
+          <mat-error *ngIf="formErrors.text">{{formErrors.text}}</mat-error>
+        </mat-form-field>
+
+
+        <section class="full-width">
+          <mat-slide-toggle color="primary" formControlName="shipping" [(ngModel)]="shipping" required>shipping
+          </mat-slide-toggle>
+        </section>
+
+        <section class="full-width">
+          <mat-slide-toggle color="primary" formControlName="inventory" [(ngModel)]="inventory" required>inventory
+          </mat-slide-toggle>
+        </section>
+
 
 
       </mat-card-content>
