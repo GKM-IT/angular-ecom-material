@@ -22,7 +22,7 @@ import { TypeService } from 'src/app/providers/catalog/type.service';
 import { Constant } from 'src/app/helper/constant';
 
 class ImageSnippet {
-  constructor(public src: string, public file: File) {}
+  constructor(public src: string, public file: File) { }
 }
 
 @Component({
@@ -37,12 +37,14 @@ export class BannerFormComponent implements OnInit {
   public message: any;
   public messageTitle: string;
   hide = true;
-  type;
-  typeId;
-  name;
+
+
   public imageGroup: FormArray;
   selectedFile: ImageSnippet;
 
+  name;
+  type;
+  typeId;
   types;
   isLoading = false;
 
@@ -60,9 +62,9 @@ export class BannerFormComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
-  get formData() {    
+  get formData() {
     return (this.form.get('images') as FormArray).controls;
   }
 
