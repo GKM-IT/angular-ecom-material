@@ -82,6 +82,15 @@ export class LocationService {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);
+    this.formData.append('contact_person', data.contactPerson);
+    this.formData.append('contact', data.contact);
+    this.formData.append('email', data.email);
+    this.formData.append('country_id', data.countryId);
+    this.formData.append('zone_id', data.zoneId);
+    this.formData.append('city_id', data.cityId);
+    this.formData.append('postcode', data.postcode);
+    this.formData.append('address', data.address);
+
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

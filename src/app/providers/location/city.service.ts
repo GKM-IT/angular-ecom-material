@@ -36,6 +36,14 @@ export class CityService {
       this.formData.append('sort_dir', data.sort_dir);
     }
 
+    if (data.countryId) {
+      this.formData.append('where[country_id]', data.countryId);
+    }
+
+    if (data.zoneId) {
+      this.formData.append('where[zone_id]', data.zoneId);
+    }
+
     this.url = `${environment.url}location/cities`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -82,6 +90,9 @@ export class CityService {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);
+    this.formData.append('code', data.code);
+    this.formData.append('country_id', data.countryId);
+    this.formData.append('zone_id', data.zoneId);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

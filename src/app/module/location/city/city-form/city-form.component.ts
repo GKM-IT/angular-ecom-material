@@ -4,6 +4,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CountryService } from 'src/app/providers/location/country.service';
+import { ZoneService } from 'src/app/providers/location/zone.service';
+import { Constant } from 'src/app/helper/constant';
+import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-city-form',
@@ -20,16 +25,27 @@ export class CityFormComponent implements OnInit {
   hide = true;
   name;
   code;
+  countries;
+  country;
+  countryId;
+  zones;
+  zone;
+  zoneId;
 
+  isLoading = false;
 
   public form: FormGroup;
   public formErrors = {
     name: '',
     code: '',
+    country: '',
+    zone: '',
   };
 
   constructor(
     public masterService: CityService,
+    public countryService: CountryService,
+    public zoneService: ZoneService,
     private formBuilder: FormBuilder,
     private formService: FormService,
     private router: Router,
@@ -54,6 +70,11 @@ export class CityFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: [this.name, Validators.required],
+      code: [this.code, Validators.required],
+      country: [this.country, Validators.required],
+      countryId: [this.countryId, Validators.required],
+      zone: [this.zone, Validators.required],
+      zoneId: [this.zoneId, Validators.required],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -63,6 +84,72 @@ export class CityFormComponent implements OnInit {
         true
       );
     });
+    this.getCountryAutocomplete();
+    this.getZoneAutocomplete();
+  }
+
+  getCountryAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('country')
+      .valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => this.isLoading = true),
+        switchMap(value =>
+          this.countryService.list({ search: value, pageSize: constant.autocompleteListSize, pageIndex: 0, sort_by: 'name' }
+          )
+            .pipe(
+              finalize(() => this.isLoading = false),
+            )
+        )
+      ).subscribe(res => {
+        if (res.status) {
+          this.countries = res.data;
+        }
+      });
+  }
+
+  onCountrySelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.countryId.setValue(event.option.value.id);
+  }
+  getZoneAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('zone')
+      .valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => this.isLoading = true),
+        switchMap(value =>
+          this.zoneService.list(
+            {
+              search: value,
+              countryId: this.countryId,
+              pageSize: constant.autocompleteListSize,
+              pageIndex: 0,
+              sort_by: 'name'
+            }
+          )
+            .pipe(
+              finalize(() => this.isLoading = false),
+            )
+        )
+      ).subscribe(res => {
+        if (res.status) {
+          this.zones = res.data;
+        }
+      });
+  }
+
+  onZoneSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.zoneId.setValue(event.option.value.id);
+  }
+
+  displayFn(data: any): string {
+    return data ? data.name : data;
   }
 
   getDetail(id) {
@@ -70,6 +157,17 @@ export class CityFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.name = response.data.name;
+          this.code = response.data.code;
+          this.country = {
+            id: response.data.country_id,
+            name: response.data.country,
+          };
+          this.countryId = response.data.country_id;
+          this.zone = {
+            id: response.data.zone_id,
+            name: response.data.zone,
+          };
+          this.zoneId = response.data.zone_id;
         }
       },
       err => {

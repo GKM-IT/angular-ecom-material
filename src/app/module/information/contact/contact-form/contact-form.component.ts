@@ -4,6 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { InquiryTypeService } from 'src/app/providers/inquiry/inquiry-type.service';
+import { Constant } from 'src/app/helper/constant';
+import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-contact-form',
@@ -21,17 +25,25 @@ export class ContactFormComponent implements OnInit {
   name;
   email;
   contact;
+  typeId;
+  type;
+  types;
+  text;
+  isLoading = false;
 
 
   public form: FormGroup;
   public formErrors = {
+    type: '',
     name: '',
     email: '',
     contact: '',
+    text: '',
   };
 
   constructor(
     public masterService: InquiryService,
+    public inquiryTypeService: InquiryTypeService,
     private formBuilder: FormBuilder,
     private formService: FormService,
     private router: Router,
@@ -55,7 +67,12 @@ export class ContactFormComponent implements OnInit {
     }
 
     this.form = this.formBuilder.group({
+      type: [this.type, Validators.required],
+      typeId: [this.typeId],
       name: [this.name, Validators.required],
+      email: [this.email, Validators.required],
+      contact: [this.contact, Validators.required],
+      text: [this.text, Validators.required],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -65,6 +82,39 @@ export class ContactFormComponent implements OnInit {
         true
       );
     });
+
+    this.getAutocomplete();
+  }
+
+  getAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('type')
+      .valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => this.isLoading = true),
+        switchMap(value =>
+          this.inquiryTypeService.list({ search: value, pageSize: constant.autocompleteListSize, pageIndex: 0, sort_by: 'name' }
+          )
+            .pipe(
+              finalize(() => this.isLoading = false),
+            )
+        )
+      ).subscribe(res => {
+        if (res.status) {
+          this.types = res.data;
+        }
+      });
+  }
+
+  onSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.typeId.setValue(event.option.value.id);
+  }
+
+  displayFn(data: any): string {
+    return data ? data.name : data;
   }
 
   getDetail(id) {
@@ -72,6 +122,14 @@ export class ContactFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.name = response.data.name;
+          this.email = response.data.email;
+          this.contact = response.data.contact;
+          this.text = response.data.text;
+          this.type = {
+            id: response.data.type_id,
+            name: response.data.type,
+          };
+          this.typeId = response.data.type_id;
         }
       },
       err => {

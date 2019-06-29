@@ -81,9 +81,11 @@ export class InquiryService {
     if (id !== 'new') {
       this.formData.append('id', id);
     }
+    this.formData.append('type_id', data.typeId);
     this.formData.append('name', data.name);
     this.formData.append('email', data.email);
     this.formData.append('contact', data.contact);
+    this.formData.append('text', data.text);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

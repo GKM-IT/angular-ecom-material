@@ -19,15 +19,15 @@
         </p>
 
         <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="description" formControlName="description" [(ngModel)]="description" required>
+          <mat-form-field class="full-width">            
+            <textarea matInput placeholder="description" formControlName="description" [(ngModel)]="description" required></textarea>
             <mat-error *ngIf="formErrors.description">{{formErrors.description}}</mat-error>
           </mat-form-field>
         </p>
 
         <p>
           <mat-form-field class="full-width">
-            <input matInput placeholder="text" formControlName="text" [(ngModel)]="text" required>
+              <textarea matInput placeholder="text" formControlName="text" [(ngModel)]="text" required></textarea>
             <mat-error *ngIf="formErrors.text">{{formErrors.text}}</mat-error>
           </mat-form-field>
         </p>

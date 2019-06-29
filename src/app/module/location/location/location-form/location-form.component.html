@@ -11,13 +11,105 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
+
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="country" formControlName="country" required [matAutocomplete]="countryAuto"
+              [(ngModel)]="country">
+            <input type="hidden" formControlName="countryId" [(ngModel)]="countryId">
+            <mat-error *ngIf="formErrors.country">{{formErrors.country}}</mat-error>
+            <mat-autocomplete #countryAuto="matAutocomplete" [displayWith]="displayFn"
+              (optionSelected)="onCountrySelectionChanged($event)">
+              <mat-option *ngIf="isLoading" class="is-loading">
+                <mat-spinner diameter="50"></mat-spinner>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let option of countries" [value]="option">
+                  {{option.name}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="zone" formControlName="zone" required [matAutocomplete]="zoneAuto"
+              [(ngModel)]="zone">
+            <input type="hidden" formControlName="zoneId" [(ngModel)]="zoneId">
+            <mat-error *ngIf="formErrors.zone">{{formErrors.zone}}</mat-error>
+            <mat-autocomplete #zoneAuto="matAutocomplete" [displayWith]="displayFn"
+              (optionSelected)="onZoneSelectionChanged($event)">
+              <mat-option *ngIf="isLoading" class="is-loading">
+                <mat-spinner diameter="50"></mat-spinner>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let option of zones" [value]="option">
+                  {{option.name}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="city" formControlName="city" required [matAutocomplete]="cityAuto"
+              [(ngModel)]="city">
+            <input type="hidden" formControlName="cityId" [(ngModel)]="cityId">
+            <mat-error *ngIf="formErrors.city">{{formErrors.city}}</mat-error>
+            <mat-autocomplete #cityAuto="matAutocomplete" [displayWith]="displayFn"
+              (optionSelected)="onCitySelectionChanged($event)">
+              <mat-option *ngIf="isLoading" class="is-loading">
+                <mat-spinner diameter="50"></mat-spinner>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let option of cities" [value]="option">
+                  {{option.name}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </mat-form-field>
+        </p>
+
         <p>
           <mat-form-field class="full-width">
             <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
             <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
           </mat-form-field>
         </p>
-
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="contact person" formControlName="contactPerson" [(ngModel)]="contactPerson"
+              required>
+            <mat-error *ngIf="formErrors.contactPerson">{{formErrors.contactPerson}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="contact" formControlName="contact" [(ngModel)]="contact" required>
+            <mat-error *ngIf="formErrors.contact">{{formErrors.contact}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="email" formControlName="email" [(ngModel)]="email" required>
+            <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="postcode" formControlName="postcode" [(ngModel)]="postcode" required>
+            <mat-error *ngIf="formErrors.postcode">{{formErrors.postcode}}</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="address" formControlName="address" [(ngModel)]="address"
+              required></textarea>
+            <mat-error *ngIf="formErrors.address">{{formErrors.address}}</mat-error>
+          </mat-form-field>
+        </p>
       </mat-card-content>
       <mat-card-actions>
         <button mat-raised-button type="submit" color="primary">Save</button>

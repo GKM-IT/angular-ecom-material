@@ -36,6 +36,9 @@ export class ZoneService {
     if (data.sort_dir) {
       this.formData.append('sort_dir', data.sort_dir);
     }
+    if (data.countryId) {
+      this.formData.append('where[country_id]', data.countryId);
+    }
 
     this.url = `${environment.url}location/zones`;
     return this.http.post<any>(this.url, this.formData).pipe(
