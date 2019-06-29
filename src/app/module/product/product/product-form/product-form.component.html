@@ -63,6 +63,31 @@
           <mat-error *ngIf="formErrors.text">{{formErrors.text}}</mat-error>
         </mat-form-field>
 
+        <mat-form-field class="full-width">
+          <input matInput placeholder="length" formControlName="length" [(ngModel)]="length" required>
+          <mat-error *ngIf="formErrors.length">{{formErrors.length}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="width" formControlName="width" [(ngModel)]="width" required>
+          <mat-error *ngIf="formErrors.width">{{formErrors.width}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="height" formControlName="height" [(ngModel)]="height" required>
+          <mat-error *ngIf="formErrors.height">{{formErrors.height}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="weight" formControlName="weight" [(ngModel)]="weight" required>
+          <mat-error *ngIf="formErrors.weight">{{formErrors.weight}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="minimum" formControlName="minimum" [(ngModel)]="minimum" required>
+          <mat-error *ngIf="formErrors.minimum">{{formErrors.minimum}}</mat-error>
+        </mat-form-field>
+
 
         <section class="full-width">
           <mat-slide-toggle color="primary" formControlName="shipping" [(ngModel)]="shipping" required>shipping
