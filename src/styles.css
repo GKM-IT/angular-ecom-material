@@ -16,6 +16,14 @@ body {
   width: 50%;
   margin: 10px auto;
 }
+.content{  
+  width: 50%;
+  margin: 10px auto;
+}
+.content-fluid{  
+  width: 90%;
+  margin: 10px auto;
+}
 
 .main-div{
   height: 100%;  

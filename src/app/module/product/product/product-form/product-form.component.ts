@@ -88,6 +88,7 @@ export class ProductFormComponent implements OnInit {
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -106,15 +107,7 @@ export class ProductFormComponent implements OnInit {
     const constant = new Constant();
     this.priceTypes = constant.priceTypes;
 
-    this.firstFormGroup = this.formBuilder.group({
-      type: [this.type, Validators.required],
-      typeId: [this.typeId, Validators.required],
-      manufacture: [this.manufacture, Validators.required],
-      manufactureId: [this.manufactureId, Validators.required],
-    });
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+
   }
 
   getId() {
@@ -132,7 +125,7 @@ export class ProductFormComponent implements OnInit {
       this.getDetail(this.getId());
     }
 
-    this.form = this.formBuilder.group({
+    this.firstFormGroup = this.formBuilder.group({
       type: [this.type, Validators.required],
       typeId: [this.typeId, Validators.required],
       manufacture: [this.manufacture, Validators.required],
@@ -143,10 +136,17 @@ export class ProductFormComponent implements OnInit {
       name: [this.name, Validators.required],
       priceType: [this.priceType, Validators.required],
       price: [this.price, Validators.required],
-      description: [this.description, Validators.required],
-      text: [this.text, Validators.required],
       taxClass: [this.taxClass, Validators.required],
       taxClassId: [this.taxClassId, Validators.required],
+      minimum: [this.minimum, Validators.required],
+      shipping: [this.shipping, Validators.required],
+      inventory: [this.inventory, Validators.required],
+    });
+    this.secondFormGroup = this.formBuilder.group({
+      description: [this.description, Validators.required],
+      text: [this.text, Validators.required],
+    });
+    this.thirdFormGroup = this.formBuilder.group({
       lengthClassId: [this.lengthClassId, Validators.required],
       lengthClass: [this.lengthClass, Validators.required],
       length: [this.length, Validators.required],
@@ -155,18 +155,13 @@ export class ProductFormComponent implements OnInit {
       weightClass: [this.weightClass, Validators.required],
       weightClassId: [this.weightClassId, Validators.required],
       weight: [this.weight, Validators.required],
-      minimum: [this.minimum, Validators.required],
-      shipping: [this.shipping, Validators.required],
-      inventory: [this.inventory, Validators.required],
     });
 
-    this.form.valueChanges.subscribe(data => {
-      this.formErrors = this.formService.validateForm(
-        this.form,
-        this.formErrors,
-        true
-      );
+    this.form = this.formBuilder.group({
+
     });
+
+    this.setErrors();
 
     this.getTypeAutocomplete();
     this.getManufactureAutocomplete();
@@ -175,9 +170,11 @@ export class ProductFormComponent implements OnInit {
     this.getWeightAutocomplete();
   }
 
+
+
   getTypeAutocomplete() {
     const constant = new Constant();
-    this.form
+    this.firstFormGroup
       .get('type')
       .valueChanges.pipe(
         startWith(''),
@@ -203,7 +200,7 @@ export class ProductFormComponent implements OnInit {
 
   getManufactureAutocomplete() {
     const constant = new Constant();
-    this.form
+    this.firstFormGroup
       .get('manufacture')
       .valueChanges.pipe(
         startWith(''),
@@ -229,7 +226,7 @@ export class ProductFormComponent implements OnInit {
 
   getTaxClassAutocomplete() {
     const constant = new Constant();
-    this.form
+    this.firstFormGroup
       .get('taxClass')
       .valueChanges.pipe(
         startWith(''),
@@ -255,7 +252,7 @@ export class ProductFormComponent implements OnInit {
 
   getLengthAutocomplete() {
     const constant = new Constant();
-    this.form
+    this.thirdFormGroup
       .get('length')
       .valueChanges.pipe(
         startWith(''),
@@ -281,7 +278,7 @@ export class ProductFormComponent implements OnInit {
 
   getWeightAutocomplete() {
     const constant = new Constant();
-    this.form
+    this.thirdFormGroup
       .get('weight')
       .valueChanges.pipe(
         startWith(''),
@@ -306,19 +303,19 @@ export class ProductFormComponent implements OnInit {
   }
 
   onTypeSelectionChanged(event: MatAutocompleteSelectedEvent) {
-    this.form.controls.typeId.setValue(event.option.value.id);
+    this.firstFormGroup.controls.typeId.setValue(event.option.value.id);
   }
   onManufactureSelectionChanged(event: MatAutocompleteSelectedEvent) {
-    this.form.controls.manufactureId.setValue(event.option.value.id);
+    this.firstFormGroup.controls.manufactureId.setValue(event.option.value.id);
   }
   onTaxClassSelectionChanged(event: MatAutocompleteSelectedEvent) {
-    this.form.controls.taxClassId.setValue(event.option.value.id);
+    this.firstFormGroup.controls.taxClassId.setValue(event.option.value.id);
   }
   onLengthClassSelectionChanged(event: MatAutocompleteSelectedEvent) {
-    this.form.controls.lengthClassId.setValue(event.option.value.id);
+    this.thirdFormGroup.controls.lengthClassId.setValue(event.option.value.id);
   }
   onWeightClassSelectionChanged(event: MatAutocompleteSelectedEvent) {
-    this.form.controls.weightClassId.setValue(event.option.value.id);
+    this.thirdFormGroup.controls.weightClassId.setValue(event.option.value.id);
   }
 
   displayFn(data: any): string {
@@ -378,13 +375,78 @@ export class ProductFormComponent implements OnInit {
     );
   }
 
+  setErrors() {
+    this.formErrors = this.formService.validateForm(
+      this.firstFormGroup,
+      this.formErrors,
+      false
+    );
+    this.formErrors = this.formService.validateForm(
+      this.secondFormGroup,
+      this.formErrors,
+      false
+    );
+    this.formErrors = this.formService.validateForm(
+      this.thirdFormGroup,
+      this.formErrors,
+      false
+    );
+  }
+
+  markFormGroupTouched() {
+    this.formService.markFormGroupTouched(this.firstFormGroup);
+    this.formService.markFormGroupTouched(this.secondFormGroup);
+    this.formService.markFormGroupTouched(this.thirdFormGroup);
+  }
+
+  isFormValid() {
+    let status = false;
+    if (this.form.valid) {
+      status = true;
+    } else if (this.firstFormGroup.valid) {
+      status = true;
+    } else if (this.secondFormGroup.valid) {
+      status = true;
+    } else if (this.thirdFormGroup.valid) {
+      status = true;
+    }
+
+    return status;
+  }
+
 
   public onSubmit() {
-    console.log(this.form.value);
     // mark all fields as touched
-    this.formService.markFormGroupTouched(this.form);
-    if (this.form.valid) {
-      this.masterService.save(this.form.value, this.getId()).subscribe(
+    this.markFormGroupTouched();
+    if (this.isFormValid()) {
+
+      const data = {
+        typeId: this.firstFormGroup.value.typeId,
+        manufactureId: this.firstFormGroup.value.manufactureId,
+        code: this.firstFormGroup.value.code,
+        model: this.firstFormGroup.value.model,
+        sku: this.firstFormGroup.value.sku,
+        name: this.firstFormGroup.value.name,
+        priceType: this.firstFormGroup.value.priceType,
+        price: this.firstFormGroup.value.price,
+        taxClassId: this.firstFormGroup.value.taxClassId,
+        minimum: this.firstFormGroup.value.minimum,
+        shipping: this.firstFormGroup.value.shipping,
+        inventory: this.firstFormGroup.value.inventory,
+
+        description: this.secondFormGroup.value.description,
+        text: this.secondFormGroup.value.text,
+
+        lengthClassId: this.thirdFormGroup.value.lengthClassId,
+        length: this.thirdFormGroup.value.length,
+        width: this.thirdFormGroup.value.width,
+        height: this.thirdFormGroup.value.height,
+        weightClassId: this.thirdFormGroup.value.weightClassId,
+        weight: this.thirdFormGroup.value.weight,
+
+      };
+
+      this.masterService.save(data, this.getId()).subscribe(
         response => {
           if (!response.status) {
             if (response.result) {
@@ -393,10 +455,9 @@ export class ProductFormComponent implements OnInit {
               });
             }
           } else {
-            this.form.reset();
+            // this.form.reset();
             this.router.navigate(['/products']);
           }
-
           this.snackBar.open(response.message, 'X', {
             duration: 2000,
           });
@@ -406,11 +467,7 @@ export class ProductFormComponent implements OnInit {
         }
       );
     } else {
-      this.formErrors = this.formService.validateForm(
-        this.form,
-        this.formErrors,
-        false
-      );
+      this.setErrors();
     }
   }
 
