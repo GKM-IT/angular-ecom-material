@@ -125,7 +125,7 @@
               </section>
 
 
-              <div>
+              <div class="button-group">
                 <button mat-raised-button matStepperNext color="primary">Next</button>
               </div>
             </div>
@@ -150,7 +150,7 @@
               </mat-form-field>
 
 
-              <div>
+              <div class="button-group">
                 <button mat-raised-button matStepperPrevious color="light">Back</button>
                 <button mat-raised-button matStepperNext color="primary">Next</button>
               </div>
@@ -220,7 +220,7 @@
                 <mat-error *ngIf="formErrors.weight">{{formErrors.weight}}</mat-error>
               </mat-form-field>
 
-              <div>
+              <div class="button-group">
                 <button mat-raised-button matStepperPrevious color="light">Back</button>
                 <button mat-raised-button matStepperNext color="primary">Next</button>
               </div>
@@ -231,7 +231,7 @@
         <mat-step>
           <ng-template matStepLabel>Done</ng-template>
           You are now done.
-          <div>
+          <div class="button-group">
             <button mat-raised-button matStepperPrevious color="light">Back</button>
             <button mat-raised-button type="submit" color="primary" (click)="onSubmit()">Save</button>
           </div>

@@ -5,43 +5,51 @@ body {
 }
 
 .menu-fill-remaining-space {
-  flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 .mat-drawer-container {
-    position: inherit !important;    
+    position: inherit !important;
 }
 
-.center{  
-  width: 50%;
-  margin: 10px auto;
-}
-.content{  
-  width: 50%;
-  margin: 10px auto;
-}
-.content-fluid{  
-  width: 90%;
-  margin: 10px auto;
+.center {
+    width: 50%;
+    margin: 10px auto;
 }
 
-.main-div{
-  height: 100%;  
-  justify-content: center;
-  align-items: center;
+.content {
+    width: 50%;
+    margin: 10px auto;
+}
+
+.content-fluid {
+    width: 90%;
+    margin: 10px auto;
+}
+
+.main-div {
+    height: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .full-width {
-  width: 100%;
+    width: 100%;
 }
 
 table {
-  width: 100%;
+    width: 100%;
 }
 
-.invisible{
+.invisible {
     display: block;
     visibility: hidden;
     height: 0;
     width: 0;
+}
+
+.button-group button,
+.button-group a {
+    margin-top: 10px;
+    margin-right: 8px;
 }

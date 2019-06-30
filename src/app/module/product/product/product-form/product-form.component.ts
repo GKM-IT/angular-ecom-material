@@ -61,8 +61,6 @@ export class ProductFormComponent implements OnInit {
   inventory;
   isLoading = false;
 
-
-  public form: FormGroup;
   public formErrors = {
     type: '',
     manufacture: '',
@@ -157,9 +155,6 @@ export class ProductFormComponent implements OnInit {
       weight: [this.weight, Validators.required],
     });
 
-    this.form = this.formBuilder.group({
-
-    });
 
     this.setErrors();
 
@@ -401,9 +396,7 @@ export class ProductFormComponent implements OnInit {
 
   isFormValid() {
     let status = false;
-    if (this.form.valid) {
-      status = true;
-    } else if (this.firstFormGroup.valid) {
+    if (this.firstFormGroup.valid) {
       status = true;
     } else if (this.secondFormGroup.valid) {
       status = true;
