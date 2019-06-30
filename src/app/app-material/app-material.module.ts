@@ -24,14 +24,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatStepperModule} from '@angular/material/stepper';
-
+import { MatStepperModule } from '@angular/material/stepper';
+import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 
 @NgModule({
   declarations: [],
   imports: [
+    SelectAutocompleteModule,
     MatButtonModule,
     MatCheckboxModule,
     MatToolbarModule,
@@ -62,6 +63,7 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatStepperModule
   ],
   exports: [
+    SelectAutocompleteModule,
     MatButtonModule,
     MatCheckboxModule,
     MatToolbarModule,

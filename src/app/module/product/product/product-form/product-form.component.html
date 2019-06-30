@@ -13,6 +13,7 @@
     <mat-card-content>
 
       <mat-horizontal-stepper [linear]="true" #stepper>
+
         <mat-step [stepControl]="firstFormGroup">
           <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Basic</ng-template>
@@ -132,6 +133,7 @@
 
           </form>
         </mat-step>
+
         <mat-step [stepControl]="secondFormGroup">
           <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Details</ng-template>
@@ -228,6 +230,25 @@
             </div>
           </form>
         </mat-step>
+
+        <!-- <mat-step [stepControl]="fourthFormGroup">
+          <form [formGroup]="fourthFormGroup">
+            <ng-template matStepLabel>links</ng-template>
+            <div class="content">
+
+              <mat-select-autocomplete class="full-width" [placeholder]="'Options Selection'" [errorMsg]="errorMessage"
+                [showErrorMsg]="showError" [options]="options" [display]="'display'" [value]="'value'" [labelCount]="1"
+                [multiple]='false' [selectedOptions]="selectedOptions" (selectionChange)="getSelectedOptions($event)" (onChanges)="onChange($event)">
+              </mat-select-autocomplete>
+
+              <div class="button-group">
+                <button mat-raised-button matStepperPrevious color="light">Back</button>
+                <button mat-raised-button matStepperNext color="primary">Next</button>
+              </div>
+            </div>
+          </form>
+        </mat-step> -->
+
         <mat-step>
           <ng-template matStepLabel>Done</ng-template>
           You are now done.
@@ -236,6 +257,7 @@
             <button mat-raised-button type="submit" color="primary" (click)="onSubmit()">Save</button>
           </div>
         </mat-step>
+
       </mat-horizontal-stepper>
 
     </mat-card-content>

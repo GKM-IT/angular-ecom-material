@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/providers/product/product.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
@@ -13,6 +13,9 @@ import { TaxClassService } from 'src/app/providers/tax/tax-class.service';
 import { LengthService } from 'src/app/providers/unit/length.service';
 import { WeightService } from 'src/app/providers/unit/weight.service';
 import { AttributeService } from 'src/app/providers/product/attribute.service';
+import { CategoryService } from 'src/app/providers/product/category.service';
+
+import { SelectAutocompleteComponent } from 'mat-select-autocomplete';
 
 @Component({
   selector: 'app-product-form',
@@ -20,6 +23,49 @@ import { AttributeService } from 'src/app/providers/product/attribute.service';
   styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
+
+
+
+  options = [
+    {
+      display: 'One',
+      value: '1'
+    }, {
+      display: 'Two',
+      value: '2'
+    }, {
+      display: 'Three',
+      value: '3'
+    }, {
+      display: 'Four',
+      value: '4'
+    }, {
+      display: 'Five',
+      value: '5'
+    }, {
+      display: 'Six',
+      value: '6'
+    }
+  ];
+  selectedOptions = ['1', '2', '3', '4'];
+
+  selected = this.selectedOptions;
+  showError = false;
+  errorMessage = '';
+
+  onChange(event){
+    console.log(event);
+  }
+
+  getSelectedOptions(selected) {
+    this.selected = selected;
+    console.log(this.selected);
+    // console.log("being called");
+  }
+
+  onResetSelection() {
+    this.selectedOptions = [];
+  }
 
   public pageHeading = 'product Form';
   public data: any;
@@ -87,6 +133,7 @@ export class ProductFormComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
+  fourthFormGroup: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -97,6 +144,7 @@ export class ProductFormComponent implements OnInit {
     public lengthService: LengthService,
     public weightService: WeightService,
     public attributeService: AttributeService,
+    public categoryService: CategoryService,
     private formService: FormService,
     private router: Router,
     public activatedRoute: ActivatedRoute,
@@ -155,6 +203,9 @@ export class ProductFormComponent implements OnInit {
       weight: [this.weight, Validators.required],
     });
 
+    this.fourthFormGroup = this.formBuilder.group({
+      text: [this.text, Validators.required],
+    });
 
     this.setErrors();
 
