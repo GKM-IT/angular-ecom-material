@@ -12,6 +12,42 @@
       </mat-card-header>
       <mat-card-content>
 
+        <mat-form-field class="full-width">
+          <input matInput placeholder="type" formControlName="type" required [matAutocomplete]="typeAuto"
+            [(ngModel)]="type">
+          <input type="hidden" formControlName="typeId" [(ngModel)]="typeId">
+          <mat-error *ngIf="formErrors.type">{{formErrors.type}}</mat-error>
+          <mat-autocomplete #typeAuto="matAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="onTypeSelectionChanged($event)">
+            <mat-option *ngIf="isLoading" class="is-loading">
+              <mat-spinner diameter="50"></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let option of types" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="manufacture" formControlName="manufacture" required
+            [matAutocomplete]="manufactureAuto" [(ngModel)]="manufacture">
+          <input type="hidden" formControlName="manufactureId" [(ngModel)]="manufactureId">
+          <mat-error *ngIf="formErrors.manufacture">{{formErrors.manufacture}}</mat-error>
+          <mat-autocomplete #manufactureAuto="matAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="onManufactureSelectionChanged($event)">
+            <mat-option *ngIf="isLoading" class="is-loading">
+              <mat-spinner diameter="50"></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let option of manufactures" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </mat-form-field>
+
 
         <mat-form-field class="full-width">
           <input matInput placeholder="code" formControlName="code" [(ngModel)]="code" required>
@@ -63,6 +99,44 @@
           <mat-error *ngIf="formErrors.text">{{formErrors.text}}</mat-error>
         </mat-form-field>
 
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="taxClass" formControlName="taxClass" required [matAutocomplete]="taxClassAuto"
+            [(ngModel)]="taxClass">
+          <input type="hidden" formControlName="taxClassId" [(ngModel)]="taxClassId">
+          <mat-error *ngIf="formErrors.taxClass">{{formErrors.taxClass}}</mat-error>
+          <mat-autocomplete #taxClassAuto="matAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="onTaxClassSelectionChanged($event)">
+            <mat-option *ngIf="isLoading" class="is-loading">
+              <mat-spinner diameter="50"></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let option of taxClasses" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </mat-form-field>
+
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="lengthClass" formControlName="lengthClass" required
+            [matAutocomplete]="lengthClassAuto" [(ngModel)]="lengthClass">
+          <input type="hidden" formControlName="lengthClassId" [(ngModel)]="lengthClassId">
+          <mat-error *ngIf="formErrors.lengthClass">{{formErrors.lengthClass}}</mat-error>
+          <mat-autocomplete #lengthClassAuto="matAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="onLengthClassSelectionChanged($event)">
+            <mat-option *ngIf="isLoading" class="is-loading">
+              <mat-spinner diameter="50"></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let option of lengthClasses" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </mat-form-field>
+
         <mat-form-field class="full-width">
           <input matInput placeholder="length" formControlName="length" [(ngModel)]="length" required>
           <mat-error *ngIf="formErrors.length">{{formErrors.length}}</mat-error>
@@ -76,6 +150,24 @@
         <mat-form-field class="full-width">
           <input matInput placeholder="height" formControlName="height" [(ngModel)]="height" required>
           <mat-error *ngIf="formErrors.height">{{formErrors.height}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="weightClass" formControlName="weightClass" required
+            [matAutocomplete]="weightClassAuto" [(ngModel)]="weightClass">
+          <input type="hidden" formControlName="weightClassId" [(ngModel)]="weightClassId">
+          <mat-error *ngIf="formErrors.weightClass">{{formErrors.weightClass}}</mat-error>
+          <mat-autocomplete #weightClassAuto="matAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="onWeightClassSelectionChanged($event)">
+            <mat-option *ngIf="isLoading" class="is-loading">
+              <mat-spinner diameter="50"></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let option of weightClasses" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
         </mat-form-field>
 
         <mat-form-field class="full-width">
@@ -100,6 +192,41 @@
         </section>
 
 
+
+        
+        <mat-horizontal-stepper [linear]="true" #stepper>
+          <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+              <ng-template matStepLabel>Fill out your name</ng-template>
+              <mat-form-field>
+                <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+              </mat-form-field>
+              <div>
+                <button mat-button matStepperNext>Next</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+              <ng-template matStepLabel>Fill out your address</ng-template>
+              <mat-form-field>
+                <input matInput placeholder="Address" formControlName="secondCtrl" required>
+              </mat-form-field>
+              <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            You are now done.
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="stepper.reset()">Reset</button>
+            </div>
+          </mat-step>
+        </mat-horizontal-stepper>
 
       </mat-card-content>
       <mat-card-actions>

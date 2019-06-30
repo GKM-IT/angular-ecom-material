@@ -11,24 +11,40 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
-            <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="email" formControlName="email" [(ngModel)]="email" required>
-            <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="contact" formControlName="contact" [(ngModel)]="contact" required>
-            <mat-error *ngIf="formErrors.contact">{{formErrors.contact}}</mat-error>
-          </mat-form-field>
-        </p>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="group" formControlName="group" required [matAutocomplete]="auto"
+            [(ngModel)]="group">
+          <input type="hidden" formControlName="groupId" [(ngModel)]="groupId">
+          <mat-error *ngIf="formErrors.group">{{formErrors.group}}</mat-error>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="onSelectionChanged($event)">
+            <mat-option *ngIf="isLoading" class="is-loading">
+              <mat-spinner diameter="50"></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let option of groups" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </mat-form-field>
+
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
+          <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="email" formControlName="email" [(ngModel)]="email" required>
+          <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="contact" formControlName="contact" [(ngModel)]="contact" required>
+          <mat-error *ngIf="formErrors.contact">{{formErrors.contact}}</mat-error>
+        </mat-form-field>
+
 
       </mat-card-content>
       <mat-card-actions>

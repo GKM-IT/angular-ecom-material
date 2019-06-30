@@ -83,7 +83,26 @@ export class ProductService {
     if (id !== 'new') {
       this.formData.append('id', id);
     }
+    this.formData.append('type_id', data.typeId);
+    this.formData.append('manufacture_id', data.manufactureId);
+    this.formData.append('code', data.code);
+    this.formData.append('model', data.model);
+    this.formData.append('sku', data.sku);
     this.formData.append('name', data.name);
+    this.formData.append('price_type', data.priceType);
+    this.formData.append('price', data.price);
+    this.formData.append('description', data.description);
+    this.formData.append('text', data.text);
+    this.formData.append('tax_class_id', data.taxClassId);
+    this.formData.append('length_class_id', data.lengthClassId);
+    this.formData.append('length', data.length);
+    this.formData.append('width', data.width);
+    this.formData.append('height', data.height);
+    this.formData.append('weight_class_id', data.weightClassId);
+    this.formData.append('weight', data.weight);
+    this.formData.append('minimum', data.minimum);
+    this.formData.append('shipping', data.shipping);
+    this.formData.append('inventory', data.inventory);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

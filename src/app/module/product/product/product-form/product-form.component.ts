@@ -4,6 +4,15 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Constant } from 'src/app/helper/constant';
+import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { TypeService } from 'src/app/providers/catalog/type.service';
+import { ManufactureService } from 'src/app/providers/product/manufacture.service';
+import { TaxClassService } from 'src/app/providers/tax/tax-class.service';
+import { LengthService } from 'src/app/providers/unit/length.service';
+import { WeightService } from 'src/app/providers/unit/weight.service';
+import { AttributeService } from 'src/app/providers/product/attribute.service';
 
 @Component({
   selector: 'app-product-form',
@@ -29,24 +38,7 @@ export class ProductFormComponent implements OnInit {
   sku;
   name;
   priceType;
-  priceTypes = [
-    {
-      value: 'FIXED',
-      text: 'Fixed',
-    },
-    {
-      value: 'WEIGHT',
-      text: 'Weight',
-    },
-    {
-      value: 'LENGTH',
-      text: 'Length',
-    },
-    {
-      value: 'HOUR',
-      text: 'Hour',
-    },
-  ];
+  priceTypes;
   price;
   image;
   description;
@@ -67,6 +59,7 @@ export class ProductFormComponent implements OnInit {
   minimum;
   shipping;
   inventory;
+  isLoading = false;
 
 
   public form: FormGroup;
@@ -93,14 +86,36 @@ export class ProductFormComponent implements OnInit {
     inventory: '',
   };
 
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+
   constructor(
-    public masterService: ProductService,
     private formBuilder: FormBuilder,
+    public masterService: ProductService,
+    public typeService: TypeService,
+    public manufactureService: ManufactureService,
+    public taxClassService: TaxClassService,
+    public lengthService: LengthService,
+    public weightService: WeightService,
+    public attributeService: AttributeService,
     private formService: FormService,
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
-  ) { }
+  ) {
+    const constant = new Constant();
+    this.priceTypes = constant.priceTypes;
+
+    this.firstFormGroup = this.formBuilder.group({
+      type: [this.type, Validators.required],
+      typeId: [this.typeId, Validators.required],
+      manufacture: [this.manufacture, Validators.required],
+      manufactureId: [this.manufactureId, Validators.required],
+    });
+    this.secondFormGroup = this.formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
+  }
 
   getId() {
     const id = this.activatedRoute.snapshot.paramMap.get('id') ? this.activatedRoute.snapshot.paramMap.get('id') : 'new';
@@ -132,6 +147,7 @@ export class ProductFormComponent implements OnInit {
       text: [this.text, Validators.required],
       taxClass: [this.taxClass, Validators.required],
       taxClassId: [this.taxClassId, Validators.required],
+      lengthClassId: [this.lengthClassId, Validators.required],
       lengthClass: [this.lengthClass, Validators.required],
       length: [this.length, Validators.required],
       width: [this.width, Validators.required],
@@ -151,6 +167,162 @@ export class ProductFormComponent implements OnInit {
         true
       );
     });
+
+    this.getTypeAutocomplete();
+    this.getManufactureAutocomplete();
+    this.getTaxClassAutocomplete();
+    this.getLengthAutocomplete();
+    this.getWeightAutocomplete();
+  }
+
+  getTypeAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('type')
+      .valueChanges.pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => (this.isLoading = true)),
+        switchMap(value =>
+          this.typeService
+            .list({
+              search: value,
+              pageSize: constant.autocompleteListSize,
+              pageIndex: 0,
+              sort_by: 'name'
+            })
+            .pipe(finalize(() => (this.isLoading = false)))
+        )
+      )
+      .subscribe(res => {
+        if (res.status) {
+          this.types = res.data;
+        }
+      });
+  }
+
+  getManufactureAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('manufacture')
+      .valueChanges.pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => (this.isLoading = true)),
+        switchMap(value =>
+          this.manufactureService
+            .list({
+              search: value,
+              pageSize: constant.autocompleteListSize,
+              pageIndex: 0,
+              sort_by: 'name'
+            })
+            .pipe(finalize(() => (this.isLoading = false)))
+        )
+      )
+      .subscribe(res => {
+        if (res.status) {
+          this.manufactures = res.data;
+        }
+      });
+  }
+
+  getTaxClassAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('taxClass')
+      .valueChanges.pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => (this.isLoading = true)),
+        switchMap(value =>
+          this.taxClassService
+            .list({
+              search: value,
+              pageSize: constant.autocompleteListSize,
+              pageIndex: 0,
+              sort_by: 'name'
+            })
+            .pipe(finalize(() => (this.isLoading = false)))
+        )
+      )
+      .subscribe(res => {
+        if (res.status) {
+          this.taxClasses = res.data;
+        }
+      });
+  }
+
+  getLengthAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('length')
+      .valueChanges.pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => (this.isLoading = true)),
+        switchMap(value =>
+          this.lengthService
+            .list({
+              search: value,
+              pageSize: constant.autocompleteListSize,
+              pageIndex: 0,
+              sort_by: 'name'
+            })
+            .pipe(finalize(() => (this.isLoading = false)))
+        )
+      )
+      .subscribe(res => {
+        if (res.status) {
+          this.lengthClasses = res.data;
+        }
+      });
+  }
+
+  getWeightAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('weight')
+      .valueChanges.pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => (this.isLoading = true)),
+        switchMap(value =>
+          this.weightService
+            .list({
+              search: value,
+              pageSize: constant.autocompleteListSize,
+              pageIndex: 0,
+              sort_by: 'name'
+            })
+            .pipe(finalize(() => (this.isLoading = false)))
+        )
+      )
+      .subscribe(res => {
+        if (res.status) {
+          this.weightClasses = res.data;
+        }
+      });
+  }
+
+  onTypeSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.typeId.setValue(event.option.value.id);
+  }
+  onManufactureSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.manufactureId.setValue(event.option.value.id);
+  }
+  onTaxClassSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.taxClassId.setValue(event.option.value.id);
+  }
+  onLengthClassSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.lengthClassId.setValue(event.option.value.id);
+  }
+  onWeightClassSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.weightClassId.setValue(event.option.value.id);
+  }
+
+  displayFn(data: any): string {
+    return data ? data.name : data;
   }
 
   getDetail(id) {
@@ -158,7 +330,15 @@ export class ProductFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.typeId = response.data.type_id;
+          this.type = {
+            id: response.data.type_id,
+            name: response.data.type
+          };
           this.manufactureId = response.data.manufacture_id;
+          this.manufacture = {
+            id: response.data.manufacture_id,
+            name: response.data.manufacture
+          };
           this.code = response.data.code;
           this.model = response.data.model;
           this.sku = response.data.sku;
@@ -169,11 +349,23 @@ export class ProductFormComponent implements OnInit {
           this.description = response.data.description;
           this.text = response.data.text;
           this.taxClassId = response.data.tax_class_id;
+          this.taxClass = {
+            id: response.data.tax_class_id,
+            name: response.data.tax_class
+          };
           this.lengthClassId = response.data.length_class_id;
+          this.lengthClass = {
+            id: response.data.length_class_id,
+            name: response.data.length_class
+          };
           this.length = response.data.length;
           this.width = response.data.width;
           this.height = response.data.height;
           this.weightClassId = response.data.weight_class_id;
+          this.weightClass = {
+            id: response.data.weight_class_id,
+            name: response.data.weight_class
+          };
           this.weight = response.data.weight;
           this.minimum = response.data.minimum;
           this.shipping = response.data.shipping ? true : false;
