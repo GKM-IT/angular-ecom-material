@@ -34,7 +34,7 @@ export class TaxRateFormComponent implements OnInit {
 
   public form: FormGroup;
   public formErrors = {
-    taxtClass: '',
+    taxClass: '',
     name: '',
     rate: '',
     type: '',
@@ -67,6 +67,7 @@ export class TaxRateFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       taxClass: [this.taxClass, Validators.required],
+      taxClassId: [this.taxClassId, Validators.required],
       name: [this.name, Validators.required],
       rate: [this.rate, Validators.required],
       type: [this.type, Validators.required],
