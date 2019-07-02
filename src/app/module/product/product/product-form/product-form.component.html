@@ -145,11 +145,7 @@
               </mat-form-field>
 
 
-
-              <mat-form-field class="full-width">
-                <textarea matInput placeholder="text" formControlName="text" [(ngModel)]="text" required></textarea>
-                <mat-error *ngIf="formErrors.text">{{formErrors.text}}</mat-error>
-              </mat-form-field>
+              <editor formControlName="text" [(ngModel)]="text" [init]="{plugins: 'link'}"></editor>
 
 
               <div class="button-group">

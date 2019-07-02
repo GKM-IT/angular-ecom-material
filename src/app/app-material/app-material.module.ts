@@ -28,6 +28,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   declarations: [],
@@ -60,7 +61,8 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     MatPaginatorModule,
     MatSortModule,
     MatAutocompleteModule,
-    MatStepperModule
+    MatStepperModule,
+    EditorModule
   ],
   exports: [
     SelectAutocompleteModule,
@@ -91,7 +93,8 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     MatPaginatorModule,
     MatSortModule,
     MatAutocompleteModule,
-    MatStepperModule
+    MatStepperModule,
+    EditorModule
   ]
 })
 export class AppMaterialModule { }
