@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  name: 'Dev Erp',
+  name: 'Dev Admin',
   url: 'http://localhost/ci/ci-ecom/'
 };
 
