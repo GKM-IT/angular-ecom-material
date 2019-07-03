@@ -227,14 +227,14 @@
           </form>
         </mat-step>
 
-        <!-- <mat-step [stepControl]="fourthFormGroup">
+        <mat-step [stepControl]="fourthFormGroup">
           <form [formGroup]="fourthFormGroup">
             <ng-template matStepLabel>links</ng-template>
-            <div class="content">
+            <div class="content">              
 
-              <mat-select-autocomplete class="full-width" [placeholder]="'Options Selection'" [errorMsg]="errorMessage"
-                [showErrorMsg]="showError" [options]="options" [display]="'display'" [value]="'value'" [labelCount]="1"
-                [multiple]='false' [selectedOptions]="selectedOptions" (selectionChange)="getSelectedOptions($event)" (onChanges)="onChange($event)">
+              <mat-select-autocomplete class="full-width" formControlName="categories" [placeholder]="'Options Selection'" [errorMsg]="formErrors.categories"
+                [showErrorMsg]="formErrors.categories" [options]="categories" [display]="'name'" [value]="'value'" [labelCount]="2"
+                [multiple]='true' [selectedOptions]="selectedOptions" (selectionChange)="getSelectedOptions($event)" (onChanges)="onChange($event)">
               </mat-select-autocomplete>
 
               <div class="button-group">
@@ -243,7 +243,7 @@
               </div>
             </div>
           </form>
-        </mat-step> -->
+        </mat-step>
 
         <mat-step>
           <ng-template matStepLabel>Done</ng-template>

@@ -103,6 +103,7 @@ export class ProductService {
     this.formData.append('minimum', data.minimum);
     this.formData.append('shipping', data.shipping);
     this.formData.append('inventory', data.inventory);
+    this.formData.append('categories', JSON.stringify(data.categories));
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

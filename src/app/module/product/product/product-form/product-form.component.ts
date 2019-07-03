@@ -24,47 +24,25 @@ import { SelectAutocompleteComponent } from 'mat-select-autocomplete';
 })
 export class ProductFormComponent implements OnInit {
 
-
-
-  options = [
-    {
-      display: 'One',
-      value: '1'
-    }, {
-      display: 'Two',
-      value: '2'
-    }, {
-      display: 'Three',
-      value: '3'
-    }, {
-      display: 'Four',
-      value: '4'
-    }, {
-      display: 'Five',
-      value: '5'
-    }, {
-      display: 'Six',
-      value: '6'
-    }
-  ];
-  selectedOptions = ['1', '2', '3', '4'];
-
-  selected = this.selectedOptions;
+  selectedCategories = [];
   showError = false;
   errorMessage = '';
 
-  onChange(event){
+  categories: any = [];
+
+  onChange(event) {
     console.log(event);
   }
 
   getSelectedOptions(selected) {
-    this.selected = selected;
-    console.log(this.selected);
+    this.selectedCategories = selected;
+    this.fourthFormGroup.setValue({ categories: this.selectedCategories });
+    // console.log(this.selected);
     // console.log("being called");
   }
 
   onResetSelection() {
-    this.selectedOptions = [];
+    this.selectedCategories = [];
   }
 
   public pageHeading = 'product Form';
@@ -171,6 +149,9 @@ export class ProductFormComponent implements OnInit {
       this.getDetail(this.getId());
     }
 
+
+    this.getCategories();
+
     this.firstFormGroup = this.formBuilder.group({
       type: [this.type, Validators.required],
       typeId: [this.typeId, Validators.required],
@@ -204,7 +185,7 @@ export class ProductFormComponent implements OnInit {
     });
 
     this.fourthFormGroup = this.formBuilder.group({
-      text: [this.text, Validators.required],
+      categories: [this.selectedCategories],
     });
 
     this.setErrors();
@@ -216,7 +197,16 @@ export class ProductFormComponent implements OnInit {
     this.getWeightAutocomplete();
   }
 
-
+  getCategories() {
+    this.categoryService.list({}).subscribe(response => {
+      for (let index = 0; index < response.data.length; index++) {
+        this.categories.push({
+          name: response.data[index].name,
+          value: response.data[index].id,
+        });
+      }
+    });
+  }
 
   getTypeAutocomplete() {
     const constant = new Constant();
@@ -413,6 +403,10 @@ export class ProductFormComponent implements OnInit {
           this.minimum = response.data.minimum;
           this.shipping = response.data.shipping ? true : false;
           this.inventory = response.data.inventory ? true : false;
+
+          for (let index = 0; index < response.data.categories.length; index++) {
+            this.selectedCategories.push(response.data.categories[index].id);
+          }
         }
       },
       err => {
@@ -464,6 +458,8 @@ export class ProductFormComponent implements OnInit {
     this.markFormGroupTouched();
     if (this.isFormValid()) {
 
+      console.log(this.fourthFormGroup.value);
+
       const data = {
         typeId: this.firstFormGroup.value.typeId,
         manufactureId: this.firstFormGroup.value.manufactureId,
@@ -488,6 +484,7 @@ export class ProductFormComponent implements OnInit {
         weightClassId: this.thirdFormGroup.value.weightClassId,
         weight: this.thirdFormGroup.value.weight,
 
+        categories: this.fourthFormGroup.value.categories
       };
 
       this.masterService.save(data, this.getId()).subscribe(
