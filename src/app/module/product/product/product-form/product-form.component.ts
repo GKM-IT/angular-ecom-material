@@ -30,15 +30,10 @@ export class ProductFormComponent implements OnInit {
 
   categories: any = [];
 
-  onChange(event) {
-    console.log(event);
-  }
 
   getSelectedOptions(selected) {
     this.selectedCategories = selected;
     this.fourthFormGroup.setValue({ categories: this.selectedCategories });
-    // console.log(this.selected);
-    // console.log("being called");
   }
 
   onResetSelection() {
