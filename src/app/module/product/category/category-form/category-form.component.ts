@@ -16,8 +16,6 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 })
 export class CategoryFormComponent implements OnInit {
 
-
-
   public pageHeading = 'Category Form';
   public data: any;
   public status: any;
@@ -28,12 +26,16 @@ export class CategoryFormComponent implements OnInit {
   type;
   typeId;
   types;
+  category;
+  categoryId;
+  categories;
   isLoading = false;
 
   public form: FormGroup;
   public formErrors = {
     name: '',
-    type: ''
+    type: '',
+    category: '',
   };
 
   constructor(
@@ -65,6 +67,8 @@ export class CategoryFormComponent implements OnInit {
       name: [this.name, Validators.required],
       typeId: [this.typeId],
       type: [this.type, Validators.required],
+      categoryId: [this.categoryId],
+      category: [this.category, Validators.required],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -76,6 +80,7 @@ export class CategoryFormComponent implements OnInit {
     });
 
     this.getAutocomplete();
+    this.getCategoryAutocomplete();
   }
 
   getAutocomplete() {
@@ -108,6 +113,36 @@ export class CategoryFormComponent implements OnInit {
     this.form.controls.typeId.setValue(event.option.value.id);
   }
 
+  getCategoryAutocomplete() {
+    const constant = new Constant();
+    this.form
+      .get('category')
+      .valueChanges.pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => (this.isLoading = true)),
+        switchMap(value =>
+          this.masterService
+            .list({
+              search: value,
+              pageSize: constant.autocompleteListSize,
+              pageIndex: 0,
+              sort_by: 'name'
+            })
+            .pipe(finalize(() => (this.isLoading = false)))
+        )
+      )
+      .subscribe(res => {
+        if (res.status) {
+          this.categories = res.data;
+        }
+      });
+  }
+
+  onCategorySelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.categoryId.setValue(event.option.value.id);
+  }
+
   displayFn(data: any): string {
     return data ? data.name : data;
   }
@@ -122,6 +157,11 @@ export class CategoryFormComponent implements OnInit {
             name: response.data.type
           };
           this.typeId = response.data.type_id;
+          this.category = {
+            id: response.data.parent_id,
+            name: response.data.parent
+          };
+          this.categoryId = response.data.parent_id;
         }
       },
       err => {

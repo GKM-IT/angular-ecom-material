@@ -11,31 +11,47 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="type" formControlName="type" required [matAutocomplete]="auto"
-              [(ngModel)]="type">
-            <input type="hidden" formControlName="typeId" [(ngModel)]="typeId">
-            <mat-error *ngIf="formErrors.type">{{formErrors.type}}</mat-error>
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-              (optionSelected)="onSelectionChanged($event)">
-              <mat-option *ngIf="isLoading" class="is-loading">
-                <mat-spinner diameter="50"></mat-spinner>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="type" formControlName="type" required [matAutocomplete]="auto"
+            [(ngModel)]="type">
+          <input type="hidden" formControlName="typeId" [(ngModel)]="typeId">
+          <mat-error *ngIf="formErrors.type">{{formErrors.type}}</mat-error>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="onSelectionChanged($event)">
+            <mat-option *ngIf="isLoading" class="is-loading">
+              <mat-spinner diameter="50"></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let option of types" [value]="option">
+                {{option.name}}
               </mat-option>
-              <ng-container *ngIf="!isLoading">
-                <mat-option *ngFor="let option of types" [value]="option">
-                  {{option.name}}
-                </mat-option>
-              </ng-container>
-            </mat-autocomplete>
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
-            <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
-          </mat-form-field>
-        </p>
+            </ng-container>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="parent category" formControlName="category" required [matAutocomplete]="categoryAuto"
+            [(ngModel)]="category">
+          <input type="hidden" formControlName="categoryId" [(ngModel)]="categoryId">
+          <mat-error *ngIf="formErrors.category">{{formErrors.category}}</mat-error>
+          <mat-autocomplete #categoryAuto="matAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="onCategorySelectionChanged($event)">
+            <mat-option *ngIf="isLoading" class="is-loading">
+              <mat-spinner diameter="50"></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let option of categories" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
+          <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+        </mat-form-field>
 
 
       </mat-card-content>

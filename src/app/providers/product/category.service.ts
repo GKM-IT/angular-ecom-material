@@ -83,6 +83,7 @@ export class CategoryService {
       this.formData.append('id', id);
     }
     this.formData.append('type_id', data.typeId);
+    this.formData.append('parent_id', data.categoryId);
     this.formData.append('name', data.name);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
