@@ -38,50 +38,64 @@
         </p>
 
         <p>
-          <button type="button" mat-button (click)="addImage()">Add Image</button>
+          <button type="button" mat-button (click)="addImage()">
+            <i class="material-icons">add</i>
+            Add Image
+          </button>
         </p>
 
 
-        <mat-card formArrayName="images">
-          <mat-card-title>Images</mat-card-title>
-          <mat-divider></mat-divider>
-          <div *ngFor="let control of formData; let i = index;">
+        <div class="images-section" formArrayName="images">
+
+          <mat-card *ngFor="let control of formData; let i = index;">
             <div [formGroupName]="i">
 
+              <mat-card-header>
+                <mat-card-title>
 
-              <div (click)="imageInput.click()">
-                <img src="{{control.value.image_thumb}}" width="100" height="100" />
-                <input #imageInput type="file" accept="image/*" (change)="uploadImage($event,control)"
-                  style="display:none">
-              </div>
+                </mat-card-title>
+              </mat-card-header>
 
-              <mat-form-field class="full-width">
-                <input matInput placeholder="image" formControlName="image" required>
-                <mat-error *ngIf="formErrors.image">{{formErrors.image}}</mat-error>
-              </mat-form-field>
+              <mat-card-content>
+                <div (click)="imageInput.click()">
+                  <img [src]="control.value.image_thumb" width="100" height="100" />
+                  <input #imageInput type="file" accept="image/*" (change)="uploadImage($event,control)"
+                    style="display:none">
+                </div>
 
-              <mat-form-field class="full-width">
-                <input matInput placeholder="name" formControlName="name" required>
-                <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
-              </mat-form-field>
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="image" formControlName="image" [(ngModel)]="control.value.image"
+                    required>
+                  <mat-error *ngIf="formErrors.image">{{formErrors.image}}</mat-error>
+                </mat-form-field>
 
-              <mat-form-field class="full-width">
-                <input matInput placeholder="link" formControlName="link" required>
-                <mat-error *ngIf="formErrors.link">{{formErrors.link}}</mat-error>
-              </mat-form-field>
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="name" formControlName="name" required>
+                  <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+                </mat-form-field>
 
-              <mat-form-field class="full-width">
-                <input matInput placeholder="sort_order" formControlName="sort_order" required>
-                <mat-error *ngIf="formErrors.sort_order">{{formErrors.sort_order}}</mat-error>
-              </mat-form-field>
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="link" formControlName="link" required>
+                  <mat-error *ngIf="formErrors.link">{{formErrors.link}}</mat-error>
+                </mat-form-field>
 
-              <button type="button" mat-button (click)="delImage(i)">delete</button>
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="sort_order" formControlName="sort_order" required>
+                  <mat-error *ngIf="formErrors.sort_order">{{formErrors.sort_order}}</mat-error>
+                </mat-form-field>
 
+
+              </mat-card-content>
+
+              <mat-card-actions>
+                <button type="button" mat-button (click)="delImage(i)">
+                  <i class="material-icons">delete</i>
+                </button>
+              </mat-card-actions>
 
             </div>
-            <br />
-          </div>
-        </mat-card>
+          </mat-card>
+        </div>
 
       </mat-card-content>
       <mat-card-actions>

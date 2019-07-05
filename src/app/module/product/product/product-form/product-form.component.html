@@ -232,9 +232,12 @@
             <ng-template matStepLabel>links</ng-template>
             <div class="content">              
 
-              <mat-select-autocomplete class="full-width" formControlName="categories" [placeholder]="'Options Selection'" [errorMsg]="formErrors.categories"
+              
+              <mat-select-autocomplete class="full-width" [placeholder]="'Category Selection'" [errorMsg]="formErrors.categories"
                 [showErrorMsg]="formErrors.categories" [options]="categories" [display]="'name'" [value]="'value'" [labelCount]="2"
-                [multiple]='true' [selectedOptions]="selectedOptions">
+                [multiple]='true' [selectedOptions]="selectedCategories" name="categories"
+                ngDefaultControl
+                [formControl]="fourthFormGroup.controls['categories']">
               </mat-select-autocomplete>
 
               <div class="button-group">

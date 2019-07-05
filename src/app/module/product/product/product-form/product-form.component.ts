@@ -453,8 +453,6 @@ export class ProductFormComponent implements OnInit {
     this.markFormGroupTouched();
     if (this.isFormValid()) {
 
-      console.log(this.fourthFormGroup.value);
-
       const data = {
         typeId: this.firstFormGroup.value.typeId,
         manufactureId: this.firstFormGroup.value.manufactureId,
