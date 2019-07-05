@@ -230,14 +230,18 @@
         <mat-step [stepControl]="fourthFormGroup">
           <form [formGroup]="fourthFormGroup">
             <ng-template matStepLabel>links</ng-template>
-            <div class="content">              
+            <div class="content">
 
-              
-              <mat-select-autocomplete class="full-width" [placeholder]="'Category Selection'" [errorMsg]="formErrors.categories"
-                [showErrorMsg]="formErrors.categories" [options]="categories" [display]="'name'" [value]="'value'" [labelCount]="2"
-                [multiple]='true' [selectedOptions]="selectedCategories" name="categories"
+
+              <!-- <mat-select-autocomplete class="full-width" [placeholder]="'Category Selection'" [errorMsg]="formErrors.category"
+                [showErrorMsg]="formErrors.category" [options]="categories" [display]="'display'" [value]="'value'" [labelCount]="2"
+                [multiple]='true' [selectedOptions]="selectedCategories"
                 ngDefaultControl
-                [formControl]="fourthFormGroup.controls['categories']">
+                [formControl]="fourthFormGroup.controls['category']">
+              </mat-select-autocomplete> -->
+              <mat-select-autocomplete class="full-width" [placeholder]="'Category Selection'" [options]="categories"
+                [display]="'display'" [value]="'value'" [multiple]='true' [selectedOptions]="selectedCategories"
+                ngDefaultControl [formControl]="fourthFormGroup.controls['category']">
               </mat-select-autocomplete>
 
               <div class="button-group">

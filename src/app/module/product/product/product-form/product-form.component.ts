@@ -31,7 +31,7 @@ export class ProductFormComponent implements OnInit {
   categories: any = [];
 
 
-  getSelectedOptions(selected) {
+  getSelectedOptions(selected: any[]) {
     this.selectedCategories = selected;
     this.fourthFormGroup.setValue({ categories: this.selectedCategories });
   }
@@ -46,38 +46,38 @@ export class ProductFormComponent implements OnInit {
   public message: any;
   public messageTitle: string;
   hide = true;
-  typeId;
-  type;
-  types;
-  manufactureId;
-  manufacture;
-  manufactures;
-  code;
-  model;
-  sku;
-  name;
-  priceType;
-  priceTypes;
-  price;
-  image;
-  description;
-  text;
-  taxClass;
-  taxClassId;
-  taxClasses;
-  lengthClass;
-  lengthClassId;
-  lengthClasses;
-  length;
-  width;
-  height;
-  weightClass;
-  weightClassId;
-  weightClasses;
-  weight;
-  minimum;
-  shipping;
-  inventory;
+  typeId: any;
+  type: { id: any; name: any; };
+  types: any;
+  manufactureId: any;
+  manufacture: { id: any; name: any; };
+  manufactures: any;
+  code: any;
+  model: any;
+  sku: any;
+  name: any;
+  priceType: any;
+  priceTypes: { value: string; text: string; }[];
+  price: any;
+  image: any;
+  description: any;
+  text: any;
+  taxClass: { id: any; name: any; };
+  taxClassId: any;
+  taxClasses: any;
+  lengthClass: { id: any; name: any; };
+  lengthClassId: any;
+  lengthClasses: any;
+  length: any;
+  width: any;
+  height: any;
+  weightClass: { id: any; name: any; };
+  weightClassId: any;
+  weightClasses: any;
+  weight: any;
+  minimum: any;
+  shipping: boolean;
+  inventory: boolean;
   isLoading = false;
 
   public formErrors = {
@@ -180,7 +180,7 @@ export class ProductFormComponent implements OnInit {
     });
 
     this.fourthFormGroup = this.formBuilder.group({
-      categories: [this.selectedCategories],
+      category: [this.selectedCategories],
     });
 
     this.setErrors();
@@ -194,9 +194,10 @@ export class ProductFormComponent implements OnInit {
 
   getCategories() {
     this.categoryService.list({}).subscribe(response => {
+// tslint:disable-next-line: prefer-for-of
       for (let index = 0; index < response.data.length; index++) {
         this.categories.push({
-          name: response.data[index].name,
+          display: response.data[index].name,
           value: response.data[index].id,
         });
       }
@@ -353,7 +354,7 @@ export class ProductFormComponent implements OnInit {
     return data ? data.name : data;
   }
 
-  getDetail(id) {
+  getDetail(id: string) {
     this.masterService.detail(id).subscribe(
       response => {
         if (response.status) {
@@ -477,7 +478,7 @@ export class ProductFormComponent implements OnInit {
         weightClassId: this.thirdFormGroup.value.weightClassId,
         weight: this.thirdFormGroup.value.weight,
 
-        categories: this.fourthFormGroup.value.categories
+        categories: this.fourthFormGroup.value.category
       };
 
       this.masterService.save(data, this.getId()).subscribe(
