@@ -240,9 +240,63 @@
                 [formControl]="fourthFormGroup.controls['category']">
               </mat-select-autocomplete> -->
               <mat-select-autocomplete class="full-width" [placeholder]="'Category Selection'" [options]="categories"
-                [display]="'display'" [value]="'value'" [multiple]='true' [selectedOptions]="selectedCategories"
-                ngDefaultControl [formControl]="fourthFormGroup.controls['category']">
+                [display]="'name'" [value]="'value'" [multiple]='true' [selectedOptions]="selectedCategories"
+                ngDefaultControl name="category" [formControl]="fourthFormGroup.controls['category']">
               </mat-select-autocomplete>
+
+
+
+              <!-- attributes section -->
+
+              <div>
+                <button type="button" mat-button (click)="addAttribute()">
+                  <i class="material-icons">add</i>
+                  Add Attribute
+                </button>
+              </div>
+
+
+              <div class="attributes-section" formArrayName="productAttributes">
+
+                <mat-card *ngFor="let control of formAttributeData; let i = index;">
+                  <div [formGroupName]="i">
+
+                    <mat-card-header>
+                      <mat-card-title>
+                        Attribute {{i+1}}
+                      </mat-card-title>
+                    </mat-card-header>
+
+                    <mat-card-content>
+
+                      <mat-form-field class="full-width">
+                        <mat-label>Attribute</mat-label>
+                        <select matNativeControl formControlName="attributeId" required>
+                          <option *ngFor="let attribute of attributes" [value]="attribute.value">{{attribute.name}}
+                          </option>
+                        </select>
+                      </mat-form-field>
+
+                      <mat-form-field class="full-width">
+                        <input matInput placeholder="text" formControlName="text" required>
+                        <mat-error *ngIf="formErrors.text">{{formErrors.text}}</mat-error>
+                      </mat-form-field>
+
+
+                    </mat-card-content>
+
+                    <mat-card-actions>
+                      <button type="button" mat-button (click)="delAttribute(i)">
+                        <i class="material-icons">delete</i>
+                      </button>
+                    </mat-card-actions>
+
+                  </div>
+                </mat-card>
+              </div>
+              <!-- end attributes section -->
+
+
 
               <div class="button-group">
                 <button mat-raised-button matStepperPrevious color="light">Back</button>

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/providers/product/product.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -29,11 +29,29 @@ export class ProductFormComponent implements OnInit {
   errorMessage = '';
 
   categories: any = [];
+  attributes: any = [];
 
+  public productAttributes: FormArray;
 
-  getSelectedOptions(selected: any[]) {
-    this.selectedCategories = selected;
-    this.fourthFormGroup.setValue({ categories: this.selectedCategories });
+  get formAttributeData() {
+    return (this.fourthFormGroup.get('productAttributes') as FormArray).controls;
+  }
+
+  createAttribute(attributeId, text): FormGroup {
+    return this.formBuilder.group({
+      attributeId: new FormControl(attributeId),
+      text: new FormControl(text),
+    });
+  }
+
+  addAttribute(): void {
+    this.productAttributes = <FormArray>this.fourthFormGroup.controls['productAttributes'];
+    this.productAttributes.push(this.createAttribute('', ''));
+  }
+
+  delAttribute(index: number): void {
+    const arrayControl = <FormArray>this.fourthFormGroup.controls['productAttributes'];
+    arrayControl.removeAt(index);
   }
 
   onResetSelection() {
@@ -146,6 +164,7 @@ export class ProductFormComponent implements OnInit {
 
 
     this.getCategories();
+    this.getAttributes();
 
     this.firstFormGroup = this.formBuilder.group({
       type: [this.type, Validators.required],
@@ -181,6 +200,7 @@ export class ProductFormComponent implements OnInit {
 
     this.fourthFormGroup = this.formBuilder.group({
       category: [this.selectedCategories],
+      productAttributes: this.formBuilder.array([])
     });
 
     this.setErrors();
@@ -194,10 +214,21 @@ export class ProductFormComponent implements OnInit {
 
   getCategories() {
     this.categoryService.list({}).subscribe(response => {
-// tslint:disable-next-line: prefer-for-of
+      // tslint:disable-next-line: prefer-for-of
       for (let index = 0; index < response.data.length; index++) {
         this.categories.push({
-          display: response.data[index].name,
+          name: response.data[index].name,
+          value: response.data[index].id,
+        });
+      }
+    });
+  }
+  getAttributes() {
+    this.attributeService.list({}).subscribe(response => {
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < response.data.length; index++) {
+        this.attributes.push({
+          name: response.data[index].name,
           value: response.data[index].id,
         });
       }
@@ -403,6 +434,20 @@ export class ProductFormComponent implements OnInit {
           for (let index = 0; index < response.data.categories.length; index++) {
             this.selectedCategories.push(response.data.categories[index].id);
           }
+
+
+          this.productAttributes = this.fourthFormGroup.get('productAttributes') as FormArray;
+
+          if (response.data.attributes) {
+            response.data.attributes.forEach(element => {
+              this.productAttributes.push(
+                this.createAttribute(
+                  element.attribute_id,
+                  element.text
+                )
+              );
+            });
+          }
         }
       },
       err => {
@@ -478,7 +523,8 @@ export class ProductFormComponent implements OnInit {
         weightClassId: this.thirdFormGroup.value.weightClassId,
         weight: this.thirdFormGroup.value.weight,
 
-        categories: this.fourthFormGroup.value.category
+        categories: this.fourthFormGroup.value.category,
+        productAttributes: this.fourthFormGroup.value.productAttributes
       };
 
       this.masterService.save(data, this.getId()).subscribe(
