@@ -15,7 +15,9 @@ import { WeightService } from 'src/app/providers/unit/weight.service';
 import { AttributeService } from 'src/app/providers/product/attribute.service';
 import { CategoryService } from 'src/app/providers/product/category.service';
 
-import { SelectAutocompleteComponent } from 'mat-select-autocomplete';
+class ImageSnippet {
+  constructor(public src: string, public file: File) { }
+}
 
 @Component({
   selector: 'app-product-form',
@@ -78,6 +80,8 @@ export class ProductFormComponent implements OnInit {
   priceTypes: { value: string; text: string; }[];
   price: any;
   image: any;
+  imageThumb: any;
+  selectedFile: ImageSnippet;
   description: any;
   text: any;
   taxClass: { id: any; name: any; };
@@ -167,6 +171,7 @@ export class ProductFormComponent implements OnInit {
     this.getAttributes();
 
     this.firstFormGroup = this.formBuilder.group({
+      image: [this.image],
       type: [this.type, Validators.required],
       typeId: [this.typeId, Validators.required],
       manufacture: [this.manufacture, Validators.required],
@@ -210,6 +215,29 @@ export class ProductFormComponent implements OnInit {
     this.getTaxClassAutocomplete();
     this.getLengthAutocomplete();
     this.getWeightAutocomplete();
+  }
+
+  uploadImage(imageInput: any) {
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', (event: any) => {
+
+      this.selectedFile = new ImageSnippet(event.target.result, file);
+
+      this.masterService.imageUpload(this.selectedFile.file).subscribe(
+        (res) => {
+          console.log(res);
+
+          this.image = res.data.base_path;
+          this.imageThumb = res.data.full_path;
+        },
+        (err) => {
+          console.log(err);
+        });
+    });
+
+    reader.readAsDataURL(file);
   }
 
   getCategories() {
@@ -403,9 +431,10 @@ export class ProductFormComponent implements OnInit {
           this.model = response.data.model;
           this.sku = response.data.sku;
           this.name = response.data.name;
+          this.image = response.data.image;
+          this.imageThumb = response.data.image_thumb;
           this.priceType = response.data.price_type;
           this.price = response.data.price;
-          this.name = response.data.name;
           this.description = response.data.description;
           this.text = response.data.text;
           this.taxClassId = response.data.tax_class_id;
@@ -500,6 +529,7 @@ export class ProductFormComponent implements OnInit {
     if (this.isFormValid()) {
 
       const data = {
+        image: this.firstFormGroup.value.image,
         typeId: this.firstFormGroup.value.typeId,
         manufactureId: this.firstFormGroup.value.manufactureId,
         code: this.firstFormGroup.value.code,

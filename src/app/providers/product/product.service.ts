@@ -83,6 +83,7 @@ export class ProductService {
     if (id !== 'new') {
       this.formData.append('id', id);
     }
+    this.formData.append('image', data.image);
     this.formData.append('type_id', data.typeId);
     this.formData.append('manufacture_id', data.manufactureId);
     this.formData.append('code', data.code);
@@ -105,6 +106,16 @@ export class ProductService {
     this.formData.append('inventory', data.inventory);
     this.formData.append('categories', JSON.stringify(data.categories));
     this.formData.append('attributes', JSON.stringify(data.productAttributes));
+    return this.http.post<any>(this.url, this.formData).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.configService.handleError)
+    );
+  }
+
+  public imageUpload(image: File) {
+    this.formData = new FormData();
+    this.url = `${environment.url}product/products/image_upload`;
+    this.formData.append('userfile', image);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

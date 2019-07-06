@@ -1,6 +1,7 @@
-<mat-grid-list cols="2" rowHeight="2:1">
 
-    <mat-grid-tile>
+<br>
+<div class="row">
+    <div class="col-md-6">
         <mat-card>
             <mat-card-title>
                 <mat-icon class="example-icon">account_box</mat-icon> User Module
@@ -10,9 +11,9 @@
                 <button mat-raised-button type="button" color="primary" [routerLink]="'/users'">more...</button>
             </mat-card-actions>
         </mat-card>
-    </mat-grid-tile>
+    </div>
 
-    <mat-grid-tile>
+    <div class="col-md-6">
         <mat-card>
             <mat-card-title>
                 <mat-icon class="example-icon">account_box</mat-icon> Product Module
@@ -22,9 +23,12 @@
                 <button mat-raised-button type="button" color="primary" [routerLink]="'/products'">more...</button>
             </mat-card-actions>
         </mat-card>
-    </mat-grid-tile>
+    </div>
+</div>
 
-    <mat-grid-tile>
+<br>
+<div class="row">
+    <div class="col-md-6">
         <mat-card>
             <mat-card-title>
                 <mat-icon class="example-icon">account_box</mat-icon> Customer Module
@@ -34,9 +38,8 @@
                 <button mat-raised-button type="button" color="primary" [routerLink]="'/customers'">more...</button>
             </mat-card-actions>
         </mat-card>
-    </mat-grid-tile>
-
-    <mat-grid-tile>
+    </div>
+    <div class="col-md-6">
         <mat-card>
             <mat-card-title>
                 <mat-icon class="example-icon">account_box</mat-icon> Order Module
@@ -46,5 +49,5 @@
                 <button mat-raised-button type="button" color="primary" [routerLink]="'/orders'">more...</button>
             </mat-card-actions>
         </mat-card>
-    </mat-grid-tile>
-</mat-grid-list>
+    </div>
+</div>
