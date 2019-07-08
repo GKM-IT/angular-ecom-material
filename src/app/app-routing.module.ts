@@ -71,6 +71,10 @@ import { UserGroupListComponent } from './module/user/user-group/user-group-list
 import { UserGroupFormComponent } from './module/user/user-group/user-group-form/user-group-form.component';
 import { LocationListComponent } from './module/location/location/location-list/location-list.component';
 import { LocationFormComponent } from './module/location/location/location-form/location-form.component';
+import { TotalSalesComponent } from './module/report/total-sales/total-sales.component';
+import { TotalSalesDayComponent } from './module/report/total-sales-day/total-sales-day.component';
+import { TotalSalesMonthComponent } from './module/report/total-sales-month/total-sales-month.component';
+import { TotalSalesYearComponent } from './module/report/total-sales-year/total-sales-year.component';
 
 
 
@@ -141,7 +145,11 @@ const adminChildRoutes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: 'user/:id', component: UserFormComponent },
   { path: 'user-groups', component: UserGroupListComponent },
-  { path: 'user-group/:id', component: UserGroupFormComponent }
+  { path: 'user-group/:id', component: UserGroupFormComponent },
+  { path: 'total-sales', component: TotalSalesComponent },
+  { path: 'total-sales-day', component: TotalSalesDayComponent },
+  { path: 'total-sales-month', component: TotalSalesMonthComponent },
+  { path: 'total-sales-year', component: TotalSalesYearComponent },
 ];
 
 const routes: Routes = [

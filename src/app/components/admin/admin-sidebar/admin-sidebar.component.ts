@@ -210,6 +210,29 @@ export class AdminSidebarComponent implements OnInit {
       ]
     });
 
+    this.menuData.push({
+      name: 'Report Module',
+      icon: 'account_circle',
+      chidren: [
+        {
+          name: 'Total Sales',
+          link: '/total-sales',
+        },
+        {
+          name: 'Total Sales Day',
+          link: '/total-sales-day',
+        },
+        {
+          name: 'Total Sales Month',
+          link: '/total-sales-month',
+        },
+        {
+          name: 'Total Sales Year',
+          link: '/total-sales-year',
+        },
+      ]
+    });
+
 
   }
 

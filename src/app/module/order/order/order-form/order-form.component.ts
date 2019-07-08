@@ -4,6 +4,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { OrderTypeService } from 'src/app/providers/order/order-type.service';
+import { CustomerService } from 'src/app/providers/customer/customer.service';
+import { OrderStatusService } from 'src/app/providers/order/order-status.service';
 
 @Component({
   selector: 'app-order-form',
@@ -28,6 +31,9 @@ export class OrderFormComponent implements OnInit {
 
   constructor(
     public masterService: OrderService,
+    public orderTypeService: OrderTypeService,
+    public orderStatusService: OrderStatusService,
+    public customerService: CustomerService,
     private formBuilder: FormBuilder,
     private formService: FormService,
     private router: Router,
