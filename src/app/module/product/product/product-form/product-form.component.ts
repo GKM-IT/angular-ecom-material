@@ -103,6 +103,7 @@ export class ProductFormComponent implements OnInit {
   isLoading = false;
 
   public formErrors = {
+    image: '',
     type: '',
     manufacture: '',
     code: '',
