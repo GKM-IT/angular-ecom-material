@@ -99,6 +99,7 @@ export class CityListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.masterService.deleteAll(this.selection.selected).subscribe(response => {
+            this.getData();
             this.snackBar.open(response.message, 'X', {
               duration: 2000,
             });
@@ -121,6 +122,7 @@ export class CityListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.masterService.delete(row.id).subscribe(response => {
+          this.getData();
           this.snackBar.open(response.message, 'X', {
             duration: 2000,
           });

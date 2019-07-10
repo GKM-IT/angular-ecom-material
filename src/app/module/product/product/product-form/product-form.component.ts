@@ -14,11 +14,7 @@ import { LengthService } from 'src/app/providers/unit/length.service';
 import { WeightService } from 'src/app/providers/unit/weight.service';
 import { AttributeService } from 'src/app/providers/product/attribute.service';
 import { CategoryService } from 'src/app/providers/product/category.service';
-
-class ImageSnippet {
-  constructor(public src: string, public file: File) { }
-}
-
+import { ImageSnippet } from 'src/app/model/image-snippet';
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
