@@ -10,6 +10,10 @@
   <i class="material-icons">delete</i>
 </button>
 
+<button mat-button (click)="getData()">
+  <i class="material-icons">refresh</i>
+</button>
+
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
 
   <ng-container matColumnDef="select">

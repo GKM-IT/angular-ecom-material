@@ -4,6 +4,13 @@
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
   </div>
+
+  <div class="col-md-6">
+    <button mat-button (click)="getData()">
+      <i class="material-icons">refresh</i>
+    </button>
+  </div>
+
 </div>
 
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">

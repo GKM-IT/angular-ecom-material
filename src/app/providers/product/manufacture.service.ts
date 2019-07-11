@@ -83,6 +83,19 @@ export class ManufactureService {
       this.formData.append('id', id);
     }
     this.formData.append('name', data.name);
+    this.formData.append('image', data.image);
+    return this.http.post<any>(this.url, this.formData).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.configService.handleError)
+    );
+  }
+  public imageUpload(image: File) {
+    this.formData = new FormData();
+    this.url = `${environment.url}common/ImageUpload`;
+    this.formData.append('userfile', image);
+    this.formData.append('filepath', 'manufactures');
+    this.formData.append('filename', 'manufacture');
+
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

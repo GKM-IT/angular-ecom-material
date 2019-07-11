@@ -30,9 +30,20 @@
           </mat-autocomplete>
         </mat-form-field>
 
+        <div (click)="imageInput.click()">
+          <img src="{{imageThumb}}" width="100" height="100" />
+          <input #imageInput type="file" accept="image/*" (change)="uploadImage(imageInput)" style="display:none">
+        </div>
+
+
         <mat-form-field class="full-width">
-          <input matInput placeholder="parent category" formControlName="category" required [matAutocomplete]="categoryAuto"
-            [(ngModel)]="category">
+          <input matInput placeholder="image" formControlName="image" [(ngModel)]="image" required>
+          <mat-error *ngIf="formErrors.image">{{formErrors.image}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="parent category" formControlName="category" required
+            [matAutocomplete]="categoryAuto" [(ngModel)]="category">
           <input type="hidden" formControlName="categoryId" [(ngModel)]="categoryId">
           <mat-error *ngIf="formErrors.category">{{formErrors.category}}</mat-error>
           <mat-autocomplete #categoryAuto="matAutocomplete" [displayWith]="displayFn"

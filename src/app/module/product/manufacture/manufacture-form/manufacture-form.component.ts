@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ImageSnippet } from 'src/app/model/image-snippet';
 
 @Component({
   selector: 'app-manufacture-form',
@@ -19,11 +20,15 @@ export class ManufactureFormComponent implements OnInit {
   public messageTitle: string;
   hide = true;
   name;
+  image: any;
+  imageThumb: any;
+  selectedFile: ImageSnippet;
 
 
   public form: FormGroup;
   public formErrors = {
     name: '',
+    image: '',
   };
 
   constructor(
@@ -52,6 +57,7 @@ export class ManufactureFormComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       name: [this.name, Validators.required],
+      image: [this.image],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -68,12 +74,38 @@ export class ManufactureFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.name = response.data.name;
+          this.image = response.data.image;
+          this.imageThumb = response.data.image_thumb;
         }
       },
       err => {
         console.error(err);
       }
     );
+  }
+
+
+  uploadImage(imageInput: any) {
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', (event: any) => {
+
+      this.selectedFile = new ImageSnippet(event.target.result, file);
+
+      this.masterService.imageUpload(this.selectedFile.file).subscribe(
+        (res) => {
+          console.log(res);
+
+          this.image = res.data.base_path;
+          this.imageThumb = res.data.full_path;
+        },
+        (err) => {
+          console.log(err);
+        });
+    });
+
+    reader.readAsDataURL(file);
   }
 
 

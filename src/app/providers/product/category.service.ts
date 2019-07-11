@@ -85,6 +85,19 @@ export class CategoryService {
     this.formData.append('type_id', data.typeId);
     this.formData.append('parent_id', data.categoryId);
     this.formData.append('name', data.name);
+    this.formData.append('image', data.image);
+    return this.http.post<any>(this.url, this.formData).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.configService.handleError)
+    );
+  }
+
+  public imageUpload(image: File) {
+    this.formData = new FormData();
+    this.url = `${environment.url}common/ImageUpload`;
+    this.formData.append('filepath', 'categories');
+    this.formData.append('filename', 'category');
+
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

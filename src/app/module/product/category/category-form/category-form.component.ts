@@ -8,7 +8,7 @@ import { TypeService } from 'src/app/providers/catalog/type.service';
 import { Constant } from 'src/app/helper/constant';
 import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-
+import { ImageSnippet } from 'src/app/model/image-snippet';
 @Component({
   selector: 'app-category-form',
   templateUrl: './category-form.component.html',
@@ -23,6 +23,9 @@ export class CategoryFormComponent implements OnInit {
   public messageTitle: string;
   hide = true;
   name;
+  image: any;
+  imageThumb: any;
+  selectedFile: ImageSnippet;
   type;
   typeId;
   types;
@@ -36,6 +39,7 @@ export class CategoryFormComponent implements OnInit {
     name: '',
     type: '',
     category: '',
+    image: '',
   };
 
   constructor(
@@ -69,6 +73,7 @@ export class CategoryFormComponent implements OnInit {
       type: [this.type, Validators.required],
       categoryId: [this.categoryId],
       category: [this.category, Validators.required],
+      image: [this.image],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -81,6 +86,29 @@ export class CategoryFormComponent implements OnInit {
 
     this.getAutocomplete();
     this.getCategoryAutocomplete();
+  }
+
+  uploadImage(imageInput: any) {
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', (event: any) => {
+
+      this.selectedFile = new ImageSnippet(event.target.result, file);
+
+      this.masterService.imageUpload(this.selectedFile.file).subscribe(
+        (res) => {
+          console.log(res);
+
+          this.image = res.data.base_path;
+          this.imageThumb = res.data.full_path;
+        },
+        (err) => {
+          console.log(err);
+        });
+    });
+
+    reader.readAsDataURL(file);
   }
 
   getAutocomplete() {
@@ -152,6 +180,8 @@ export class CategoryFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.name = response.data.name;
+          this.image = response.data.image;
+          this.imageThumb = response.data.image_thumb;
           this.type = {
             id: response.data.type_id,
             name: response.data.type
