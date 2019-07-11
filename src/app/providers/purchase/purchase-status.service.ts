@@ -21,7 +21,7 @@ export class PurchaseStatusService {
   public list(data: any) {
     this.formData = new FormData();
 
-    if (data.search && isString(data.search)) {
+    if (data.search && typeof data.search === 'string') {
       this.formData.append('search', data.search);
     }
     if (data.pageSize) {

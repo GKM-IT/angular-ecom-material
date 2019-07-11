@@ -21,7 +21,7 @@ export class ZoneService {
   public list(data: any) {
     this.formData = new FormData();
 
-    if (data.search && isString(data.search)) {
+    if (data.search && typeof data.search === 'string') {
       this.formData.append('search', data.search);
     }
     if (data.pageSize) {
@@ -59,19 +59,9 @@ export class ZoneService {
   }
 
   public delete(id: any) {
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT');
-    headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Headers', '*');
 
-    this.url = `${environment.url}location/zones/${id}`;
-    const options = {
-      headers,
-      body: {}
-    }
-    return this.http.delete<any>(this.url, options).pipe(
+    this.url = `${environment.url}location/zones/delete/${id}`;
+    return this.http.get<any>(this.url).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
     );
