@@ -16,7 +16,7 @@ import { CustomerGroupService } from 'src/app/providers/customer/customer-group.
 })
 export class CustomerFormComponent implements OnInit {
 
-  public pageHeading = 'customer Form';
+  public pageHeading = 'Customer Form';
   public data: any;
   public status: any;
   public message: any;

@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AttributeGroupFormComponent implements OnInit {
 
 
-  public pageHeading = 'Rating Form';
+  public pageHeading = 'Attribute Group Form';
   public data: any;
   public status: any;
   public message: any;

@@ -18,7 +18,7 @@ import { RatingService } from 'src/app/providers/catalog/rating.service';
 })
 export class ProductReviewFormComponent implements OnInit {
 
-  public pageHeading = 'Review Form';
+  public pageHeading = 'Product Review Form';
   public data: any;
   public status: any;
   public message: any;

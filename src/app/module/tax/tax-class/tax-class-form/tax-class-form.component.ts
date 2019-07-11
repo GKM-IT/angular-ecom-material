@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class TaxClassFormComponent implements OnInit {
 
 
-  public pageHeading = 'tax-classes Form';
+  public pageHeading = 'Tax Classes Form';
   public data: any;
   public status: any;
   public message: any;

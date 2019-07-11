@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class PurchaseFormComponent implements OnInit {
 
-  public pageHeading = 'purchase Type Form';
+  public pageHeading = 'Purchase Form';
   public data: any;
   public status: any;
   public message: any;

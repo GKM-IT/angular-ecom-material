@@ -56,7 +56,7 @@ export class ProductFormComponent implements OnInit {
     this.selectedCategories = [];
   }
 
-  public pageHeading = 'product Form';
+  public pageHeading = 'Product Form';
   public data: any;
   public status: any;
   public message: any;

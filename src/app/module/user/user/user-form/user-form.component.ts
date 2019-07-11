@@ -16,7 +16,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 })
 export class UserFormComponent implements OnInit {
 
-  public pageHeading = 'user Form';
+  public pageHeading = 'User Form';
   public data: any;
   public status: any;
   public message: any;

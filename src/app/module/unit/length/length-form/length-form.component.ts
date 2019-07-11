@@ -12,8 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LengthFormComponent implements OnInit {
 
-
-  public pageHeading = 'length Class Form';
+  public pageHeading = 'Length Class Form';
   public data: any;
   public status: any;
   public message: any;

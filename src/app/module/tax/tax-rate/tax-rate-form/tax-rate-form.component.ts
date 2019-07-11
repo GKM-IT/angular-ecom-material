@@ -15,9 +15,7 @@ import { TaxClassService } from 'src/app/providers/tax/tax-class.service';
   styleUrls: ['./tax-rate-form.component.css']
 })
 export class TaxRateFormComponent implements OnInit {
-
-
-  public pageHeading = 'tax-classes Form';
+  public pageHeading = 'Tax Rate Form';
   public data: any;
   public status: any;
   public message: any;

@@ -12,7 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class WeightFormComponent implements OnInit {
 
-
   public pageHeading = 'Weight Class Form';
   public data: any;
   public status: any;

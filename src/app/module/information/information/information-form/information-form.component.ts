@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class InformationFormComponent implements OnInit {
 
-  public pageHeading = 'information Form';
+  public pageHeading = 'Information Form';
   public data: any;
   public status: any;
   public message: any;

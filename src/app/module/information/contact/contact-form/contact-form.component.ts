@@ -16,7 +16,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 })
 export class ContactFormComponent implements OnInit {
 
-  public pageHeading = 'contact Form';
+  public pageHeading = 'Contact Form';
   public data: any;
   public status: any;
   public message: any;

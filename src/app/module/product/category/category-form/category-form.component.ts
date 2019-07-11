@@ -72,7 +72,7 @@ export class CategoryFormComponent implements OnInit {
       typeId: [this.typeId],
       type: [this.type, Validators.required],
       categoryId: [this.categoryId],
-      category: [this.category, Validators.required],
+      category: [this.category],
       image: [this.image],
     });
 

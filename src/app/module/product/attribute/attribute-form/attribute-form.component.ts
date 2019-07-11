@@ -17,7 +17,7 @@ import { AttributeGroupService } from 'src/app/providers/product/attribute-group
 export class AttributeFormComponent implements OnInit {
 
 
-  public pageHeading = 'Rating Form';
+  public pageHeading = 'Attribute Form';
   public data: any;
   public status: any;
   public message: any;

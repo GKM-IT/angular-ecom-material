@@ -12,7 +12,7 @@ import { PurchaseStatusService } from 'src/app/providers/purchase/purchase-statu
 })
 export class PurchaseStatusFormComponent implements OnInit {
 
-  public pageHeading = 'purchase Type Form';
+  public pageHeading = 'Purchase Status Form';
   public data: any;
   public status: any;
   public message: any;
