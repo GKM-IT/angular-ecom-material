@@ -15,6 +15,7 @@ import { WeightService } from 'src/app/providers/unit/weight.service';
 import { AttributeService } from 'src/app/providers/product/attribute.service';
 import { CategoryService } from 'src/app/providers/product/category.service';
 import { ImageSnippet } from 'src/app/model/image-snippet';
+import { CustomerGroupService } from 'src/app/providers/customer/customer-group.service';
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
@@ -28,33 +29,11 @@ export class ProductFormComponent implements OnInit {
 
   categories: any = [];
   attributes: any = [];
+  customerGroups: any = [];
+  prices: any = [];
 
   public productAttributes: FormArray;
-
-  get formAttributeData() {
-    return (this.fourthFormGroup.get('productAttributes') as FormArray).controls;
-  }
-
-  createAttribute(attributeId, text): FormGroup {
-    return this.formBuilder.group({
-      attributeId: new FormControl(attributeId),
-      text: new FormControl(text),
-    });
-  }
-
-  addAttribute(): void {
-    this.productAttributes = <FormArray>this.fourthFormGroup.controls['productAttributes'];
-    this.productAttributes.push(this.createAttribute('', ''));
-  }
-
-  delAttribute(index: number): void {
-    const arrayControl = <FormArray>this.fourthFormGroup.controls['productAttributes'];
-    arrayControl.removeAt(index);
-  }
-
-  onResetSelection() {
-    this.selectedCategories = [];
-  }
+  public productPrices: FormArray;
 
   public pageHeading = 'Product Form';
   public data: any;
@@ -127,6 +106,59 @@ export class ProductFormComponent implements OnInit {
   thirdFormGroup: FormGroup;
   fourthFormGroup: FormGroup;
 
+  // product prices
+  get formPriceData() {
+    return (this.fourthFormGroup.get('productPrices') as FormArray).controls;
+  }
+
+  createPrice(customerGroupId, price, start, end): FormGroup {
+    return this.formBuilder.group({
+      customerGroupId: new FormControl(customerGroupId),
+      price: new FormControl(price),
+      start: new FormControl(start),
+      end: new FormControl(end),
+    });
+  }
+
+  addPrice(): void {
+    this.productPrices = <FormArray>this.fourthFormGroup.controls['productPrices'];
+    this.productPrices.push(this.createPrice('', '', '', ''));
+  }
+
+  delPrice(index: number): void {
+    const arrayControl = <FormArray>this.fourthFormGroup.controls['productPrices'];
+    arrayControl.removeAt(index);
+  }
+  // end product prices
+
+  // product attributes
+  get formAttributeData() {
+    return (this.fourthFormGroup.get('productAttributes') as FormArray).controls;
+  }
+
+  createAttribute(attributeId, text): FormGroup {
+    return this.formBuilder.group({
+      attributeId: new FormControl(attributeId),
+      text: new FormControl(text),
+    });
+  }
+
+  addAttribute(): void {
+    this.productAttributes = <FormArray>this.fourthFormGroup.controls['productAttributes'];
+    this.productAttributes.push(this.createAttribute('', ''));
+  }
+
+  delAttribute(index: number): void {
+    const arrayControl = <FormArray>this.fourthFormGroup.controls['productAttributes'];
+    arrayControl.removeAt(index);
+  }
+
+  // end product attributes
+
+  onResetSelection() {
+    this.selectedCategories = [];
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     public masterService: ProductService,
@@ -137,6 +169,7 @@ export class ProductFormComponent implements OnInit {
     public weightService: WeightService,
     public attributeService: AttributeService,
     public categoryService: CategoryService,
+    public customerGroupService: CustomerGroupService,
     private formService: FormService,
     private router: Router,
     public activatedRoute: ActivatedRoute,
@@ -166,6 +199,7 @@ export class ProductFormComponent implements OnInit {
 
     this.getCategories();
     this.getAttributes();
+    this.getCustomerGroups();
 
     this.firstFormGroup = this.formBuilder.group({
       image: [this.image],
@@ -185,10 +219,12 @@ export class ProductFormComponent implements OnInit {
       shipping: [this.shipping, Validators.required],
       inventory: [this.inventory, Validators.required],
     });
+
     this.secondFormGroup = this.formBuilder.group({
       description: [this.description, Validators.required],
       text: [this.text, Validators.required],
     });
+
     this.thirdFormGroup = this.formBuilder.group({
       lengthClassId: [this.lengthClassId, Validators.required],
       lengthClass: [this.lengthClass, Validators.required],
@@ -202,7 +238,8 @@ export class ProductFormComponent implements OnInit {
 
     this.fourthFormGroup = this.formBuilder.group({
       category: [this.selectedCategories],
-      productAttributes: this.formBuilder.array([])
+      productAttributes: this.formBuilder.array([]),
+      productPrices: this.formBuilder.array([])
     });
 
     this.setErrors();
@@ -248,6 +285,19 @@ export class ProductFormComponent implements OnInit {
       }
     });
   }
+
+  getCustomerGroups() {
+    this.customerGroupService.list({}).subscribe(response => {
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < response.data.length; index++) {
+        this.customerGroups.push({
+          name: response.data[index].name,
+          value: response.data[index].id,
+        });
+      }
+    });
+  }
+
   getAttributes() {
     this.attributeService.list({}).subscribe(response => {
       // tslint:disable-next-line: prefer-for-of
@@ -457,6 +507,7 @@ export class ProductFormComponent implements OnInit {
           this.shipping = response.data.shipping ? true : false;
           this.inventory = response.data.inventory ? true : false;
 
+          // tslint:disable-next-line: prefer-for-of
           for (let index = 0; index < response.data.categories.length; index++) {
             this.selectedCategories.push(response.data.categories[index].id);
           }
@@ -474,6 +525,21 @@ export class ProductFormComponent implements OnInit {
               );
             });
           }
+          this.productPrices = this.fourthFormGroup.get('productPrices') as FormArray;
+
+          if (response.data.prices) {
+            response.data.prices.forEach(element => {
+              this.productPrices.push(
+                this.createPrice(
+                  element.customer_group_id,
+                  element.price,
+                  element.start,
+                  element.end,
+                )
+              );
+            });
+          }
+
         }
       },
       err => {
@@ -551,7 +617,8 @@ export class ProductFormComponent implements OnInit {
         weight: this.thirdFormGroup.value.weight,
 
         categories: this.fourthFormGroup.value.category,
-        productAttributes: this.fourthFormGroup.value.productAttributes
+        productAttributes: this.fourthFormGroup.value.productAttributes,
+        prices: this.fourthFormGroup.value.productPrices
       };
 
       this.masterService.save(data, this.getId()).subscribe(

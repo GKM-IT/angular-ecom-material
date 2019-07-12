@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatOptionModule } from '@angular/material/core';
+import { MatOptionModule, MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -29,6 +29,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
 
 @NgModule({
   declarations: [],
@@ -62,7 +64,9 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     MatSortModule,
     MatAutocompleteModule,
     MatStepperModule,
-    EditorModule
+    EditorModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     SelectAutocompleteModule,
@@ -94,7 +98,9 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     MatSortModule,
     MatAutocompleteModule,
     MatStepperModule,
-    EditorModule
+    EditorModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class AppMaterialModule { }
