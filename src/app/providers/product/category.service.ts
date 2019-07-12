@@ -97,7 +97,7 @@ export class CategoryService {
     this.url = `${environment.url}common/ImageUpload`;
     this.formData.append('filepath', 'categories');
     this.formData.append('filename', 'category');
-
+    this.formData.append('userfile', image);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
