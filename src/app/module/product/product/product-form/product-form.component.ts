@@ -16,6 +16,7 @@ import { AttributeService } from 'src/app/providers/product/attribute.service';
 import { CategoryService } from 'src/app/providers/product/category.service';
 import { ImageSnippet } from 'src/app/model/image-snippet';
 import { CustomerGroupService } from 'src/app/providers/customer/customer-group.service';
+
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
@@ -24,6 +25,7 @@ import { CustomerGroupService } from 'src/app/providers/customer/customer-group.
 export class ProductFormComponent implements OnInit {
 
   selectedCategories = [];
+  selectedProducts = [];
   showError = false;
   errorMessage = '';
 
@@ -31,6 +33,7 @@ export class ProductFormComponent implements OnInit {
   attributes: any = [];
   customerGroups: any = [];
   prices: any = [];
+  products: any = [];
 
   public productAttributes: FormArray;
   public productPrices: FormArray;
@@ -54,6 +57,7 @@ export class ProductFormComponent implements OnInit {
   priceType: any;
   priceTypes: { value: string; text: string; }[];
   price: any;
+  mrp: any;
   image: any;
   imageThumb: any;
   selectedFile: ImageSnippet;
@@ -198,6 +202,7 @@ export class ProductFormComponent implements OnInit {
 
 
     this.getCategories();
+    this.getProducts();
     this.getAttributes();
     this.getCustomerGroups();
 
@@ -213,6 +218,7 @@ export class ProductFormComponent implements OnInit {
       name: [this.name, Validators.required],
       priceType: [this.priceType, Validators.required],
       price: [this.price, Validators.required],
+      mrp: [this.mrp, Validators.required],
       taxClass: [this.taxClass, Validators.required],
       taxClassId: [this.taxClassId, Validators.required],
       minimum: [this.minimum, Validators.required],
@@ -238,6 +244,7 @@ export class ProductFormComponent implements OnInit {
 
     this.fourthFormGroup = this.formBuilder.group({
       category: [this.selectedCategories],
+      product: [this.selectedProducts],
       productAttributes: this.formBuilder.array([]),
       productPrices: this.formBuilder.array([])
     });
@@ -279,6 +286,18 @@ export class ProductFormComponent implements OnInit {
       // tslint:disable-next-line: prefer-for-of
       for (let index = 0; index < response.data.length; index++) {
         this.categories.push({
+          name: response.data[index].name,
+          value: response.data[index].id,
+        });
+      }
+    });
+  }
+
+  getProducts() {
+    this.masterService.list({}).subscribe(response => {
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < response.data.length; index++) {
+        this.products.push({
           name: response.data[index].name,
           value: response.data[index].id,
         });
@@ -482,6 +501,7 @@ export class ProductFormComponent implements OnInit {
           this.imageThumb = response.data.image_thumb;
           this.priceType = response.data.price_type;
           this.price = response.data.price;
+          this.mrp = response.data.mrp;
           this.description = response.data.description;
           this.text = response.data.text;
           this.taxClassId = response.data.tax_class_id;
@@ -510,6 +530,10 @@ export class ProductFormComponent implements OnInit {
           // tslint:disable-next-line: prefer-for-of
           for (let index = 0; index < response.data.categories.length; index++) {
             this.selectedCategories.push(response.data.categories[index].id);
+          }
+          // tslint:disable-next-line: prefer-for-of
+          for (let index = 0; index < response.data.related_products.length; index++) {
+            this.selectedProducts.push(response.data.related_products[index].id);
           }
 
 
@@ -601,6 +625,7 @@ export class ProductFormComponent implements OnInit {
         name: this.firstFormGroup.value.name,
         priceType: this.firstFormGroup.value.priceType,
         price: this.firstFormGroup.value.price,
+        mrp: this.firstFormGroup.value.mrp,
         taxClassId: this.firstFormGroup.value.taxClassId,
         minimum: this.firstFormGroup.value.minimum,
         shipping: this.firstFormGroup.value.shipping,
@@ -618,7 +643,8 @@ export class ProductFormComponent implements OnInit {
 
         categories: this.fourthFormGroup.value.category,
         productAttributes: this.fourthFormGroup.value.productAttributes,
-        prices: this.fourthFormGroup.value.productPrices
+        prices: this.fourthFormGroup.value.productPrices,
+        relatedProducts: this.fourthFormGroup.value.product
       };
 
       this.masterService.save(data, this.getId()).subscribe(

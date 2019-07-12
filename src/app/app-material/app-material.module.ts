@@ -30,10 +30,12 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   imports: [
     SelectAutocompleteModule,
     MatButtonModule,
@@ -66,7 +68,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatStepperModule,
     EditorModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatMomentDateModule
   ],
   exports: [
     SelectAutocompleteModule,
@@ -100,7 +103,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatStepperModule,
     EditorModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatMomentDateModule
   ]
 })
 export class AppMaterialModule { }

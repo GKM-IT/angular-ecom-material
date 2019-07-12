@@ -92,6 +92,7 @@ export class ProductService {
     this.formData.append('name', data.name);
     this.formData.append('price_type', data.priceType);
     this.formData.append('price', data.price);
+    this.formData.append('mrp', data.mrp);
     this.formData.append('description', data.description);
     this.formData.append('text', data.text);
     this.formData.append('tax_class_id', data.taxClassId);
@@ -105,6 +106,7 @@ export class ProductService {
     this.formData.append('shipping', data.shipping);
     this.formData.append('inventory', data.inventory);
     this.formData.append('categories', JSON.stringify(data.categories));
+    this.formData.append('relatedProducts', JSON.stringify(data.relatedProducts));
     this.formData.append('attributes', JSON.stringify(data.productAttributes));
     this.formData.append('prices', JSON.stringify(data.prices));
     return this.http.post<any>(this.url, this.formData).pipe(

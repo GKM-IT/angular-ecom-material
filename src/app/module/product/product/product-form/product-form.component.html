@@ -126,7 +126,10 @@
                   <mat-error *ngIf="formErrors.sku">{{formErrors.sku}}</mat-error>
                 </mat-form-field>
 
-
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="mrp" formControlName="mrp" [(ngModel)]="mrp" required>
+                  <mat-error *ngIf="formErrors.mrp">{{formErrors.mrp}}</mat-error>
+                </mat-form-field>
 
                 <mat-form-field class="full-width">
                   <mat-label>price type</mat-label>
@@ -252,6 +255,8 @@
 
             <div class="row">
               <div class="col-md-6">
+
+                <!-- product category -->
                 <mat-card>
                   <mat-card-header>
                     <mat-card-title>
@@ -259,12 +264,6 @@
                     </mat-card-title>
                   </mat-card-header>
                   <mat-card-content>
-                    <!-- <mat-select-autocomplete class="full-width" [placeholder]="'Category Selection'" [errorMsg]="formErrors.category"
-                [showErrorMsg]="formErrors.category" [options]="categories" [display]="'display'" [value]="'value'" [labelCount]="2"
-                [multiple]='true' [selectedOptions]="selectedCategories"
-                ngDefaultControl
-                [formControl]="fourthFormGroup.controls['category']">
-              </mat-select-autocomplete> -->
                     <mat-select-autocomplete class="full-width" [placeholder]="'Category Selection'"
                       [options]="categories" [display]="'name'" [value]="'value'" [multiple]='true'
                       [selectedOptions]="selectedCategories" ngDefaultControl name="category"
@@ -272,6 +271,7 @@
                     </mat-select-autocomplete>
                   </mat-card-content>
                 </mat-card>
+                <!-- end product category -->
 
                 <!-- product price section -->
                 <mat-card>
@@ -345,6 +345,22 @@
 
               </div>
               <div class="col-md-6">
+                <!-- product related -->
+                <mat-card>
+                  <mat-card-header>
+                    <mat-card-title>
+                      Related Product
+                    </mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <mat-select-autocomplete class="full-width" [placeholder]="'Product Selection'" [options]="products"
+                      [display]="'name'" [value]="'value'" [multiple]='true' [selectedOptions]="selectedProducts"
+                      ngDefaultControl name="product" [formControl]="fourthFormGroup.controls['product']">
+                    </mat-select-autocomplete>
+                  </mat-card-content>
+                </mat-card>
+                <!-- end product related -->
+
                 <!-- attributes section -->
                 <mat-card>
                   <mat-card-header>
