@@ -35,6 +35,7 @@ import { InformationListComponent } from './module/information/information/infor
 import { InformationFormComponent } from './module/information/information/information-form/information-form.component';
 import { OrderListComponent } from './module/order/order/order-list/order-list.component';
 import { OrderFormComponent } from './module/order/order/order-form/order-form.component';
+import { OrderDetailComponent } from './module/order/order/order-detail/order-detail.component';
 import { OrderStatusListComponent } from './module/order/order-status/order-status-list/order-status-list.component';
 import { OrderStatusFormComponent } from './module/order/order-status/order-status-form/order-status-form.component';
 import { OrderTypeListComponent } from './module/order/order-type/order-type-list/order-type-list.component';
@@ -78,6 +79,7 @@ import { TotalSalesYearComponent } from './module/report/total-sales-year/total-
 
 
 
+
 const adminChildRoutes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'banners', component: BannerListComponent },
@@ -112,6 +114,7 @@ const adminChildRoutes: Routes = [
   { path: 'location/:id', component: LocationFormComponent },
   { path: 'orders', component: OrderListComponent },
   { path: 'order/:id', component: OrderFormComponent },
+  { path: 'order-detail/:id', component: OrderDetailComponent },
   { path: 'order-statuses', component: OrderStatusListComponent },
   { path: 'order-status/:id', component: OrderStatusFormComponent },
   { path: 'order-types', component: OrderTypeListComponent },

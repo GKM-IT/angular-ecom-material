@@ -10,9 +10,10 @@ import { OrderStatusFormComponent } from './order-status/order-status-form/order
 import { HttpClientModule } from '@angular/common/http';
 import { AppMaterialModule } from 'src/app/app-material/app-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrderDetailComponent } from './order/order-detail/order-detail.component';
 
 @NgModule({
-  declarations: [OrderListComponent, OrderFormComponent, OrderTypeListComponent, OrderTypeFormComponent, OrderStatusListComponent, OrderStatusFormComponent],
+  declarations: [OrderListComponent, OrderFormComponent, OrderTypeListComponent, OrderTypeFormComponent, OrderStatusListComponent, OrderStatusFormComponent, OrderDetailComponent],
   imports: [
     CommonModule,
     AppMaterialModule,

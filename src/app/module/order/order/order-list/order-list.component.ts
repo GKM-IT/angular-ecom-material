@@ -133,6 +133,9 @@ export class OrderListComponent implements OnInit {
   edit(row) {
     this.router.navigate(['/order/', row.id]);
   }
+  detail(row) {
+    this.router.navigate(['/order-detail/', row.id]);
+  }
 
   add() {
     this.router.navigate(['/order/', 'new']);

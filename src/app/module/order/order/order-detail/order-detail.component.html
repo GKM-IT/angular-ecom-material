@@ -1,0 +1,125 @@
+<div class="main-div">
+
+  <table class="table table-border">
+    <thead>
+      <tr>
+        <td colspan="3">
+
+          <table>
+            <tr>
+              <th>name</th>
+              <td>{{name}}</td>
+            </tr>
+            <tr>
+              <th>email</th>
+              <td>{{email}}</td>
+            </tr>
+            <tr>
+              <th>contact</th>
+              <td>{{contact}}</td>
+            </tr>
+
+          </table>
+
+        </td>
+        <td colspan="3">
+
+          <table>
+            <tr>
+              <th>Order Type</th>
+              <td>{{orderType}}</td>
+            </tr>
+            <tr>
+              <th>Order Status</th>
+              <td>{{orderStatus}}</td>
+            </tr>
+            <tr>
+              <th>Order Date</th>
+              <td>{{createdAt}}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <table>
+            <tr>
+              <th>Person Name</th>
+              <td>{{personName}}</td>
+            </tr>
+            <tr>
+              <th>Person Contact</th>
+              <td>{{personContact}}</td>
+            </tr>
+            <tr>
+              <th>Postcode</th>
+              <td>{{postcode}}</td>
+            </tr>
+          </table>
+        </td>
+        <td colspan="3">
+          <table>
+            <tr>
+              <th>Country</th>
+              <td>{{country}}</td>
+            </tr>
+            <tr>
+              <th>Zone</th>
+              <td>{{zone}}</td>
+            </tr>
+            <tr>
+              <th>City</th>
+              <td>{{city}}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <table>
+            <tr>
+              <th>address</th>
+            </tr>
+            <tr>
+              <td>{{address}}</td>
+            </tr>
+          </table>
+        </td>
+        <td colspan="3">
+          <table>
+            <tr>
+              <th>comment</th>
+            </tr>
+            <tr>
+              <td>{{comment}}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>name</th>
+        <th>image</th>
+        <th>quantity</th>
+        <th>price</th>
+        <th>tax</th>
+        <th>total</th>
+      </tr>
+      <tr *ngFor="let product of products;">
+        <td>{{product.product}}</td>
+        <td><img width="50" height="50" src="{{product.product_image}}"></td>
+        <td>{{product.quantity}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.tax}}</td>
+        <td>{{product.total}}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr *ngFor="let total of totals;">
+        <th>{{total.title}}</th>
+        <td>{{total.value}}</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

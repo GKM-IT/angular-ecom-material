@@ -91,6 +91,7 @@ export class ProductFormComponent implements OnInit {
     name: '',
     priceType: '',
     price: '',
+    mrp: '',
     description: '',
     text: '',
     taxClass: '',
