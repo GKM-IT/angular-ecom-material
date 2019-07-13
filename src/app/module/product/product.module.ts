@@ -23,7 +23,7 @@ import { AttributeGroupListComponent } from './attribute-group/attribute-group-l
     AppMaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ProductModule { }

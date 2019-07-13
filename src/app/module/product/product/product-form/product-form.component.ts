@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/providers/product/product.service';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
@@ -16,6 +16,7 @@ import { AttributeService } from 'src/app/providers/product/attribute.service';
 import { CategoryService } from 'src/app/providers/product/category.service';
 import { ImageSnippet } from 'src/app/model/image-snippet';
 import { CustomerGroupService } from 'src/app/providers/customer/customer-group.service';
+import { Dateformat } from 'src/app/helper/dateformat';
 
 @Component({
   selector: 'app-product-form',
@@ -120,8 +121,8 @@ export class ProductFormComponent implements OnInit {
     return this.formBuilder.group({
       customerGroupId: new FormControl(customerGroupId),
       price: new FormControl(price),
-      start: new FormControl(start),
-      end: new FormControl(end),
+      start: new FormControl(new Date(start)),
+      end: new FormControl(new Date(end)),
     });
   }
 
@@ -179,7 +180,9 @@ export class ProductFormComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
+
   ) {
+
     const constant = new Constant();
     this.priceTypes = constant.priceTypes;
 
@@ -616,6 +619,20 @@ export class ProductFormComponent implements OnInit {
     this.markFormGroupTouched();
     if (this.isFormValid()) {
 
+      const dateformat = new Dateformat();
+
+      const prices = [];
+      if (this.fourthFormGroup.value.productPrices) {
+        this.fourthFormGroup.value.productPrices.forEach(element => {
+          prices.push({
+            customerGroupId: element.customerGroupId,
+            price: element.price,
+            start: dateformat.dateConvert(element.start),
+            end: dateformat.dateConvert(element.end),
+          });
+        });
+      }
+
       const data = {
         image: this.firstFormGroup.value.image,
         typeId: this.firstFormGroup.value.typeId,
@@ -644,9 +661,11 @@ export class ProductFormComponent implements OnInit {
 
         categories: this.fourthFormGroup.value.category,
         productAttributes: this.fourthFormGroup.value.productAttributes,
-        prices: this.fourthFormGroup.value.productPrices,
+
+        prices,
         relatedProducts: this.fourthFormGroup.value.product
       };
+
 
       this.masterService.save(data, this.getId()).subscribe(
         response => {

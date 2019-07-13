@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatOptionModule, MatNativeDateModule } from '@angular/material/core';
+import { MatOptionModule, MatNativeDateModule, DateAdapter } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -31,11 +31,9 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   imports: [
     SelectAutocompleteModule,
     MatButtonModule,
@@ -107,4 +105,5 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatMomentDateModule
   ]
 })
-export class AppMaterialModule { }
+export class AppMaterialModule {
+}
