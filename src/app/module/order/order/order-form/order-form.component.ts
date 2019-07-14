@@ -62,6 +62,8 @@ export class OrderFormComponent implements OnInit {
     orderStatusId: '',
     orderStatus: '',
     comment: '',
+    product: '',
+    quantity: ''
   };
 
   firstFormGroup: FormGroup;
