@@ -1,6 +1,6 @@
 <div class="main-div">
 
-  <form (ngSubmit)="onSubmit()" [formGroup]="firstFormGroup">
+  <mat-card class="z-depth content-fluid" flex="100">
     <mat-card-header>
       <mat-card-title>
         <button mat-button (click)="goBack()">
@@ -9,89 +9,200 @@
         {{pageHeading}}
       </mat-card-title>
     </mat-card-header>
+
     <mat-card-content>
 
-      <mat-form-field class="full-width">
-        <input matInput placeholder="customer" formControlName="customer" required [matAutocomplete]="customerAuto"
-          [(ngModel)]="customer">
-        <input type="hidden" formControlName="customerId" [(ngModel)]="customerId">
-        <mat-error *ngIf="formErrors.customer">{{formErrors.customer}}</mat-error>
-        <mat-autocomplete #customerAuto="matAutocomplete" [displayWith]="displayFn"
-          (optionSelected)="onAutoSelectionChanged('customerId',$event)">
-          <mat-option *ngIf="isLoading" class="is-loading">
-            <mat-spinner diameter="50"></mat-spinner>
-          </mat-option>
-          <ng-container *ngIf="!isLoading">
-            <mat-option *ngFor="let option of customers" [value]="option">
-              {{option.name}}
-            </mat-option>
-          </ng-container>
-        </mat-autocomplete>
-      </mat-form-field>
+      <mat-horizontal-stepper [linear]="true" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Basic</ng-template>
 
-      <mat-form-field class="full-width">
-        <input matInput placeholder="address" formControlName="address" required [matAutocomplete]="addressAuto"
-          [(ngModel)]="address">
-        <input type="hidden" formControlName="addressId" [(ngModel)]="addressId">
-        <mat-error *ngIf="formErrors.address">{{formErrors.address}}</mat-error>
-        <mat-autocomplete #addressAuto="matAutocomplete" [displayWith]="displayAddressFn"
-          (optionSelected)="onAutoSelectionChanged('addressId',$event)">
-          <mat-option *ngIf="isLoading" class="is-loading">
-            <mat-spinner diameter="50"></mat-spinner>
-          </mat-option>
-          <ng-container *ngIf="!isLoading">
-            <mat-option *ngFor="let option of addresses" [value]="option">
-              {{option.text}}
-            </mat-option>
-          </ng-container>
-        </mat-autocomplete>
-      </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="customer" formControlName="customer" required
+                [matAutocomplete]="customerAuto" [(ngModel)]="customer">
+              <input type="hidden" formControlName="customerId" [(ngModel)]="customerId">
+              <mat-error *ngIf="formErrors.customer">{{formErrors.customer}}</mat-error>
+              <mat-autocomplete #customerAuto="matAutocomplete" [displayWith]="displayFn"
+                (optionSelected)="onAutoSelectionChanged('customerId',$event)">
+                <mat-option *ngIf="isLoading" class="is-loading">
+                  <mat-spinner diameter="50"></mat-spinner>
+                </mat-option>
+                <ng-container *ngIf="!isLoading">
+                  <mat-option *ngFor="let option of customers" [value]="option">
+                    {{option.name}}
+                  </mat-option>
+                </ng-container>
+              </mat-autocomplete>
+            </mat-form-field>
 
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Order Type" formControlName="orderType" required [matAutocomplete]="orderTypeAuto"
-          [(ngModel)]="orderType">
-        <input type="hidden" formControlName="orderTypeId" [(ngModel)]="orderTypeId">
-        <mat-error *ngIf="formErrors.orderType">{{formErrors.orderType}}</mat-error>
-        <mat-autocomplete #orderTypeAuto="matAutocomplete" [displayWith]="displayFn"
-          (optionSelected)="onAutoSelectionChanged('orderTypeId',$event)">
-          <mat-option *ngIf="isLoading" class="is-loading">
-            <mat-spinner diameter="50"></mat-spinner>
-          </mat-option>
-          <ng-container *ngIf="!isLoading">
-            <mat-option *ngFor="let option of orderTypes" [value]="option">
-              {{option.name}}
-            </mat-option>
-          </ng-container>
-        </mat-autocomplete>
-      </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="address" formControlName="address" required [matAutocomplete]="addressAuto"
+                [(ngModel)]="address">
+              <input type="hidden" formControlName="addressId" [(ngModel)]="addressId">
+              <mat-error *ngIf="formErrors.address">{{formErrors.address}}</mat-error>
+              <mat-autocomplete #addressAuto="matAutocomplete" [displayWith]="displayAddressFn"
+                (optionSelected)="onAutoSelectionChanged('addressId',$event)">
+                <mat-option *ngIf="isLoading" class="is-loading">
+                  <mat-spinner diameter="50"></mat-spinner>
+                </mat-option>
+                <ng-container *ngIf="!isLoading">
+                  <mat-option *ngFor="let option of addresses" [value]="option">
+                    {{option.address}}
+                  </mat-option>
+                </ng-container>
+              </mat-autocomplete>
+            </mat-form-field>
 
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Order Status" formControlName="orderStatus" required
-          [matAutocomplete]="orderStatusAuto" [(ngModel)]="orderStatus">
-        <input type="hidden" formControlName="orderStatusId" [(ngModel)]="orderStatusId">
-        <mat-error *ngIf="formErrors.orderStatus">{{formErrors.orderStatus}}</mat-error>
-        <mat-autocomplete #orderStatusAuto="matAutocomplete" [displayWith]="displayFn"
-          (optionSelected)="onAutoSelectionChanged('orderStatusId',$event)">
-          <mat-option *ngIf="isLoading" class="is-loading">
-            <mat-spinner diameter="50"></mat-spinner>
-          </mat-option>
-          <ng-container *ngIf="!isLoading">
-            <mat-option *ngFor="let option of orderStatuses" [value]="option">
-              {{option.name}}
-            </mat-option>
-          </ng-container>
-        </mat-autocomplete>
-      </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Order Type" formControlName="orderType" required
+                [matAutocomplete]="orderTypeAuto" [(ngModel)]="orderType">
+              <input type="hidden" formControlName="orderTypeId" [(ngModel)]="orderTypeId">
+              <mat-error *ngIf="formErrors.orderType">{{formErrors.orderType}}</mat-error>
+              <mat-autocomplete #orderTypeAuto="matAutocomplete" [displayWith]="displayFn"
+                (optionSelected)="onAutoSelectionChanged('orderTypeId',$event)">
+                <mat-option *ngIf="isLoading" class="is-loading">
+                  <mat-spinner diameter="50"></mat-spinner>
+                </mat-option>
+                <ng-container *ngIf="!isLoading">
+                  <mat-option *ngFor="let option of orderTypes" [value]="option">
+                    {{option.name}}
+                  </mat-option>
+                </ng-container>
+              </mat-autocomplete>
+            </mat-form-field>
 
-      <mat-form-field class="full-width">
-        <textarea matInput placeholder="comment" formControlName="comment" [(ngModel)]="comment" required></textarea>
-        <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
-      </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Order Status" formControlName="orderStatus" required
+                [matAutocomplete]="orderStatusAuto" [(ngModel)]="orderStatus">
+              <input type="hidden" formControlName="orderStatusId" [(ngModel)]="orderStatusId">
+              <mat-error *ngIf="formErrors.orderStatus">{{formErrors.orderStatus}}</mat-error>
+              <mat-autocomplete #orderStatusAuto="matAutocomplete" [displayWith]="displayFn"
+                (optionSelected)="onAutoSelectionChanged('orderStatusId',$event)">
+                <mat-option *ngIf="isLoading" class="is-loading">
+                  <mat-spinner diameter="50"></mat-spinner>
+                </mat-option>
+                <ng-container *ngIf="!isLoading">
+                  <mat-option *ngFor="let option of orderStatuses" [value]="option">
+                    {{option.name}}
+                  </mat-option>
+                </ng-container>
+              </mat-autocomplete>
+            </mat-form-field>
 
+            <mat-form-field class="full-width">
+              <textarea matInput placeholder="comment" formControlName="comment" [(ngModel)]="comment"
+                required></textarea>
+              <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
+            </mat-form-field>
+
+            <div class="button-group">
+              <button mat-raised-button matStepperNext color="primary" (click)="nextProcess()">Next</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Products</ng-template>
+
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>
+                product section
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+
+              <form [formGroup]="secondFormGroup">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="product" formControlName="product" required
+                    [matAutocomplete]="productAuto" [(ngModel)]="product">
+                  <input type="hidden" formControlName="productId" [(ngModel)]="productId">
+                  <mat-error *ngIf="formErrors.product">{{formErrors.product}}</mat-error>
+                  <mat-autocomplete #productAuto="matAutocomplete" [displayWith]="displayFn"
+                    (optionSelected)="onSecondAutoSelectionChanged('productId',$event)">
+                    <mat-option *ngIf="isLoading" class="is-loading">
+                      <mat-spinner diameter="50"></mat-spinner>
+                    </mat-option>
+                    <ng-container *ngIf="!isLoading">
+                      <mat-option *ngFor="let option of products" [value]="option">
+                        {{option.name}}
+                      </mat-option>
+                    </ng-container>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="quantity" formControlName="quantity" [(ngModel)]="quantity" required>
+                  <mat-error *ngIf="formErrors.quantity">{{formErrors.quantity}}</mat-error>
+                </mat-form-field>
+
+                <button mat-raised-button (click)="onCartSubmit()" color="primary">Add</button>
+              </form>
+
+              <!-- cart list -->
+              <table mat-table [dataSource]="carts">
+                <ng-container matColumnDef="product">
+                  <th mat-header-cell *matHeaderCellDef>product</th>
+                  <td mat-cell *matCellDef="let element"> {{element.product}} </td>
+                </ng-container>
+                <ng-container matColumnDef="product_image">
+                  <th mat-header-cell *matHeaderCellDef>image</th>
+                  <td mat-cell *matCellDef="let element">
+                    <img width="50" height="50" src="{{element.product_image}}" />
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="quantity">
+                  <th mat-header-cell *matHeaderCellDef>quantity</th>
+                  <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+                </ng-container>
+                <ng-container matColumnDef="totalFinalPrice">
+                  <th mat-header-cell *matHeaderCellDef>price</th>
+                  <td mat-cell *matCellDef="let element"> {{element.totalFinalPrice}} </td>
+                </ng-container>
+                <ng-container matColumnDef="totalDiscount">
+                  <th mat-header-cell *matHeaderCellDef>discount</th>
+                  <td mat-cell *matCellDef="let element"> {{element.totalDiscount}} </td>
+                </ng-container>
+                <ng-container matColumnDef="total">
+                  <th mat-header-cell *matHeaderCellDef>total</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef>Action</th>
+                  <td mat-cell *matCellDef="let row">
+                    <button mat-button (click)="deleteCart(row)">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="cartDisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: cartDisplayedColumns;"></tr>
+              </table>
+              <!-- end cart list -->
+
+
+            </mat-card-content>
+          </mat-card>
+
+          <div class="button-group">
+            <button mat-raised-button matStepperPrevious color="light">Back</button>
+            <button mat-raised-button matStepperNext color="primary">Next</button>
+          </div>
+        </mat-step>
+
+
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          You are now done.
+          <div class="button-group">
+            <button mat-raised-button matStepperPrevious color="light">Back</button>
+            <button mat-raised-button type="submit" color="primary" (click)="onSubmit()">Save</button>
+          </div>
+        </mat-step>
+
+      </mat-horizontal-stepper>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button type="submit" color="primary">Save</button>
-    </mat-card-actions>
-  </form>
-
+  </mat-card>
 </div>

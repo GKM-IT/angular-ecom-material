@@ -4,6 +4,7 @@ import { ConfigService } from '../config/config.service';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { isString } from 'util';
+import { AuthService } from '../user/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class OrderCartService {
   public formData: FormData = new FormData();
   private url;
 
-  constructor(public http: HttpClient, public configService: ConfigService) {
+  constructor(public http: HttpClient, public configService: ConfigService, private authService: AuthService) {
 
   }
 
@@ -35,7 +36,11 @@ export class OrderCartService {
     if (data.sort_dir) {
       this.formData.append('sort_dir', data.sort_dir);
     }
-    this.url = `${environment.url}order/order_carts`;
+    if (data.customerId) {
+      this.formData.append('customer_id', data.customerId);
+    }
+    this.formData.append('token', this.authService.getToken());
+    this.url = `${environment.url}order/carts`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -45,7 +50,7 @@ export class OrderCartService {
   public detail(id: any) {
     this.formData = new FormData();
 
-    this.url = `${environment.url}order/order_carts/detail`;
+    this.url = `${environment.url}order/carts/detail`;
     this.formData.append('id', id);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -54,7 +59,7 @@ export class OrderCartService {
   }
 
   public delete(id: any) {
-    this.url = `${environment.url}order/order_carts/delete/${id}`;
+    this.url = `${environment.url}order/carts/delete/${id}`;
     return this.http.get<any>(this.url).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -67,7 +72,7 @@ export class OrderCartService {
     ));
     this.formData = new FormData();
     this.formData.append('list', JSON.stringify(selected));
-    this.url = `${environment.url}order/order_carts/delete_all`;
+    this.url = `${environment.url}order/carts/delete_all`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -76,11 +81,17 @@ export class OrderCartService {
 
   public save(data: any, id: any) {
     this.formData = new FormData();
-    this.url = `${environment.url}order/order_carts/save`;
+    this.url = `${environment.url}order/carts/save`;
     if (id !== 'new') {
       this.formData.append('id', id);
     }
-    this.formData.append('name', data.name);
+    this.formData.append('token', this.authService.getToken());
+    this.formData.append('product_id', data.productId);
+    this.formData.append('customer_id', data.customerId);
+    this.formData.append('quantity', data.quantity);
+    this.formData.append('status', '1');
+    this.formData.append('price_type', 'FIXED');
+
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

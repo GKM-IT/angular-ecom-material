@@ -10,6 +10,8 @@ import { OrderStatusService } from 'src/app/providers/order/order-status.service
 import { Constant } from 'src/app/helper/constant';
 import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { OrderCartService } from 'src/app/providers/order/order-cart.service';
+import { ProductService } from 'src/app/providers/product/product.service';
 
 @Component({
   selector: 'app-order-form',
@@ -31,16 +33,24 @@ export class OrderFormComponent implements OnInit {
   orderStatuses: any = [];
   customers: any = [];
   addresses: any = [];
+  products: any = [];
+  carts: any = [];
+  cartDisplayedColumns: string[] = ['product', 'product_image', 'quantity', 'totalFinalPrice', 'totalDiscount', 'total', 'action'];
 
   orderTypeId;
   orderType: { id: any; name: any; };
   customerId;
   customer: { id: any; name: any; };
   addressId;
-  address: { id: any; name: any; };
+  address: { id: any; address: any; };
   orderStatusId;
   orderStatus: { id: any; name: any; };
   comment;
+
+
+  productId;
+  product: { id: any; name: any; };
+  quantity;
 
   public formErrors = {
     customerId: '',
@@ -62,6 +72,8 @@ export class OrderFormComponent implements OnInit {
     public orderTypeService: OrderTypeService,
     public orderStatusService: OrderStatusService,
     public customerService: CustomerService,
+    public orderCartService: OrderCartService,
+    public productService: ProductService,
     private formBuilder: FormBuilder,
     private formService: FormService,
     private router: Router,
@@ -150,7 +162,6 @@ export class OrderFormComponent implements OnInit {
         )
       )
       .subscribe(res => {
-        console.log(res);
         if (res.status) {
           this.customers = res.data;
         }
@@ -188,15 +199,45 @@ export class OrderFormComponent implements OnInit {
       });
   }
 
+  getProductAutocomplete() {
+    const constant = new Constant();
+    this.secondFormGroup
+      .get('product')
+      .valueChanges.pipe(
+        startWith(''),
+        debounceTime(1000),
+        tap(() => (this.isLoading = true)),
+        switchMap(value =>
+          this.productService
+            .list({
+              search: value,
+              pageSize: constant.autocompleteListSize,
+              pageIndex: 0,
+              sort_by: 'name'
+            })
+            .pipe(finalize(() => (this.isLoading = false)))
+        )
+      )
+      .subscribe(res => {
+        if (res.status) {
+          this.products = res.data;
+        }
+      });
+  }
+
   onAutoSelectionChanged(autoId, event: MatAutocompleteSelectedEvent) {
     this.firstFormGroup.controls[`${autoId}`].setValue(event.option.value.id);
+  }
+  onSecondAutoSelectionChanged(autoId, event: MatAutocompleteSelectedEvent) {
+    this.secondFormGroup.controls[`${autoId}`].setValue(event.option.value.id);
   }
 
   displayFn(data: any): string {
     return data ? data.name : data;
   }
+
   displayAddressFn(data: any): string {
-    return data ? data.text : data;
+    return data ? data.address : data;
   }
 
   setErrors() {
@@ -205,11 +246,11 @@ export class OrderFormComponent implements OnInit {
       this.formErrors,
       false
     );
-    // this.formErrors = this.formService.validateForm(
-    //   this.secondFormGroup,
-    //   this.formErrors,
-    //   false
-    // );
+    this.formErrors = this.formService.validateForm(
+      this.secondFormGroup,
+      this.formErrors,
+      false
+    );
   }
 
   ngOnInit() {
@@ -229,10 +270,17 @@ export class OrderFormComponent implements OnInit {
       comment: [this.comment, Validators.required],
     });
 
+    this.secondFormGroup = this.formBuilder.group({
+      productId: [this.productId, Validators.required],
+      product: [this.product, Validators.required],
+      quantity: [this.quantity, Validators.required],
+    });
+
     this.getOrderStatusAutocomplete();
     this.getOrderTypeAutocomplete();
     this.getCustomerAutocomplete();
     this.getAddressAutocomplete();
+    this.getProductAutocomplete();
 
     this.setErrors();
   }
@@ -246,8 +294,6 @@ export class OrderFormComponent implements OnInit {
     let status = false;
     if (this.firstFormGroup.valid) {
       status = true;
-    } else if (this.secondFormGroup.valid) {
-      status = true;
     }
 
     return status;
@@ -258,10 +304,67 @@ export class OrderFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.orderTypeId = response.data.order_type_id;
+          this.orderType = {
+            id: response.data.order_type_id,
+            name: response.data.order_type
+          };
           this.customerId = response.data.customer_id;
+          this.customer = {
+            id: response.data.customer_id,
+            name: response.data.name
+          };
           this.addressId = response.data.address_id;
+          this.address = {
+            id: response.data.address_id,
+            address: response.data.address
+          };
           this.orderStatusId = response.data.order_status_id;
+          this.orderStatus = {
+            id: response.data.order_status_id,
+            name: response.data.order_status
+          };
           this.comment = response.data.comment;
+
+          if (response.data.products) {
+            response.data.products.forEach(element => {
+              this.addCart(element);
+            });
+          }
+
+        }
+      },
+      err => {
+        console.error(err);
+      }
+    );
+
+  }
+
+  nextProcess() {
+    this.getCarts();
+  }
+
+  getCarts() {
+    this.orderCartService.list({ customerId: this.customerId }).subscribe(response => {
+      this.carts = response.data;
+    });
+  }
+
+  addCart(cartData) {
+    const data = {
+      customerId: this.customerId,
+      productId: cartData.product_id,
+      quantity: cartData.quantity,
+    };
+
+    this.orderCartService.save(data, 'new').subscribe(
+      response => {
+        if (!response.status) {
+          if (response.result) {
+            response.result.forEach((element: { id: any; text: any; }) => {
+              this.formErrors[`${element.id}`] = element.text;
+            });
+          }
         }
       },
       err => {
@@ -270,8 +373,57 @@ export class OrderFormComponent implements OnInit {
     );
   }
 
+  deleteCart(data) {
+    this.orderCartService.delete(data.id).subscribe(
+      response => {
+        this.getCarts();
+        this.snackBar.open(response.message, 'X', {
+          duration: 2000,
+        });
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
 
-  public onSubmit() {
+  onCartSubmit() {
+    // mark all fields as touched
+    this.markFormGroupTouched();
+
+    if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
+
+      const data = {
+        customerId: this.firstFormGroup.value.customerId,
+        productId: this.secondFormGroup.value.productId,
+        quantity: this.secondFormGroup.value.quantity,
+      };
+
+      this.orderCartService.save(data, 'new').subscribe(
+        response => {
+          if (!response.status) {
+            if (response.result) {
+              response.result.forEach((element: { id: any; text: any; }) => {
+                this.formErrors[`${element.id}`] = element.text;
+              });
+            }
+          }
+          this.getCarts();
+          this.snackBar.open(response.message, 'X', {
+            duration: 2000,
+          });
+        },
+        err => {
+          console.error(err);
+        }
+      );
+
+    } else {
+      this.setErrors();
+    }
+  }
+
+  onSubmit() {
     // mark all fields as touched
     this.markFormGroupTouched();
 
@@ -283,7 +435,6 @@ export class OrderFormComponent implements OnInit {
         addressId: this.firstFormGroup.value.addressId,
         comment: this.firstFormGroup.value.comment,
       };
-
 
       this.masterService.save(data, this.getId()).subscribe(
         response => {

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { isString } from 'util';
+import { AuthService } from '../user/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class OrderService {
   public formData: FormData = new FormData();
   private url;
 
-  constructor(public http: HttpClient, public configService: ConfigService) {
+  constructor(public http: HttpClient, public configService: ConfigService, private authService: AuthService) {
 
   }
 
@@ -80,7 +81,7 @@ export class OrderService {
     if (id !== 'new') {
       this.formData.append('id', id);
     }
-    this.formData.append('token', '123');
+    this.formData.append('token', this.authService.getToken());
     this.formData.append('order_type_id', data.orderTypeId);
     this.formData.append('customer_id', data.customerId);
     this.formData.append('address_id', data.addressId);
