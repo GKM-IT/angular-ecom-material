@@ -80,7 +80,12 @@ export class OrderService {
     if (id !== 'new') {
       this.formData.append('id', id);
     }
-    this.formData.append('name', data.name);
+    this.formData.append('token', '123');
+    this.formData.append('order_type_id', data.orderTypeId);
+    this.formData.append('customer_id', data.customerId);
+    this.formData.append('address_id', data.addressId);
+    this.formData.append('order_status_id', data.orderStatusId);
+    this.formData.append('comment', data.comment);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

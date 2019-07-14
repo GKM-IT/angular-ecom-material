@@ -1,30 +1,97 @@
 <div class="main-div">
 
-  <mat-card class="z-depth center" flex="50">
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
-      <mat-card-header>
-        <mat-card-title>
-          <button mat-button (click)="goBack()">
-            <i class="material-icons">keyboard_backspace</i>
-          </button>
-          {{pageHeading}}
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+  <form (ngSubmit)="onSubmit()" [formGroup]="firstFormGroup">
+    <mat-card-header>
+      <mat-card-title>
+        <button mat-button (click)="goBack()">
+          <i class="material-icons">keyboard_backspace</i>
+        </button>
+        {{pageHeading}}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
 
-        <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
-            <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
-          </mat-form-field>
-        </p>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="customer" formControlName="customer" required [matAutocomplete]="customerAuto"
+          [(ngModel)]="customer">
+        <input type="hidden" formControlName="customerId" [(ngModel)]="customerId">
+        <mat-error *ngIf="formErrors.customer">{{formErrors.customer}}</mat-error>
+        <mat-autocomplete #customerAuto="matAutocomplete" [displayWith]="displayFn"
+          (optionSelected)="onAutoSelectionChanged('customerId',$event)">
+          <mat-option *ngIf="isLoading" class="is-loading">
+            <mat-spinner diameter="50"></mat-spinner>
+          </mat-option>
+          <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let option of customers" [value]="option">
+              {{option.name}}
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </mat-form-field>
 
+      <mat-form-field class="full-width">
+        <input matInput placeholder="address" formControlName="address" required [matAutocomplete]="addressAuto"
+          [(ngModel)]="address">
+        <input type="hidden" formControlName="addressId" [(ngModel)]="addressId">
+        <mat-error *ngIf="formErrors.address">{{formErrors.address}}</mat-error>
+        <mat-autocomplete #addressAuto="matAutocomplete" [displayWith]="displayAddressFn"
+          (optionSelected)="onAutoSelectionChanged('addressId',$event)">
+          <mat-option *ngIf="isLoading" class="is-loading">
+            <mat-spinner diameter="50"></mat-spinner>
+          </mat-option>
+          <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let option of addresses" [value]="option">
+              {{option.text}}
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </mat-form-field>
 
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button type="submit" color="primary">Save</button>
-      </mat-card-actions>
-    </form>
-  </mat-card>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Order Type" formControlName="orderType" required [matAutocomplete]="orderTypeAuto"
+          [(ngModel)]="orderType">
+        <input type="hidden" formControlName="orderTypeId" [(ngModel)]="orderTypeId">
+        <mat-error *ngIf="formErrors.orderType">{{formErrors.orderType}}</mat-error>
+        <mat-autocomplete #orderTypeAuto="matAutocomplete" [displayWith]="displayFn"
+          (optionSelected)="onAutoSelectionChanged('orderTypeId',$event)">
+          <mat-option *ngIf="isLoading" class="is-loading">
+            <mat-spinner diameter="50"></mat-spinner>
+          </mat-option>
+          <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let option of orderTypes" [value]="option">
+              {{option.name}}
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Order Status" formControlName="orderStatus" required
+          [matAutocomplete]="orderStatusAuto" [(ngModel)]="orderStatus">
+        <input type="hidden" formControlName="orderStatusId" [(ngModel)]="orderStatusId">
+        <mat-error *ngIf="formErrors.orderStatus">{{formErrors.orderStatus}}</mat-error>
+        <mat-autocomplete #orderStatusAuto="matAutocomplete" [displayWith]="displayFn"
+          (optionSelected)="onAutoSelectionChanged('orderStatusId',$event)">
+          <mat-option *ngIf="isLoading" class="is-loading">
+            <mat-spinner diameter="50"></mat-spinner>
+          </mat-option>
+          <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let option of orderStatuses" [value]="option">
+              {{option.name}}
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <textarea matInput placeholder="comment" formControlName="comment" [(ngModel)]="comment" required></textarea>
+        <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
+      </mat-form-field>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button type="submit" color="primary">Save</button>
+    </mat-card-actions>
+  </form>
 
 </div>
