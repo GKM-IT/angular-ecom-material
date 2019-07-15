@@ -35,7 +35,7 @@ export class AdminSidebarComponent implements OnInit {
 
     //  user
     this.menuData.push({
-      label: 'User Module',
+      label: 'Users',
       icon: 'account_circle',
       items: [
         {
@@ -69,9 +69,9 @@ export class AdminSidebarComponent implements OnInit {
       ]
     });
 
-    // customer
+    // customers
     this.menuData.push({
-      label: 'Customer',
+      label: 'Customers',
       icon: 'people',
       items: [
         {
@@ -89,9 +89,9 @@ export class AdminSidebarComponent implements OnInit {
       ]
     });
 
-    // information
+    // informations
     this.menuData.push({
-      label: 'Information',
+      label: 'Informations',
       icon: 'info',
       items: [
         {
@@ -138,25 +138,7 @@ export class AdminSidebarComponent implements OnInit {
       ]
     });
 
-    // order
-    this.menuData.push({
-      label: 'Order',
-      icon: 'add_shopping_cart',
-      items: [
-        {
-          label: 'Orders',
-          link: '/orders',
-        },
-        {
-          label: 'Order Statuses',
-          link: '/order-statuses',
-        },
-        {
-          label: 'Order Types',
-          link: '/order-types',
-        },
-      ]
-    });
+
 
     // product
     this.menuData.push({
@@ -226,31 +208,61 @@ export class AdminSidebarComponent implements OnInit {
       ]
     });
 
-    // purchase
+    // purchases
     this.menuData.push({
-      label: 'Purchase',
+      label: 'Purchases',
       icon: 'business_center',
       items: [
         {
+          label: 'Setup',
+          items: [
+            {
+              label: 'Purchase Statuses',
+              link: '/purchase-statuses',
+            },
+            {
+              label: 'Purchase Types',
+              link: '/purchase-types',
+            },
+          ]
+        },
+        {
           label: 'Purchases',
           link: '/purchases',
-        },
-        {
-          label: 'Purchase Statuses',
-          link: '/purchase-statuses',
-        },
-        {
-          label: 'Purchase Types',
-          link: '/purchase-types',
-        },
+        }
       ]
     });
 
 
-
-    // report
+    // orders
     this.menuData.push({
-      label: 'Report Module',
+      label: 'Orders',
+      icon: 'add_shopping_cart',
+      items: [
+        {
+          label: 'Setup',
+          items: [
+            {
+              label: 'Order Statuses',
+              link: '/order-statuses',
+            },
+            {
+              label: 'Order Types',
+              link: '/order-types',
+            },
+          ]
+        },
+        {
+          label: 'Orders',
+          link: '/orders',
+        }
+      ]
+    });
+
+
+    // reports
+    this.menuData.push({
+      label: 'Reports',
       icon: 'book',
       items: [
         {
