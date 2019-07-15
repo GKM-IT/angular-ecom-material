@@ -7,6 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent implements OnInit {
+  public pageHeading = 'Order Details';
+
   orderType;
   orderStatus;
   name;

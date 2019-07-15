@@ -31,10 +31,11 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-
+import { NgMaterialMultilevelMenuModule } from 'ng-material-multilevel-menu';
 @NgModule({
   declarations: [],
   imports: [
+    NgMaterialMultilevelMenuModule,
     SelectAutocompleteModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -70,6 +71,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatMomentDateModule
   ],
   exports: [
+    NgMaterialMultilevelMenuModule,
     SelectAutocompleteModule,
     MatButtonModule,
     MatCheckboxModule,

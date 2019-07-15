@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -7,229 +8,272 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminSidebarComponent implements OnInit {
   public menuData = [];
-  constructor() { }
+  constructor(private router: Router) { }
+
+  config = {
+    paddingAtStart: true,
+    classname: 'my-custom-class',
+    listBackgroundColor: '#fff',
+    fontColor: '#333',
+    backgroundColor: '#fff',
+    selectedListFontColor: 'rgb(62, 81, 181)',
+  };
+
+
+  selectedItem(event) {
+    this.router.navigate([event.link]);
+  }
 
   ngOnInit() {
+    // dashboard
     this.menuData.push({
-      name: 'Dashboard',
+      label: 'Dashboard',
       link: '/',
       icon: 'dashboard'
     });
 
-    this.menuData.push({
-      name: 'Catalog',
-      icon: 'account_circle',
-      chidren: [
-        {
-          name: 'Banners',
-          link: '/banners',
-        },
-        {
-          name: 'Ratings',
-          link: '/ratings',
-        },
-        {
-          name: 'Types',
-          link: '/types',
-        },
-      ]
-    });
 
+    //  user
     this.menuData.push({
-      name: 'Customer',
+      label: 'User Module',
       icon: 'account_circle',
-      chidren: [
+      items: [
         {
-          name: 'Customers',
-          link: '/customers',
-        },
-        {
-          name: 'Customer Groups',
-          link: '/customer-groups',
-        },
-        {
-          name: 'Customer Wishlist',
-          link: '/customer-wishlists',
-        },
-      ]
-    });
-
-    this.menuData.push({
-      name: 'Information',
-      icon: 'account_circle',
-      chidren: [
-        {
-          name: 'Contact Types',
-          link: '/contact-types',
-        },
-        {
-          name: 'Contacts',
-          link: '/contacts',
-        },
-        {
-          name: 'Informations',
-          link: '/informations',
-        },
-      ]
-    });
-
-    this.menuData.push({
-      name: 'Location',
-      icon: 'account_circle',
-      chidren: [
-        {
-          name: 'Countries',
-          link: '/countries',
-        },
-        {
-          name: 'Zones',
-          link: '/zones',
-        },
-        {
-          name: 'Cities',
-          link: '/cities',
-        },
-        {
-          name: 'Locations',
-          link: '/locations',
-        },
-      ]
-    });
-
-    this.menuData.push({
-      name: 'Order',
-      icon: 'account_circle',
-      chidren: [
-        {
-          name: 'Orders',
-          link: '/orders',
-        },
-        {
-          name: 'Order Statuses',
-          link: '/order-statuses',
-        },
-        {
-          name: 'Order Types',
-          link: '/order-types',
-        },
-      ]
-    });
-
-    this.menuData.push({
-      name: 'Products',
-      icon: 'account_circle',
-      chidren: [
-        {
-          name: 'Attributes',
-          link: '/attributes',
-        },
-        {
-          name: 'Attribute Groups',
-          link: '/attribute-groups',
-        },
-        {
-          name: 'Categories',
-          link: '/categories',
-        },
-        {
-          name: 'Manufactures',
-          link: '/manufactures',
-        },
-        {
-          name: 'Products',
-          link: '/products',
-        },
-        {
-          name: 'Product Reviews',
-          link: '/product-reviews',
-        },
-      ]
-    });
-
-    this.menuData.push({
-      name: 'Purchase',
-      icon: 'account_circle',
-      chidren: [
-        {
-          name: 'Purchases',
-          link: '/purchases',
-        },
-        {
-          name: 'Purchase Statuses',
-          link: '/purchase-statuses',
-        },
-        {
-          name: 'Purchase Types',
-          link: '/purchase-types',
-        },
-      ]
-    });
-
-    this.menuData.push({
-      name: 'Tax',
-      icon: 'account_circle',
-      chidren: [
-        {
-          name: 'Tax Classes',
-          link: '/tax-classes',
-        },
-        {
-          name: 'Tax Rates',
-          link: '/tax-rates',
-        },
-      ]
-    });
-
-    this.menuData.push({
-      name: 'Unit',
-      icon: 'account_circle',
-      chidren: [
-        {
-          name: 'Length Classes',
-          link: '/length-classes',
-        },
-        {
-          name: 'Weight Classes',
-          link: '/weight-classes',
-        },
-      ]
-    });
-
-    this.menuData.push({
-      name: 'User Module',
-      icon: 'account_circle',
-      chidren: [
-        {
-          name: 'User Groups',
+          label: 'User Groups',
           link: '/user-groups',
         },
         {
-          name: 'Users',
+          label: 'Users',
           link: '/users',
         },
       ]
     });
 
+    // catalog
     this.menuData.push({
-      name: 'Report Module',
-      icon: 'account_circle',
-      chidren: [
+      label: 'Catalog',
+      icon: 'settings',
+      items: [
         {
-          name: 'Total Sales',
-          link: '/total-sales',
+          label: 'Banners',
+          link: '/banners',
         },
         {
-          name: 'Total Sales Day',
-          link: '/total-sales-day',
+          label: 'Ratings',
+          link: '/ratings',
         },
         {
-          name: 'Total Sales Month',
-          link: '/total-sales-month',
+          label: 'Types',
+          link: '/types',
+        },
+      ]
+    });
+
+    // customer
+    this.menuData.push({
+      label: 'Customer',
+      icon: 'people',
+      items: [
+        {
+          label: 'Customers',
+          link: '/customers',
         },
         {
-          name: 'Total Sales Year',
-          link: '/total-sales-year',
+          label: 'Customer Groups',
+          link: '/customer-groups',
         },
+        {
+          label: 'Customer Wishlist',
+          link: '/customer-wishlists',
+        },
+      ]
+    });
+
+    // information
+    this.menuData.push({
+      label: 'Information',
+      icon: 'info',
+      items: [
+        {
+          label: 'Contact',
+          items: [
+            {
+              label: 'Contact Types',
+              link: '/contact-types',
+            },
+            {
+              label: 'Contacts',
+              link: '/contacts',
+            }
+          ]
+        },
+        {
+          label: 'Informations',
+          link: '/informations',
+        },
+      ]
+    });
+
+    // location
+    this.menuData.push({
+      label: 'Location',
+      icon: 'place',
+      items: [
+        {
+          label: 'Countries',
+          link: '/countries',
+        },
+        {
+          label: 'Zones',
+          link: '/zones',
+        },
+        {
+          label: 'Cities',
+          link: '/cities',
+        },
+        {
+          label: 'Locations',
+          link: '/locations',
+        },
+      ]
+    });
+
+    // order
+    this.menuData.push({
+      label: 'Order',
+      icon: 'add_shopping_cart',
+      items: [
+        {
+          label: 'Orders',
+          link: '/orders',
+        },
+        {
+          label: 'Order Statuses',
+          link: '/order-statuses',
+        },
+        {
+          label: 'Order Types',
+          link: '/order-types',
+        },
+      ]
+    });
+
+    // product
+    this.menuData.push({
+      label: 'Products',
+      icon: 'business',
+      items: [
+        {
+          label: 'Attribute',
+          items: [
+            {
+              label: 'Attributes',
+              link: '/attributes',
+            },
+            {
+              label: 'Attribute Groups',
+              link: '/attribute-groups',
+            },
+          ]
+        },
+        {
+          label: 'Unit',
+          items: [
+            {
+              label: 'Length Classes',
+              link: '/length-classes',
+            },
+            {
+              label: 'Weight Classes',
+              link: '/weight-classes',
+            },
+          ]
+        },
+        {
+          label: 'Tax',
+          items: [
+            {
+              label: 'Tax Classes',
+              link: '/tax-classes',
+            },
+            {
+              label: 'Tax Rates',
+              link: '/tax-rates',
+            },
+          ]
+        },
+        {
+          label: 'Categories',
+          link: '/categories',
+        },
+        {
+          label: 'Manufactures',
+          link: '/manufactures',
+        },
+        {
+          label: 'Product',
+          items: [
+            {
+              label: 'Products',
+              link: '/products',
+            },
+            {
+              label: 'Product Reviews',
+              link: '/product-reviews',
+            },
+          ]
+        },
+      ]
+    });
+
+    // purchase
+    this.menuData.push({
+      label: 'Purchase',
+      icon: 'business_center',
+      items: [
+        {
+          label: 'Purchases',
+          link: '/purchases',
+        },
+        {
+          label: 'Purchase Statuses',
+          link: '/purchase-statuses',
+        },
+        {
+          label: 'Purchase Types',
+          link: '/purchase-types',
+        },
+      ]
+    });
+
+
+
+    // report
+    this.menuData.push({
+      label: 'Report Module',
+      icon: 'book',
+      items: [
+        {
+          label: 'Sales Report',
+          items: [
+            {
+              label: 'Total Sales',
+              link: '/total-sales',
+            },
+            {
+              label: 'Total Sales Day',
+              link: '/total-sales-day',
+            },
+            {
+              label: 'Total Sales Month',
+              link: '/total-sales-month',
+            },
+            {
+              label: 'Total Sales Year',
+              link: '/total-sales-year',
+            },
+          ]
+        }
       ]
     });
 
