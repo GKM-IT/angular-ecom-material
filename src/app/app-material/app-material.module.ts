@@ -32,9 +32,11 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { NgMaterialMultilevelMenuModule } from 'ng-material-multilevel-menu';
+import { NgxSpinnerModule } from "ngx-spinner";
 @NgModule({
   declarations: [],
   imports: [
+    NgxSpinnerModule,
     NgMaterialMultilevelMenuModule,
     SelectAutocompleteModule,
     MatButtonModule,
@@ -71,6 +73,7 @@ import { NgMaterialMultilevelMenuModule } from 'ng-material-multilevel-menu';
     MatMomentDateModule
   ],
   exports: [
+    NgxSpinnerModule,
     NgMaterialMultilevelMenuModule,
     SelectAutocompleteModule,
     MatButtonModule,
