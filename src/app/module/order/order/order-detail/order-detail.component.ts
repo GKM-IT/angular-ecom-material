@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/providers/order/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
@@ -28,7 +29,12 @@ export class OrderDetailComponent implements OnInit {
   totals;
   products;
 
-  constructor(public masterService: OrderService, private router: Router, public activatedRoute: ActivatedRoute) { }
+  constructor(
+    public masterService: OrderService,
+    private router: Router,
+    public activatedRoute: ActivatedRoute,
+    private spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit() {
     if (this.getId() !== 'new') {
@@ -46,6 +52,7 @@ export class OrderDetailComponent implements OnInit {
   }
 
   getDetail(id) {
+    this.spinner.show();
     this.masterService.detail(id).subscribe(
       response => {
         if (response.status) {
@@ -68,6 +75,7 @@ export class OrderDetailComponent implements OnInit {
           this.products = response.data.products;
           this.totals = response.data.totals;
         }
+        this.spinner.hide();
       },
       err => {
         console.error(err);

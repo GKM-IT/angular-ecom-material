@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog/confirm-dialog.component';
 import { Constant } from 'src/app/helper/constant';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-customer-group-list',
@@ -33,6 +34,7 @@ export class CustomerGroupListComponent implements OnInit {
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router,
+    private spinner: NgxSpinnerService
   ) {
     const constant = new Constant();
     this.pageSizeOptions = constant.pageSizeOptions;
@@ -43,9 +45,11 @@ export class CustomerGroupListComponent implements OnInit {
   }
 
   getData() {
+    this.spinner.show();
     this.masterService.list(this.filterData).subscribe(response => {
       this.dataSource = response.data;
       this.filterData.length = response.recordsFiltered;
+      this.spinner.hide();
     });
   }
 

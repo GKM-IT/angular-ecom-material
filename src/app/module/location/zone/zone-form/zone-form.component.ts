@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { map, startWith, debounceTime, switchMap, tap, finalize } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Constant } from 'src/app/helper/constant';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-zone-form',
@@ -46,6 +47,7 @@ export class ZoneFormComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService
   ) {
 
   }
@@ -138,6 +140,7 @@ export class ZoneFormComponent implements OnInit {
     // mark all fields as touched
     this.formService.markFormGroupTouched(this.form);
     if (this.form.valid) {
+      this.spinner.show();
       this.masterService.save(this.form.value, this.getId()).subscribe(
         response => {
           if (!response.status) {
@@ -150,7 +153,7 @@ export class ZoneFormComponent implements OnInit {
             this.form.reset();
             this.router.navigate(['/zones']);
           }
-
+          this.spinner.hide();
           this.snackBar.open(response.message, 'X', {
             duration: 2000,
           });

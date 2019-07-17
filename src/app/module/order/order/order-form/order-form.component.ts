@@ -12,6 +12,7 @@ import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operator
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { OrderCartService } from 'src/app/providers/order/order-cart.service';
 import { ProductService } from 'src/app/providers/product/product.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-order-form',
@@ -81,6 +82,7 @@ export class OrderFormComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService
   ) { }
 
   getId() {
@@ -394,7 +396,7 @@ export class OrderFormComponent implements OnInit {
     this.markFormGroupTouched();
 
     if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
-
+      this.spinner.show();
       const data = {
         customerId: this.firstFormGroup.value.customerId,
         productId: this.secondFormGroup.value.productId,
@@ -410,6 +412,7 @@ export class OrderFormComponent implements OnInit {
               });
             }
           }
+          this.spinner.hide();
           this.getCarts();
           this.snackBar.open(response.message, 'X', {
             duration: 2000,
@@ -430,6 +433,7 @@ export class OrderFormComponent implements OnInit {
     this.markFormGroupTouched();
 
     if (this.isFormValid()) {
+      this.spinner.show();
       const data = {
         orderTypeId: this.firstFormGroup.value.orderTypeId,
         customerId: this.firstFormGroup.value.customerId,
@@ -451,6 +455,7 @@ export class OrderFormComponent implements OnInit {
             this.router.navigate(['/orders']);
           }
 
+          this.spinner.hide();
           this.snackBar.open(response.message, 'X', {
             duration: 2000,
           });

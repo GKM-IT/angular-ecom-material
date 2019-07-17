@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-type-form',
@@ -36,6 +37,7 @@ export class TypeFormComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService
   ) { }
 
   getId() {
@@ -86,6 +88,7 @@ export class TypeFormComponent implements OnInit {
     // mark all fields as touched
     this.formService.markFormGroupTouched(this.form);
     if (this.form.valid) {
+      this.spinner.show();
       this.masterService.save(this.form.value, this.getId()).subscribe(
         response => {
           if (!response.status) {
@@ -98,7 +101,7 @@ export class TypeFormComponent implements OnInit {
             this.form.reset();
             this.router.navigate(['/types']);
           }
-
+          this.spinner.hide();
           this.snackBar.open(response.message, 'X', {
             duration: 2000,
           });
