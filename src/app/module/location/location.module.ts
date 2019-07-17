@@ -31,7 +31,6 @@ import { LocationFormComponent } from './location/location-form/location-form.co
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-
   ]
 })
 export class LocationModule { }
