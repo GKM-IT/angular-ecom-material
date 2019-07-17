@@ -4,6 +4,8 @@ import {  Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/providers/user/auth.service';
 import { FormService } from 'src/app/providers/form/form.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit {
     private formService: FormService,
     private router: Router,
     private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -54,6 +57,7 @@ export class LoginComponent implements OnInit {
     // mark all fields as touched
     this.formService.markFormGroupTouched(this.form);
     if (this.form.valid) {
+      this.spinner.show();
       this.masterService.login(this.form.value).subscribe(
         response => {
           if (!response.status) {
@@ -69,9 +73,11 @@ export class LoginComponent implements OnInit {
             // window.location.replace('/');
           }
 
+          this.spinner.hide();
           this.snackBar.open(response.message, 'X', {
             duration: 2000,
           });
+
         },
         err => {
           console.error(err);

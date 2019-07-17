@@ -33,6 +33,7 @@ import { UnitModule } from './module/unit/unit.module';
 import { ReportModule } from './module/report/report.module';
 import { VendorModule } from './module/vendor/vendor.module';
 
+import { NgxSpinnerModule } from "ngx-spinner";
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +49,7 @@ import { VendorModule } from './module/vendor/vendor.module';
     ConfirmDialogComponent
   ],
   imports: [
+    NgxSpinnerModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
