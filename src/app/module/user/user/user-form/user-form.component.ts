@@ -76,11 +76,7 @@ export class UserFormComponent implements OnInit {
     });
 
     this.form.valueChanges.subscribe(data => {
-      this.formErrors = this.formService.validateForm(
-        this.form,
-        this.formErrors,
-        true
-      );
+      this.setErrors();
     });
 
     this.getAutocomplete();
@@ -139,6 +135,14 @@ export class UserFormComponent implements OnInit {
     );
   }
 
+  setErrors() {
+    this.formErrors = this.formService.validateForm(
+      this.form,
+      this.formErrors,
+      false
+    );
+  }
+
   public onSubmit() {
     // mark all fields as touched
     this.formService.markFormGroupTouched(this.form);
@@ -166,11 +170,7 @@ export class UserFormComponent implements OnInit {
         }
       );
     } else {
-      this.formErrors = this.formService.validateForm(
-        this.form,
-        this.formErrors,
-        false
-      );
+      this.setErrors();
     }
   }
 

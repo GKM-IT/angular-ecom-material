@@ -57,11 +57,7 @@ export class UserGroupFormComponent implements OnInit {
     });
 
     this.form.valueChanges.subscribe(data => {
-      this.formErrors = this.formService.validateForm(
-        this.form,
-        this.formErrors,
-        true
-      );
+      this.setErrors();
     });
   }
 
@@ -78,6 +74,13 @@ export class UserGroupFormComponent implements OnInit {
     );
   }
 
+  setErrors() {
+    this.formErrors = this.formService.validateForm(
+      this.form,
+      this.formErrors,
+      false
+    );
+  }
 
   public onSubmit() {
     // mark all fields as touched
@@ -106,11 +109,7 @@ export class UserGroupFormComponent implements OnInit {
         }
       );
     } else {
-      this.formErrors = this.formService.validateForm(
-        this.form,
-        this.formErrors,
-        false
-      );
+      this.setErrors();
     }
   }
 

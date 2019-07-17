@@ -116,11 +116,7 @@ export class BannerFormComponent implements OnInit {
     });
 
     this.form.valueChanges.subscribe(data => {
-      this.formErrors = this.formService.validateForm(
-        this.form,
-        this.formErrors,
-        true
-      );
+      this.setErrors();
     });
 
     this.getAutocomplete();
@@ -221,12 +217,16 @@ export class BannerFormComponent implements OnInit {
         }
       );
     } else {
-      this.formErrors = this.formService.validateForm(
-        this.form,
-        this.formErrors,
-        false
-      );
+      this.setErrors();
     }
+  }
+
+  setErrors() {
+    this.formErrors = this.formService.validateForm(
+      this.form,
+      this.formErrors,
+      false
+    );
   }
 
   uploadImage(e: any, control: any) {

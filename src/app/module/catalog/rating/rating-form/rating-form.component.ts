@@ -60,12 +60,16 @@ export class RatingFormComponent implements OnInit {
     });
 
     this.form.valueChanges.subscribe(data => {
-      this.formErrors = this.formService.validateForm(
-        this.form,
-        this.formErrors,
-        true
-      );
+      this.setErrors();
     });
+  }
+
+  setErrors() {
+    this.formErrors = this.formService.validateForm(
+      this.form,
+      this.formErrors,
+      false
+    );
   }
 
   getDetail(id) {
@@ -110,11 +114,7 @@ export class RatingFormComponent implements OnInit {
         }
       );
     } else {
-      this.formErrors = this.formService.validateForm(
-        this.form,
-        this.formErrors,
-        false
-      );
+      this.setErrors();
     }
   }
 
