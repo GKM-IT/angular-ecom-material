@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Constant } from 'src/app/helper/constant';
 import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog/confirm-dialog.component';
 import { PurchaseService } from 'src/app/providers/purchase/purchase.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-purchase-list',
@@ -33,6 +34,7 @@ export class PurchaseListComponent implements OnInit {
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router,
+    private spinner: NgxSpinnerService
   ) {
     const constant = new Constant();
     this.pageSizeOptions = constant.pageSizeOptions;
@@ -43,9 +45,11 @@ export class PurchaseListComponent implements OnInit {
   }
 
   getData() {
+    this.spinner.show();
     this.masterService.list(this.filterData).subscribe(response => {
       this.dataSource = response.data;
       this.filterData.length = response.recordsFiltered;
+      this.spinner.hide();
     });
   }
 

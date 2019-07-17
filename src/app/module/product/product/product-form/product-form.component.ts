@@ -17,6 +17,7 @@ import { CategoryService } from 'src/app/providers/product/category.service';
 import { ImageSnippet } from 'src/app/model/image-snippet';
 import { CustomerGroupService } from 'src/app/providers/customer/customer-group.service';
 import { Dateformat } from 'src/app/helper/dateformat';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-product-form',
@@ -180,6 +181,7 @@ export class ProductFormComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService
 
   ) {
 
@@ -618,7 +620,7 @@ export class ProductFormComponent implements OnInit {
     // mark all fields as touched
     this.markFormGroupTouched();
     if (this.isFormValid()) {
-
+      this.spinner.show();
       const dateformat = new Dateformat();
 
       const prices = [];
@@ -679,6 +681,7 @@ export class ProductFormComponent implements OnInit {
             // this.form.reset();
             this.router.navigate(['/products']);
           }
+          this.spinner.hide();
           this.snackBar.open(response.message, 'X', {
             duration: 2000,
           });

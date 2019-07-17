@@ -8,6 +8,7 @@ import { UserGroupService } from 'src/app/providers/user/user-group.service';
 import { Constant } from 'src/app/helper/constant';
 import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-user-form',
@@ -48,6 +49,7 @@ export class UserFormComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService
   ) { }
 
   getId() {
@@ -141,6 +143,7 @@ export class UserFormComponent implements OnInit {
     // mark all fields as touched
     this.formService.markFormGroupTouched(this.form);
     if (this.form.valid) {
+      this.spinner.show();
       this.masterService.save(this.form.value, this.getId()).subscribe(
         response => {
           if (!response.status) {
@@ -153,7 +156,7 @@ export class UserFormComponent implements OnInit {
             this.form.reset();
             this.router.navigate(['/users']);
           }
-
+          this.spinner.hide();
           this.snackBar.open(response.message, 'X', {
             duration: 2000,
           });

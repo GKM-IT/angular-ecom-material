@@ -3,6 +3,7 @@ import { Constant } from 'src/app/helper/constant';
 import { TotalSalesService } from 'src/app/providers/report/total-sales.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-total-sales',
@@ -28,7 +29,8 @@ export class TotalSalesComponent implements OnInit {
 
   constructor(
     private masterService: TotalSalesService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private spinner: NgxSpinnerService
   ) {
     const constant = new Constant();
     this.pageSizeOptions = constant.pageSizeOptions;
@@ -39,9 +41,11 @@ export class TotalSalesComponent implements OnInit {
   }
 
   getData() {
+    this.spinner.show();
     this.masterService.list(this.filterData).subscribe(response => {
       this.dataSource = response.data;
       this.filterData.length = response.recordsFiltered;
+      this.spinner.hide();
     });
   }
 
