@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
+import { VendorService } from 'src/app/providers/vendor/vendor.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Constant } from 'src/app/helper/constant';
 import { ConfirmDialogComponent } from 'src/app/components/common/confirm-dialog/confirm-dialog.component';
-import { PurchaseService } from 'src/app/providers/purchase/purchase.service';
 
 @Component({
-  selector: 'app-purchase-list',
-  templateUrl: './purchase-list.component.html',
-  styleUrls: ['./purchase-list.component.css']
+  selector: 'app-vendor-list',
+  templateUrl: './vendor-list.component.html',
+  styleUrls: ['./vendor-list.component.css']
 })
-export class PurchaseListComponent implements OnInit {
+export class VendorListComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'purchase_type', 'name', 'email', 'contact', 'purchase_status', 'total', 'total_tax', 'updated_at', 'action'];
+
+  displayedColumns: string[] = ['select', 'group_name', 'name', 'email', 'contact', 'updated_at', 'action'];
   selection = new SelectionModel<any>(true, []);
   dataSource: any[] = [];
   filterData = {
@@ -29,7 +30,7 @@ export class PurchaseListComponent implements OnInit {
   pageSizeOptions;
 
   constructor(
-    private masterService: PurchaseService,
+    private masterService: VendorService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router,
@@ -131,11 +132,11 @@ export class PurchaseListComponent implements OnInit {
   }
 
   edit(row) {
-    this.router.navigate(['/purchase/', row.id]);
+    this.router.navigate(['/vendor/', row.id]);
   }
 
   add() {
-    this.router.navigate(['/purchase/', 'new']);
+    this.router.navigate(['/vendor/', 'new']);
   }
 
 }

@@ -31,6 +31,7 @@ import { PurchaseModule } from './module/purchase/purchase.module';
 import { TaxModule } from './module/tax/tax.module';
 import { UnitModule } from './module/unit/unit.module';
 import { ReportModule } from './module/report/report.module';
+import { VendorModule } from './module/vendor/vendor.module';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { ReportModule } from './module/report/report.module';
     UnitModule,
     UserModule,
     ReportModule,
+    VendorModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

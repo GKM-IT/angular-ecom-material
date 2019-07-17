@@ -227,6 +227,19 @@ export class AdminSidebarComponent implements OnInit {
           ]
         },
         {
+          label: 'Vendor',
+          items: [
+            {
+              label: 'Vendor group',
+              link: '/vendor-groups',
+            },
+            {
+              label: 'Vendors',
+              link: '/vendors',
+            },
+          ]
+        },
+        {
           label: 'Purchases',
           link: '/purchases',
         }

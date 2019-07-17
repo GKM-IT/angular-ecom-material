@@ -76,6 +76,10 @@ import { TotalSalesComponent } from './module/report/total-sales/total-sales.com
 import { TotalSalesDayComponent } from './module/report/total-sales-day/total-sales-day.component';
 import { TotalSalesMonthComponent } from './module/report/total-sales-month/total-sales-month.component';
 import { TotalSalesYearComponent } from './module/report/total-sales-year/total-sales-year.component';
+import { VendorListComponent } from './module/vendor/vendor/vendor-list/vendor-list.component';
+import { VendorFormComponent } from './module/vendor/vendor/vendor-form/vendor-form.component';
+import { VendorGroupListComponent } from './module/vendor/vendor-group/vendor-group-list/vendor-group-list.component';
+import { VendorGroupFormComponent } from './module/vendor/vendor-group/vendor-group-form/vendor-group-form.component';
 
 
 
@@ -149,6 +153,10 @@ const adminChildRoutes: Routes = [
   { path: 'user/:id', component: UserFormComponent },
   { path: 'user-groups', component: UserGroupListComponent },
   { path: 'user-group/:id', component: UserGroupFormComponent },
+  { path: 'vendors', component: VendorListComponent },
+  { path: 'vendor/:id', component: VendorFormComponent },
+  { path: 'vendor-groups', component: VendorGroupListComponent },
+  { path: 'vendor-group/:id', component: VendorGroupFormComponent },
   { path: 'total-sales', component: TotalSalesComponent },
   { path: 'total-sales-day', component: TotalSalesDayComponent },
   { path: 'total-sales-month', component: TotalSalesMonthComponent },

@@ -4,7 +4,7 @@ import { ConfigService } from '../config/config.service';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { isString } from 'util';
+import { AuthService } from '../user/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class PurchaseService {
   public formData: FormData = new FormData();
   private url;
 
-  constructor(public http: HttpClient, public configService: ConfigService) {
+  constructor(public http: HttpClient, public configService: ConfigService, private authService: AuthService) {
 
   }
 
@@ -83,7 +83,12 @@ export class PurchaseService {
     if (id !== 'new') {
       this.formData.append('id', id);
     }
-    this.formData.append('name', data.name);
+    this.formData.append('purchase_type_id', data.purchaseTypeId);
+    this.formData.append('vendor_id', data.vendorId);
+    this.formData.append('purchase_status_id', data.purchaseStatusId);
+    this.formData.append('comment', data.comment);
+    this.formData.append('user_id', this.authService.getId());
+    this.formData.append('token', this.authService.getToken());
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

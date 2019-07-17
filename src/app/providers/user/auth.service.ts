@@ -56,6 +56,15 @@ export class AuthService {
       return null;
     }
   }
+  public getId() {
+    const data = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (data) {
+      return data.id;
+    } else {
+      return null;
+    }
+  }
   public getToken() {
     const data = JSON.parse(localStorage.getItem('currentUser'));
 

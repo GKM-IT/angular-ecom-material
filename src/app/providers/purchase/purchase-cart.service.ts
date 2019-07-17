@@ -4,7 +4,7 @@ import { ConfigService } from '../config/config.service';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { isString } from 'util';
+import { AuthService } from '../user/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class PurchaseCartService {
   public formData: FormData = new FormData();
   private url;
 
-  constructor(public http: HttpClient, public configService: ConfigService) {
+  constructor(public http: HttpClient, public configService: ConfigService, private authService: AuthService) {
 
   }
 
@@ -37,6 +37,7 @@ export class PurchaseCartService {
       this.formData.append('sort_dir', data.sort_dir);
     }
 
+    this.formData.append('token', this.authService.getToken());
     this.url = `${environment.url}purchase/purchase_carts`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -82,7 +83,12 @@ export class PurchaseCartService {
     if (id !== 'new') {
       this.formData.append('id', id);
     }
-    this.formData.append('name', data.name);
+    this.formData.append('user_id', this.authService.getId());
+    this.formData.append('token', this.authService.getToken());
+    this.formData.append('product_id', data.productId);
+    this.formData.append('price', data.price);
+    this.formData.append('quantity', data.quantity);
+    this.formData.append('tax', data.tax);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
