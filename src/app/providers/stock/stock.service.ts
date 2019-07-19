@@ -81,7 +81,12 @@ export class StockService {
     if (id !== 'new') {
       this.formData.append('id', id);
     }
-    this.formData.append('name', data.name);
+    this.formData.append('product_id', data.productId);
+    this.formData.append('location_id', data.locationId);
+    this.formData.append('price', data.price);
+    this.formData.append('quantity', data.quantity);
+    this.formData.append('type', data.type);
+    this.formData.append('text', data.text);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

@@ -80,6 +80,11 @@ import { VendorListComponent } from './module/vendor/vendor/vendor-list/vendor-l
 import { VendorFormComponent } from './module/vendor/vendor/vendor-form/vendor-form.component';
 import { VendorGroupListComponent } from './module/vendor/vendor-group/vendor-group-list/vendor-group-list.component';
 import { VendorGroupFormComponent } from './module/vendor/vendor-group/vendor-group-form/vendor-group-form.component';
+import { StockStatusListComponent } from './module/stock/stock-status/stock-status-list/stock-status-list.component';
+import { StockStatusFormComponent } from './module/stock/stock-status/stock-status-form/stock-status-form.component';
+import { StockListComponent } from './module/stock/stock/stock-list/stock-list.component';
+import { StockFormComponent } from './module/stock/stock/stock-form/stock-form.component';
+import { StockDetailComponent } from './module/stock/stock/stock-detail/stock-detail.component';
 
 
 
@@ -161,6 +166,11 @@ const adminChildRoutes: Routes = [
   { path: 'total-sales-day', component: TotalSalesDayComponent },
   { path: 'total-sales-month', component: TotalSalesMonthComponent },
   { path: 'total-sales-year', component: TotalSalesYearComponent },
+  { path: 'stock-statuses', component: StockStatusListComponent },
+  { path: 'stock-status/:id', component: StockStatusFormComponent },
+  { path: 'stocks', component: StockListComponent },
+  { path: 'stock/:id', component: StockFormComponent },
+  { path: 'stock-detail/:id', component: StockDetailComponent },
 ];
 
 const routes: Routes = [

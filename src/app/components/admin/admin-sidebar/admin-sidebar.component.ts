@@ -273,6 +273,22 @@ export class AdminSidebarComponent implements OnInit {
     });
 
 
+    // stocks
+    this.menuData.push({
+      label: 'Stocks',
+      icon: 'book',
+      items: [
+        {
+          label: 'Stock statuses',
+          link: '/stock-statuses',
+        },
+        {
+          label: 'Stocks',
+          link: '/stocks',
+        },
+      ]
+    });
+
     // reports
     this.menuData.push({
       label: 'Reports',

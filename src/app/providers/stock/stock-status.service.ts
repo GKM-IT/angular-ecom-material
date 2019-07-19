@@ -36,7 +36,7 @@ export class StockStatusService {
       this.formData.append('sort_dir', data.sort_dir);
     }
 
-    this.url = `${environment.url}stock/stock_statues`;
+    this.url = `${environment.url}stock/stock_statuses`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -46,7 +46,7 @@ export class StockStatusService {
   public detail(id: any) {
     this.formData = new FormData();
 
-    this.url = `${environment.url}stock/stock_statues/detail`;
+    this.url = `${environment.url}stock/stock_statuses/detail`;
     this.formData.append('id', id);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -55,7 +55,7 @@ export class StockStatusService {
   }
 
   public delete(id: any) {
-    this.url = `${environment.url}stock/stock_statues/delete/${id}`;
+    this.url = `${environment.url}stock/stock_statuses/delete/${id}`;
     return this.http.get<any>(this.url).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -68,7 +68,7 @@ export class StockStatusService {
     ));
     this.formData = new FormData();
     this.formData.append('list', JSON.stringify(selected));
-    this.url = `${environment.url}stock/stock_statues/delete_all`;
+    this.url = `${environment.url}stock/stock_statuses/delete_all`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -77,7 +77,7 @@ export class StockStatusService {
 
   public save(data: any, id: any) {
     this.formData = new FormData();
-    this.url = `${environment.url}stock/stock_statues/save`;
+    this.url = `${environment.url}stock/stock_statuses/save`;
     if (id !== 'new') {
       this.formData.append('id', id);
     }
