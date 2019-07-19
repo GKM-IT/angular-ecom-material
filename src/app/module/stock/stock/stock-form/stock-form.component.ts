@@ -34,6 +34,7 @@ export class StockFormComponent implements OnInit {
   price;
   quantity;
   type;
+  types = [];
   text;
 
 
@@ -138,6 +139,7 @@ export class StockFormComponent implements OnInit {
     }
 
     this.form = this.formBuilder.group({
+      type: [this.type, Validators.required],
       product: [this.product, Validators.required],
       productId: [this.productId, Validators.required],
       location: [this.location, Validators.required],
@@ -150,6 +152,11 @@ export class StockFormComponent implements OnInit {
     this.form.valueChanges.subscribe(data => {
       this.setErrors();
     });
+
+    this.types.push({ id: 'i', name: 'In' }, { id: 'o', name: 'Out' });
+
+    this.getLocationAutocomplete();
+    this.getProductAutocomplete();
   }
 
   getDetail(id) {
@@ -160,6 +167,8 @@ export class StockFormComponent implements OnInit {
           this.quantity = response.data.quantity;
           this.text = response.data.text;
           this.type = response.data.type;
+          this.productId = response.data.product_id;
+          this.locationId = response.data.location_id;
 
           this.product = {
             id: response.data.product_id,
