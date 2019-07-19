@@ -276,7 +276,7 @@ export class AdminSidebarComponent implements OnInit {
     // stocks
     this.menuData.push({
       label: 'Stocks',
-      icon: 'book',
+      icon: 'cached',
       items: [
         {
           label: 'Stock statuses',
