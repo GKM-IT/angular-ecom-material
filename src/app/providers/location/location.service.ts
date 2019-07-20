@@ -36,6 +36,17 @@ export class LocationService {
       this.formData.append('sort_dir', data.sort_dir);
     }
 
+    if (data.countryId) {
+      this.formData.append('where[country_id]', data.countryId);
+    }
+
+    if (data.zoneId) {
+      this.formData.append('where[zone_id]', data.zoneId);
+    }
+    if (data.cityId) {
+      this.formData.append('where[city_id]', data.cityId);
+    }
+
     this.url = `${environment.url}location/locations`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times

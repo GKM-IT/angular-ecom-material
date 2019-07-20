@@ -85,6 +85,7 @@ import { StockStatusFormComponent } from './module/stock/stock-status/stock-stat
 import { StockListComponent } from './module/stock/stock/stock-list/stock-list.component';
 import { StockFormComponent } from './module/stock/stock/stock-form/stock-form.component';
 import { StockDetailComponent } from './module/stock/stock/stock-detail/stock-detail.component';
+import { SettingFormComponent } from './module/setting/setting-form/setting-form.component';
 
 
 
@@ -171,6 +172,7 @@ const adminChildRoutes: Routes = [
   { path: 'stocks', component: StockListComponent },
   { path: 'stock/:id', component: StockFormComponent },
   { path: 'stock-detail/:id', component: StockDetailComponent },
+  { path: 'setting', component: SettingFormComponent },
 ];
 
 const routes: Routes = [

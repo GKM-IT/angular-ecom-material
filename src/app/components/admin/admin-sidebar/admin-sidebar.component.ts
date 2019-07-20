@@ -55,6 +55,10 @@ export class AdminSidebarComponent implements OnInit {
       icon: 'settings',
       items: [
         {
+          label: 'Setting',
+          link: '/setting',
+        },
+        {
           label: 'Banners',
           link: '/banners',
         },

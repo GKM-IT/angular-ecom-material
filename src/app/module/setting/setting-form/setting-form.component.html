@@ -1,0 +1,136 @@
+<div class="main-div">
+
+  <mat-card class="z-depth center" flex="50">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <mat-card-header>
+        <mat-card-title>
+          {{pageHeading}}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="defaultName" formControlName="defaultName" [(ngModel)]="defaultName" required>
+          <mat-error *ngIf="formErrors.defaultName">{{formErrors.defaultName}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="defaultEmail" formControlName="defaultEmail" [(ngModel)]="defaultEmail" required>
+          <mat-error *ngIf="formErrors.defaultEmail">{{formErrors.defaultEmail}}</mat-error>
+        </mat-form-field>
+
+        <div>
+          <mat-select-autocomplete class="full-width" [placeholder]="'Country Selection'" [options]="countries"
+            [display]="'name'" [value]="'value'" [selectedOptions]="defaultCountry" [multiple]='false' ngDefaultControl
+            name="defaultCountry" [formControl]="form.controls['defaultCountry']"
+            (selectionChange)="changeCountry($event)">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <mat-select-autocomplete class="full-width" [placeholder]="'Zone Selection'" [options]="zones"
+            [display]="'name'" [value]="'value'" [selectedOptions]="defaultZone" [multiple]='false' ngDefaultControl
+            name="defaultZone" [formControl]="form.controls['defaultZone']" (selectionChange)="changeZone($event)">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <mat-select-autocomplete class="full-width" [placeholder]="'City Selection'" [options]="cities"
+            [display]="'name'" [value]="'value'" [selectedOptions]="defaultCity" [multiple]='false' ngDefaultControl
+            name="defaultCity" [formControl]="form.controls['defaultCity']" (selectionChange)="changeCity($event)">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <mat-select-autocomplete class="full-width" [placeholder]="'Location Selection'" [options]="locations"
+            [display]="'name'" [value]="'value'" [selectedOptions]="defaultLocation" [multiple]='false' ngDefaultControl
+            name="defaultLocation" [formControl]="form.controls['defaultLocation']">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <mat-select-autocomplete class="full-width" [placeholder]="'Default Length Class Selection'"
+            [options]="lengthClasses" [display]="'name'" [value]="'value'" [selectedOptions]="defaultLengthClass"
+            [multiple]='false' ngDefaultControl name="defaultLengthClass"
+            [formControl]="form.controls['defaultLengthClass']">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <mat-select-autocomplete class="full-width" [placeholder]="'Default Weight Class Selection'"
+            [options]="weightClasses" [display]="'name'" [value]="'value'" [selectedOptions]="defaultWeightClass"
+            [multiple]='false' ngDefaultControl name="defaultWeightClass"
+            [formControl]="form.controls['defaultWeightClass']">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <mat-select-autocomplete class="full-width" [placeholder]="'defaultCustomerGroup'" [options]="customerGroups"
+            [display]="'name'" [value]="'value'" [selectedOptions]="defaultCustomerGroup" [multiple]='false'
+            ngDefaultControl name="defaultCustomerGroup" [formControl]="form.controls['defaultCustomerGroup']">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <mat-select-autocomplete class="full-width" [placeholder]="'defaultEmployeeGroup'" [options]="employeeGroups"
+            [display]="'name'" [value]="'value'" [selectedOptions]="defaultEmployeeGroup" [multiple]='false'
+            ngDefaultControl name="defaultEmployeeGroup" [formControl]="form.controls['defaultEmployeeGroup']">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <mat-select-autocomplete class="full-width" [placeholder]="'defaultUserGroup'" [options]="userGroups"
+            [display]="'name'" [value]="'value'" [selectedOptions]="defaultUserGroup" [multiple]='false'
+            ngDefaultControl name="defaultUserGroup" [formControl]="form.controls['defaultUserGroup']">
+          </mat-select-autocomplete>
+        </div>
+        
+        <div>
+          <mat-select-autocomplete class="full-width" [placeholder]="'defaultOrderType'" [options]="orderTypes"
+            [display]="'name'" [value]="'value'" [selectedOptions]="defaultOrderType" [multiple]='false'
+            ngDefaultControl name="defaultOrderType" [formControl]="form.controls['defaultOrderType']">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <mat-select-autocomplete class="full-width" [placeholder]="'defaultPurchaseType'" [options]="purchaseTypes"
+            [display]="'name'" [value]="'value'" [selectedOptions]="defaultPurchaseType" [multiple]='false'
+            ngDefaultControl name="defaultPurchaseType" [formControl]="form.controls['defaultPurchaseType']">
+          </mat-select-autocomplete>
+        </div>
+
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="defaultAddress" formControlName="defaultAddress"
+            [(ngModel)]="defaultAddress"></textarea>
+          <mat-error *ngIf="formErrors.defaultZone">{{formErrors.defaultZone}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="defaultDateFormat" formControlName="defaultDateFormat"
+            [(ngModel)]="defaultDateFormat" required>
+          <mat-error *ngIf="formErrors.defaultDateFormat">{{formErrors.defaultDateFormat}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="defaultDateTimeFormat" formControlName="defaultDateTimeFormat"
+            [(ngModel)]="defaultDateTimeFormat" required>
+          <mat-error *ngIf="formErrors.defaultDateTimeFormat">{{formErrors.defaultDateTimeFormat}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="defaultDecimalPlace" formControlName="defaultDecimalPlace"
+            [(ngModel)]="defaultDecimalPlace" required>
+          <mat-error *ngIf="formErrors.defaultDecimalPlace">{{formErrors.defaultDecimalPlace}}</mat-error>
+        </mat-form-field>
+
+
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button type="submit" color="primary">Save</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+
+</div>
