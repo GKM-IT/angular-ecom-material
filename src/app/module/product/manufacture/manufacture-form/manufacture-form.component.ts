@@ -21,6 +21,10 @@ export class ManufactureFormComponent implements OnInit {
   public messageTitle: string;
   hide = true;
   name;
+  mobileMenu;
+  top;
+  bottom;
+  sortOrder;
   image: any;
   imageThumb: any;
   selectedFile: ImageSnippet;
@@ -30,6 +34,10 @@ export class ManufactureFormComponent implements OnInit {
   public formErrors = {
     name: '',
     image: '',
+    mobileMenu: '',
+    top: '',
+    bottom: '',
+    sortOrder: '',
   };
 
   constructor(
@@ -60,6 +68,10 @@ export class ManufactureFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: [this.name, Validators.required],
       image: [this.image],
+      mobileMenu: [this.mobileMenu],
+      top: [this.top],
+      bottom: [this.bottom],
+      sortOrder: [this.sortOrder],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -74,6 +86,10 @@ export class ManufactureFormComponent implements OnInit {
           this.name = response.data.name;
           this.image = response.data.image;
           this.imageThumb = response.data.image_thumb;
+          this.mobileMenu = response.data.mobileMenu;
+          this.top = response.data.top;
+          this.bottom = response.data.bottom;
+          this.sortOrder = response.data.sortOrder;
         }
       },
       err => {

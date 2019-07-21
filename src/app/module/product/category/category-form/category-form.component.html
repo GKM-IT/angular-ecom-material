@@ -63,6 +63,29 @@
           <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
         </mat-form-field>
 
+        <section class="full-width">
+          <mat-slide-toggle color="primary" formControlName="mobileMenu" [(ngModel)]="mobileMenu">
+            mobileMenu
+          </mat-slide-toggle>
+        </section>
+
+        <section class="full-width">
+          <mat-slide-toggle color="primary" formControlName="top" [(ngModel)]="top">
+            top
+          </mat-slide-toggle>
+        </section>
+
+        <section class="full-width">
+          <mat-slide-toggle color="primary" formControlName="bottom" [(ngModel)]="bottom">
+            bottom
+          </mat-slide-toggle>
+        </section>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="sortOrder" formControlName="sortOrder" [(ngModel)]="sortOrder" required>
+          <mat-error *ngIf="formErrors.sortOrder">{{formErrors.sortOrder}}</mat-error>
+        </mat-form-field>
+
 
       </mat-card-content>
       <mat-card-actions>

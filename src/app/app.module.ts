@@ -36,6 +36,7 @@ import { VendorModule } from './module/vendor/vendor.module';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { StockModule } from './module/stock/stock.module';
 import { SettingModule } from './module/setting/setting.module';
+import { OfferModule } from './module/offer/offer.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +74,7 @@ import { SettingModule } from './module/setting/setting.module';
     VendorModule,
     StockModule,
     SettingModule,
+    OfferModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

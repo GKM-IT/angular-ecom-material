@@ -86,6 +86,8 @@ export class CustomerService {
     this.formData.append('name', data.name);
     this.formData.append('email', data.email);
     this.formData.append('contact', data.contact);
+    this.formData.append('pan_number', data.panNumber);
+    this.formData.append('gst_number', data.gstNumber);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

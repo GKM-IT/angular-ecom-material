@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../config/config.service';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { isString } from 'util';
+import { Dateformat } from 'src/app/helper/dateformat';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
+export class CouponService {
+
 
   public formData: FormData = new FormData();
   private url;
@@ -37,7 +37,7 @@ export class CategoryService {
       this.formData.append('sort_dir', data.sort_dir);
     }
 
-    this.url = `${environment.url}product/categories`;
+    this.url = `${environment.url}offer/coupons`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -47,7 +47,7 @@ export class CategoryService {
   public detail(id: any) {
     this.formData = new FormData();
 
-    this.url = `${environment.url}product/categories/detail`;
+    this.url = `${environment.url}offer/coupons/detail`;
     this.formData.append('id', id);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -56,7 +56,7 @@ export class CategoryService {
   }
 
   public delete(id: any) {
-    this.url = `${environment.url}product/categories/delete/${id}`;
+    this.url = `${environment.url}offer/coupons/delete/${id}`;
     return this.http.get<any>(this.url).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -69,7 +69,7 @@ export class CategoryService {
     ));
     this.formData = new FormData();
     this.formData.append('list', JSON.stringify(selected));
-    this.url = `${environment.url}product/categories/delete_all`;
+    this.url = `${environment.url}offer/coupons/delete_all`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -77,31 +77,20 @@ export class CategoryService {
   }
 
   public save(data: any, id: any) {
+    const dateformat = new Dateformat();
     this.formData = new FormData();
-    this.url = `${environment.url}product/categories/save`;
+    this.url = `${environment.url}offer/coupons/save`;
     if (id !== 'new') {
       this.formData.append('id', id);
     }
-    this.formData.append('type_id', data.typeId);
-    this.formData.append('parent_id', data.categoryId);
+    this.formData.append('code', data.code);
+    this.formData.append('customer_group_id', data.customerGroupId);
+    this.formData.append('start_date', dateformat.dateConvert(data.start));
+    this.formData.append('end_date', dateformat.dateConvert(data.end));
     this.formData.append('name', data.name);
-    this.formData.append('image', data.image);
-    this.formData.append('mobile_menu', data.mobileMenu);
-    this.formData.append('top', data.top);
-    this.formData.append('bottom', data.bottom);
-    this.formData.append('sort_order', data.sortOrder);
-    return this.http.post<any>(this.url, this.formData).pipe(
-      // retry(1), // retry a failed request up to 3 times
-      catchError(this.configService.handleError)
-    );
-  }
-
-  public imageUpload(image: File) {
-    this.formData = new FormData();
-    this.url = `${environment.url}common/ImageUpload`;
-    this.formData.append('filepath', 'categories');
-    this.formData.append('filename', 'category');
-    this.formData.append('userfile', image);
+    this.formData.append('discount_type', data.discountType);
+    this.formData.append('discount', data.discount);
+    this.formData.append('used_limit', data.usedLimit);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

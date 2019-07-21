@@ -1,36 +1,51 @@
 import { Component, OnInit } from '@angular/core';
-import { TypeService } from 'src/app/providers/catalog/type.service';
+import { CouponService } from 'src/app/providers/offer/coupon.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormService } from 'src/app/providers/form/form.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CustomerGroupService } from 'src/app/providers/customer/customer-group.service';
 
 @Component({
-  selector: 'app-type-form',
-  templateUrl: './type-form.component.html',
-  styleUrls: ['./type-form.component.css']
+  selector: 'app-coupon-form',
+  templateUrl: './coupon-form.component.html',
+  styleUrls: ['./coupon-form.component.css']
 })
-export class TypeFormComponent implements OnInit {
-
-  public pageHeading = 'Type Form';
+export class CouponFormComponent implements OnInit {
+  public pageHeading = 'Coupon Form';
   public data: any;
   public status: any;
   public message: any;
   public messageTitle: string;
   hide = true;
+  code;
+  customerGroupId;
+  start;
+  end;
   name;
-  sortOrder;
+  discountType;
+  discount;
+  usedLimit;
 
+  customerGroups: any = [];
+  discountTypes: any = [];
 
   public form: FormGroup;
   public formErrors = {
+    code: '',
+    customerGroupId: '',
+    start: '',
+    end: '',
     name: '',
-    sortOrder: '',
+    discountType: '',
+    discount: '',
+    usedLimit: '',
   };
 
   constructor(
-    public masterService: TypeService,
+    public masterService: CouponService,
+    public customerGroupService: CustomerGroupService,
     private formBuilder: FormBuilder,
     private formService: FormService,
     private router: Router,
@@ -45,18 +60,47 @@ export class TypeFormComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/types']);
+    this.router.navigate(['/coupons']);
+  }
+
+  getCustomerGroups() {
+    this.customerGroups = [];
+    this.customerGroupService.list({}).subscribe(response => {
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < response.data.length; index++) {
+        this.customerGroups.push({
+          name: response.data[index].name,
+          value: response.data[index].id,
+        });
+      }
+    });
   }
 
   ngOnInit() {
-
+    this.discountTypes.push(
+      {
+        text: 'Fixed',
+        value: 'F'
+      },
+      {
+        text: 'Percentage',
+        value: 'P'
+      }
+    );
+    this.getCustomerGroups();
     if (this.getId() !== 'new') {
       this.getDetail(this.getId());
     }
 
     this.form = this.formBuilder.group({
+      code: [this.code, Validators.required],
       name: [this.name, Validators.required],
-      sortOrder: [this.sortOrder, Validators.required],
+      customerGroupId: [this.customerGroupId, Validators.required],
+      start: [new Date(this.start), Validators.required],
+      end: [new Date(this.end), Validators.required],
+      discountType: [this.discountType, Validators.required],
+      discount: [this.discount, Validators.required],
+      usedLimit: [this.usedLimit, Validators.required],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -68,8 +112,14 @@ export class TypeFormComponent implements OnInit {
     this.masterService.detail(id).subscribe(
       response => {
         if (response.status) {
+          this.code = response.data.code;
           this.name = response.data.name;
-          this.sortOrder = response.data.sort_order;
+          this.customerGroupId = response.data.customerGroupId;
+          this.start = new Date(response.data.start);
+          this.end = new Date(response.data.end);
+          this.discountType = response.data.discountType;
+          this.discount = response.data.discount;
+          this.usedLimit = response.data.usedLimit;
         }
       },
       err => {
@@ -101,7 +151,7 @@ export class TypeFormComponent implements OnInit {
             }
           } else {
             this.form.reset();
-            this.router.navigate(['/types']);
+            this.router.navigate(['/coupons']);
           }
           this.spinner.hide();
           this.snackBar.open(response.message, 'X', {
@@ -116,6 +166,5 @@ export class TypeFormComponent implements OnInit {
       this.setErrors();
     }
   }
-
 
 }

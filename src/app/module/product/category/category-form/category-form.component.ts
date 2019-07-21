@@ -34,6 +34,10 @@ export class CategoryFormComponent implements OnInit {
   categoryId;
   categories;
   isLoading = false;
+  mobileMenu;
+  top;
+  bottom;
+  sortOrder;
 
   public form: FormGroup;
   public formErrors = {
@@ -41,6 +45,10 @@ export class CategoryFormComponent implements OnInit {
     type: '',
     category: '',
     image: '',
+    mobileMenu: '',
+    top: '',
+    bottom: '',
+    sortOrder: '',
   };
 
   constructor(
@@ -76,6 +84,10 @@ export class CategoryFormComponent implements OnInit {
       categoryId: [this.categoryId],
       category: [this.category],
       image: [this.image],
+      mobileMenu: [this.mobileMenu],
+      top: [this.top],
+      bottom: [this.bottom],
+      sortOrder: [this.sortOrder],
     });
 
     this.form.valueChanges.subscribe(data => {
@@ -190,6 +202,10 @@ export class CategoryFormComponent implements OnInit {
             name: response.data.parent
           };
           this.categoryId = response.data.parent_id;
+          this.mobileMenu = response.data.mobileMenu;
+          this.top = response.data.top;
+          this.bottom = response.data.bottom;
+          this.sortOrder = response.data.sortOrder;
         }
       },
       err => {

@@ -84,6 +84,10 @@ export class ManufactureService {
     }
     this.formData.append('name', data.name);
     this.formData.append('image', data.image);
+    this.formData.append('mobile_menu', data.mobileMenu);
+    this.formData.append('top', data.top);
+    this.formData.append('bottom', data.bottom);
+    this.formData.append('sort_order', data.sortOrder);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)

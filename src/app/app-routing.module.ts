@@ -86,6 +86,8 @@ import { StockListComponent } from './module/stock/stock/stock-list/stock-list.c
 import { StockFormComponent } from './module/stock/stock/stock-form/stock-form.component';
 import { StockDetailComponent } from './module/stock/stock/stock-detail/stock-detail.component';
 import { SettingFormComponent } from './module/setting/setting-form/setting-form.component';
+import { CouponListComponent } from './module/offer/coupon/coupon-list/coupon-list.component';
+import { CouponFormComponent } from './module/offer/coupon/coupon-form/coupon-form.component';
 
 
 
@@ -173,6 +175,8 @@ const adminChildRoutes: Routes = [
   { path: 'stock/:id', component: StockFormComponent },
   { path: 'stock-detail/:id', component: StockDetailComponent },
   { path: 'setting', component: SettingFormComponent },
+  { path: 'coupons', component: CouponListComponent },
+  { path: 'coupon/:id', component: CouponFormComponent },
 ];
 
 const routes: Routes = [

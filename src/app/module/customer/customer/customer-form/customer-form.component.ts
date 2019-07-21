@@ -27,6 +27,8 @@ export class CustomerFormComponent implements OnInit {
   name;
   email;
   contact;
+  panNumber;
+  gstNumber;
   group;
   groupId;
   groups;
@@ -38,6 +40,8 @@ export class CustomerFormComponent implements OnInit {
     name: '',
     email: '',
     contact: '',
+    panNumber: '',
+    gstNumber: '',
   };
 
   constructor(
@@ -72,6 +76,8 @@ export class CustomerFormComponent implements OnInit {
       name: [this.name, Validators.required],
       email: [this.email, Validators.required],
       contact: [this.contact, Validators.required],
+      gstNumber: [this.gstNumber],
+      panNumber: [this.panNumber],
     });
 
     this.form.valueChanges.subscribe(data => {

@@ -143,6 +143,18 @@ export class AdminSidebarComponent implements OnInit {
     });
 
 
+    // offer
+    this.menuData.push({
+      label: 'Offers',
+      icon: 'people',
+      items: [
+        {
+          label: 'Coupons',
+          link: '/coupons',
+        }
+      ]
+    });
+
 
     // product
     this.menuData.push({
