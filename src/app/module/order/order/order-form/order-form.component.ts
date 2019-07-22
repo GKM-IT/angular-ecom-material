@@ -50,10 +50,6 @@ export class OrderFormComponent implements OnInit {
   comment;
 
 
-  productId;
-  product: { id: any; name: any; };
-  quantity;
-
   public formErrors = {
     customerId: '',
     customer: '',
@@ -64,12 +60,9 @@ export class OrderFormComponent implements OnInit {
     orderStatusId: '',
     orderStatus: '',
     comment: '',
-    product: '',
-    quantity: ''
   };
 
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  form: FormGroup;
 
   constructor(
     public masterService: OrderService,
@@ -97,7 +90,7 @@ export class OrderFormComponent implements OnInit {
 
   getOrderTypeAutocomplete() {
     const constant = new Constant();
-    this.firstFormGroup
+    this.form
       .get('orderType')
       .valueChanges.pipe(
         startWith(''),
@@ -123,7 +116,7 @@ export class OrderFormComponent implements OnInit {
 
   getOrderStatusAutocomplete() {
     const constant = new Constant();
-    this.firstFormGroup
+    this.form
       .get('orderStatus')
       .valueChanges.pipe(
         startWith(''),
@@ -149,7 +142,7 @@ export class OrderFormComponent implements OnInit {
 
   getCustomerAutocomplete() {
     const constant = new Constant();
-    this.firstFormGroup
+    this.form
       .get('customer')
       .valueChanges.pipe(
         startWith(''),
@@ -176,7 +169,7 @@ export class OrderFormComponent implements OnInit {
   getAddressAutocomplete() {
     const constant = new Constant();
 
-    this.firstFormGroup
+    this.form
       .get('address')
       .valueChanges.pipe(
         startWith(''),
@@ -204,37 +197,8 @@ export class OrderFormComponent implements OnInit {
       });
   }
 
-  getProductAutocomplete() {
-    const constant = new Constant();
-    this.secondFormGroup
-      .get('product')
-      .valueChanges.pipe(
-        startWith(''),
-        debounceTime(1000),
-        tap(() => (this.isLoading = true)),
-        switchMap(value =>
-          this.productService
-            .list({
-              search: value,
-              pageSize: constant.autocompleteListSize,
-              pageIndex: 0,
-              sort_by: 'name'
-            })
-            .pipe(finalize(() => (this.isLoading = false)))
-        )
-      )
-      .subscribe(res => {
-        if (res.status) {
-          this.products = res.data;
-        }
-      });
-  }
-
   onAutoSelectionChanged(autoId, event: MatAutocompleteSelectedEvent) {
-    this.firstFormGroup.controls[`${autoId}`].setValue(event.option.value.id);
-  }
-  onSecondAutoSelectionChanged(autoId, event: MatAutocompleteSelectedEvent) {
-    this.secondFormGroup.controls[`${autoId}`].setValue(event.option.value.id);
+    this.form.controls[`${autoId}`].setValue(event.option.value.id);
   }
 
   displayFn(data: any): string {
@@ -247,12 +211,7 @@ export class OrderFormComponent implements OnInit {
 
   setErrors() {
     this.formErrors = this.formService.validateForm(
-      this.firstFormGroup,
-      this.formErrors,
-      false
-    );
-    this.formErrors = this.formService.validateForm(
-      this.secondFormGroup,
+      this.form,
       this.formErrors,
       false
     );
@@ -263,7 +222,7 @@ export class OrderFormComponent implements OnInit {
       this.getDetail(this.getId());
     }
 
-    this.firstFormGroup = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       orderTypeId: [this.orderTypeId, Validators.required],
       orderType: [this.orderType, Validators.required],
       customerId: [this.customerId, Validators.required],
@@ -275,29 +234,22 @@ export class OrderFormComponent implements OnInit {
       comment: [this.comment, Validators.required],
     });
 
-    this.secondFormGroup = this.formBuilder.group({
-      productId: [this.productId, Validators.required],
-      product: [this.product, Validators.required],
-      quantity: [this.quantity, Validators.required],
-    });
-
     this.getOrderStatusAutocomplete();
     this.getOrderTypeAutocomplete();
     this.getCustomerAutocomplete();
     this.getAddressAutocomplete();
-    this.getProductAutocomplete();
+
 
     this.setErrors();
   }
 
   markFormGroupTouched() {
-    this.formService.markFormGroupTouched(this.firstFormGroup);
-    this.formService.markFormGroupTouched(this.secondFormGroup);
+    this.formService.markFormGroupTouched(this.form);
   }
 
   isFormValid() {
     let status = false;
-    if (this.firstFormGroup.valid) {
+    if (this.form.valid) {
       status = true;
     }
 
@@ -346,14 +298,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   nextProcess() {
-    this.getCarts();
-  }
 
-  getCarts() {
-    this.orderCartService.list({ customerId: this.customerId }).subscribe(response => {
-      this.carts = response.data;
-      this.cartTotals = response.totals;
-    });
   }
 
   addCart(cartData) {
@@ -379,56 +324,6 @@ export class OrderFormComponent implements OnInit {
     );
   }
 
-  deleteCart(data) {
-    this.orderCartService.delete(data.id).subscribe(
-      response => {
-        this.getCarts();
-        this.snackBar.open(response.message, 'X', {
-          duration: 2000,
-        });
-      },
-      err => {
-        console.error(err);
-      }
-    );
-  }
-
-  onCartSubmit() {
-    // mark all fields as touched
-    this.markFormGroupTouched();
-
-    if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
-      this.spinner.show();
-      const data = {
-        customerId: this.firstFormGroup.value.customerId,
-        productId: this.secondFormGroup.value.productId,
-        quantity: this.secondFormGroup.value.quantity,
-      };
-
-      this.orderCartService.save(data, 'new').subscribe(
-        response => {
-          if (!response.status) {
-            if (response.result) {
-              response.result.forEach((element: { id: any; text: any; }) => {
-                this.formErrors[`${element.id}`] = element.text;
-              });
-            }
-          }
-          this.spinner.hide();
-          this.getCarts();
-          this.snackBar.open(response.message, 'X', {
-            duration: 2000,
-          });
-        },
-        err => {
-          console.error(err);
-        }
-      );
-
-    } else {
-      this.setErrors();
-    }
-  }
 
   onSubmit() {
     // mark all fields as touched
@@ -437,11 +332,11 @@ export class OrderFormComponent implements OnInit {
     if (this.isFormValid()) {
       this.spinner.show();
       const data = {
-        orderTypeId: this.firstFormGroup.value.orderTypeId,
-        customerId: this.firstFormGroup.value.customerId,
-        orderStatusId: this.firstFormGroup.value.orderStatusId,
-        addressId: this.firstFormGroup.value.addressId,
-        comment: this.firstFormGroup.value.comment,
+        orderTypeId: this.form.value.orderTypeId,
+        customerId: this.form.value.customerId,
+        orderStatusId: this.form.value.orderStatusId,
+        addressId: this.form.value.addressId,
+        comment: this.form.value.comment,
       };
 
       this.masterService.save(data, this.getId()).subscribe(

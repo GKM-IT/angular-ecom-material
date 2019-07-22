@@ -87,6 +87,9 @@ export class OrderService {
     this.formData.append('address_id', data.addressId);
     this.formData.append('order_status_id', data.orderStatusId);
     this.formData.append('comment', data.comment);
+    if (localStorage.getItem('coupon')) {
+      this.formData.append('coupon', localStorage.getItem('coupon'));
+    }
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
