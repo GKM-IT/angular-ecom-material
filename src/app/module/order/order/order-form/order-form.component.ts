@@ -36,6 +36,7 @@ export class OrderFormComponent implements OnInit {
   addresses: any = [];
   products: any = [];
   carts: any = [];
+  cartTotals: any = [];
   cartDisplayedColumns: string[] = ['product', 'product_image', 'quantity', 'totalFinalPrice', 'totalDiscount', 'total', 'action'];
 
   orderTypeId;
@@ -351,6 +352,7 @@ export class OrderFormComponent implements OnInit {
   getCarts() {
     this.orderCartService.list({ customerId: this.customerId }).subscribe(response => {
       this.carts = response.data;
+      this.cartTotals = response.totals;
     });
   }
 

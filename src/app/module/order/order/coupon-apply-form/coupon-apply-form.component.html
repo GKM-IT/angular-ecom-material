@@ -1,0 +1,20 @@
+<mat-card class="z-depth center" flex="50">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <mat-card-header>
+      <mat-card-title>
+        {{pageHeading}}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <input type="hidden" formControlName="customerId" [(ngModel)]="customerId">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="code" formControlName="code" [(ngModel)]="code" required>
+        <mat-error *ngIf="formErrors.code">{{formErrors.code}}</mat-error>
+      </mat-form-field>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button type="submit" color="primary">Save</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

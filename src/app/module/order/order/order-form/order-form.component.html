@@ -140,6 +140,9 @@
                 <button mat-raised-button (click)="onCartSubmit()" color="primary">Add</button>
               </form>
 
+
+
+
               <!-- cart list -->
               <table mat-table [dataSource]="carts">
                 <ng-container matColumnDef="product">
@@ -182,6 +185,24 @@
               </table>
               <!-- end cart list -->
 
+              <!-- cart total -->
+
+              <table mat-table [dataSource]="cartTotals">
+
+                <ng-container matColumnDef="text">
+                  <th mat-header-cell *matHeaderCellDef> </th>
+                  <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+                </ng-container>
+                <ng-container matColumnDef="value">
+                  <th mat-header-cell *matHeaderCellDef> </th>
+                  <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="['text','value']"></tr>
+                <tr mat-row *matRowDef="let myRowData; columns: ['text','value']"></tr>
+              </table>
+
+              <!-- end cart total -->
 
             </mat-card-content>
           </mat-card>
@@ -192,6 +213,14 @@
           </div>
         </mat-step>
 
+        <mat-step>
+          <ng-template matStepLabel>Coupon</ng-template>
+          <app-coupon-apply-form [customerId]="customerId"></app-coupon-apply-form>
+          <div class="button-group">
+            <button mat-raised-button matStepperPrevious color="light">Back</button>
+            <button mat-raised-button matStepperNext color="primary">Next</button>
+          </div>
+        </mat-step>
 
         <mat-step>
           <ng-template matStepLabel>Done</ng-template>

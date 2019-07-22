@@ -96,4 +96,15 @@ export class CouponService {
       catchError(this.configService.handleError)
     );
   }
+
+  public apply(data: any) {
+    this.formData = new FormData();
+    this.url = `${environment.url}offer/coupons/apply`;
+    this.formData.append('code', data.code);
+    this.formData.append('customer_id', data.customerId);
+    return this.http.post<any>(this.url, this.formData).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.configService.handleError)
+    );
+  }
 }
