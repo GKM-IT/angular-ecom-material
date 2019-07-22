@@ -74,6 +74,8 @@ export class CouponApplyFormComponent implements OnInit {
                 this.formErrors[`${element.id}`] = element.text;
               });
             }
+          } else {
+            localStorage.setItem('coupon', response.data);
           }
           this.spinner.hide();
           this.snackBar.open(response.message, 'X', {

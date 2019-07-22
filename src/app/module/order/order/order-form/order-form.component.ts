@@ -453,7 +453,7 @@ export class OrderFormComponent implements OnInit {
               });
             }
           } else {
-
+            localStorage.removeItem('coupon');
             this.router.navigate(['/orders']);
           }
 

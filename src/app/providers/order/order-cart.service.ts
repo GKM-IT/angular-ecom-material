@@ -39,6 +39,11 @@ export class OrderCartService {
     if (data.customerId) {
       this.formData.append('customer_id', data.customerId);
     }
+
+    if (localStorage.getItem('coupon')) {
+      this.formData.append('coupon', localStorage.getItem('coupon'));
+    }
+
     this.formData.append('token', this.authService.getToken());
     this.url = `${environment.url}order/carts`;
     return this.http.post<any>(this.url, this.formData).pipe(
