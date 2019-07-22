@@ -36,7 +36,7 @@ export class EmployeeGroupService {
       this.formData.append('sort_dir', data.sort_dir);
     }
 
-    this.url = `${environment.url}employee/employees`;
+    this.url = `${environment.url}employee/employee_groups`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -46,7 +46,7 @@ export class EmployeeGroupService {
   public detail(id: any) {
     this.formData = new FormData();
 
-    this.url = `${environment.url}employee/employees/detail`;
+    this.url = `${environment.url}employee/employee_groups/detail`;
     this.formData.append('id', id);
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
@@ -55,7 +55,7 @@ export class EmployeeGroupService {
   }
 
   public delete(id: any) {
-    this.url = `${environment.url}employee/employees/delete/${id}`;
+    this.url = `${environment.url}employee/employee_groups/delete/${id}`;
     return this.http.get<any>(this.url).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -68,7 +68,7 @@ export class EmployeeGroupService {
     ));
     this.formData = new FormData();
     this.formData.append('list', JSON.stringify(selected));
-    this.url = `${environment.url}employee/employees/delete_all`;
+    this.url = `${environment.url}employee/employee_groups/delete_all`;
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
       catchError(this.configService.handleError)
@@ -77,7 +77,7 @@ export class EmployeeGroupService {
 
   public save(data: any, id: any) {
     this.formData = new FormData();
-    this.url = `${environment.url}employee/employees/save`;
+    this.url = `${environment.url}employee/employee_groups/save`;
     if (id !== 'new') {
       this.formData.append('id', id);
     }

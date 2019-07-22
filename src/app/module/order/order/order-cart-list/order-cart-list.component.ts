@@ -115,7 +115,7 @@ export class OrderCartListComponent implements OnInit, AfterViewInit {
       quantity: [this.quantity, Validators.required],
     });
     this.getProductAutocomplete();
-
+    this.getCarts();
   }
 
   ngAfterViewInit() {

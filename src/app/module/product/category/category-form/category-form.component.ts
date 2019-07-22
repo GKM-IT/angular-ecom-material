@@ -223,7 +223,7 @@ export class CategoryFormComponent implements OnInit {
   }
 
   public onSubmit() {
-    // mark all fields as touched
+    // mark all fields as touched    
     this.formService.markFormGroupTouched(this.form);
     if (this.form.valid) {
       this.spinner.show();

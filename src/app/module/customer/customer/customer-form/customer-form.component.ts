@@ -130,6 +130,8 @@ export class CustomerFormComponent implements OnInit {
             name: response.data.group_name,
           };
           this.groupId = response.data.group_id;
+          this.panNumber = response.data.pan_number;
+          this.gstNumber = response.data.gst_number;
         }
       },
       err => {
