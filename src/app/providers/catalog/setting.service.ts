@@ -37,6 +37,8 @@ export class SettingService {
     this.formData.append('default_date_time_format', data.defaultDateTimeFormat);
     this.formData.append('default_decimal_place', data.defaultDecimalPlace);
     this.formData.append('default_order_type', data.defaultOrderType);
+    this.formData.append('pending_order_status', data.pendingOrderStatus);
+    this.formData.append('complete_order_status', data.completeOrderStatus);
     this.formData.append('default_purchase_type', data.defaultPurchaseType);
     this.formData.append('default_length_class', data.defaultLengthClass);
     this.formData.append('default_weight_class', data.defaultWeightClass);

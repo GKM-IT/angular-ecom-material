@@ -16,6 +16,7 @@ import { EmployeeGroupService } from 'src/app/providers/employee/employee-group.
 import { UserGroupService } from 'src/app/providers/user/user-group.service';
 import { OrderTypeService } from 'src/app/providers/order/order-type.service';
 import { PurchaseTypeService } from 'src/app/providers/purchase/purchase-type.service';
+import { OrderStatusService } from 'src/app/providers/order/order-status.service';
 
 @Component({
   selector: 'app-setting-form',
@@ -41,6 +42,8 @@ export class SettingFormComponent implements OnInit {
   defaultDateTimeFormat: any;
   defaultDecimalPlace: any;
   defaultOrderType: any;
+  pendingOrderStatus: any;
+  completeOrderStatus: any;
   defaultPurchaseType: any;
   defaultLengthClass: any;
   defaultWeightClass: any;
@@ -60,6 +63,7 @@ export class SettingFormComponent implements OnInit {
   employeeGroups: any = [];
   userGroups: any = [];
   orderTypes: any = [];
+  orderStatuses: any = [];
   purchaseTypes: any = [];
 
   public form: FormGroup;
@@ -74,6 +78,8 @@ export class SettingFormComponent implements OnInit {
     defaultDateTimeFormat: '',
     defaultDecimalPlace: '',
     defaultOrderType: '',
+    pendingOrderStatus: '',
+    completeOrderStatus: '',
     defaultPurchaseType: '',
     defaultLengthClass: '',
     defaultWeightClass: '',
@@ -97,6 +103,7 @@ export class SettingFormComponent implements OnInit {
     public employeeGroupService: EmployeeGroupService,
     public userGroupService: UserGroupService,
     public orderTypeService: OrderTypeService,
+    public orderStatusService: OrderStatusService,
     public purchaseTypeService: PurchaseTypeService,
     private formBuilder: FormBuilder,
     private formService: FormService,
@@ -119,6 +126,8 @@ export class SettingFormComponent implements OnInit {
       defaultDateTimeFormat: [this.defaultDateTimeFormat, Validators.required],
       defaultDecimalPlace: [this.defaultDecimalPlace, Validators.required],
       defaultOrderType: [this.defaultOrderType, Validators.required],
+      pendingOrderStatus: [this.pendingOrderStatus, Validators.required],
+      completeOrderStatus: [this.completeOrderStatus, Validators.required],
       defaultPurchaseType: [this.defaultPurchaseType, Validators.required],
       defaultLengthClass: [this.defaultLengthClass, Validators.required],
       defaultWeightClass: [this.defaultWeightClass, Validators.required],
@@ -154,6 +163,8 @@ export class SettingFormComponent implements OnInit {
           this.defaultEmployeeGroup = response.data.defaultEmployeeGroup;
           this.defaultUserGroup = response.data.defaultUserGroup;
           this.defaultLocation = response.data.defaultLocation;
+          this.pendingOrderStatus = response.data.pendingOrderStatus;
+          this.completeOrderStatus = response.data.completeOrderStatus;
 
           this.getCountries();
           this.getZones();
@@ -167,6 +178,7 @@ export class SettingFormComponent implements OnInit {
           this.getEmployeeGroups();
           this.getOrderTypes();
           this.getPurchaseTypes();
+          this.getOrderStatuses();
         }
       },
       err => {
@@ -331,6 +343,18 @@ export class SettingFormComponent implements OnInit {
       // tslint:disable-next-line: prefer-for-of
       for (let index = 0; index < response.data.length; index++) {
         this.orderTypes.push({
+          name: response.data[index].name,
+          value: response.data[index].id,
+        });
+      }
+    });
+  }
+  getOrderStatuses() {
+    this.orderStatuses = [];
+    this.orderStatusService.list({}).subscribe(response => {
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < response.data.length; index++) {
+        this.orderStatuses.push({
           name: response.data[index].name,
           value: response.data[index].id,
         });

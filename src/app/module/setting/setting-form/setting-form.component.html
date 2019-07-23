@@ -31,8 +31,8 @@
         </div>
 
         <div>
-            <label>Default Zone</label>
-            &nbsp;
+          <label>Default Zone</label>
+          &nbsp;
           <mat-select-autocomplete class="full-width" [placeholder]="'Zone Selection'" [options]="zones"
             [display]="'name'" [value]="'value'" [selectedOptions]="defaultZone" [multiple]='false' ngDefaultControl
             name="defaultZone" [formControl]="form.controls['defaultZone']" (selectionChange)="changeZone($event)">
@@ -40,8 +40,8 @@
         </div>
 
         <div>
-            <label>Default City</label>
-            &nbsp;
+          <label>Default City</label>
+          &nbsp;
           <mat-select-autocomplete class="full-width" [placeholder]="'City Selection'" [options]="cities"
             [display]="'name'" [value]="'value'" [selectedOptions]="defaultCity" [multiple]='false' ngDefaultControl
             name="defaultCity" [formControl]="form.controls['defaultCity']" (selectionChange)="changeCity($event)">
@@ -49,8 +49,8 @@
         </div>
 
         <div>
-            <label>Default Location</label>
-            &nbsp;
+          <label>Default Location</label>
+          &nbsp;
           <mat-select-autocomplete class="full-width" [placeholder]="'Location Selection'" [options]="locations"
             [display]="'name'" [value]="'value'" [selectedOptions]="defaultLocation" [multiple]='false' ngDefaultControl
             name="defaultLocation" [formControl]="form.controls['defaultLocation']">
@@ -58,8 +58,8 @@
         </div>
 
         <div>
-            <label>Default Length</label>
-            &nbsp;
+          <label>Default Length</label>
+          &nbsp;
           <mat-select-autocomplete class="full-width" [placeholder]="'Default Length Class Selection'"
             [options]="lengthClasses" [display]="'name'" [value]="'value'" [selectedOptions]="defaultLengthClass"
             [multiple]='false' ngDefaultControl name="defaultLengthClass"
@@ -68,8 +68,8 @@
         </div>
 
         <div>
-            <label>Default Weight</label>
-            &nbsp;
+          <label>Default Weight</label>
+          &nbsp;
           <mat-select-autocomplete class="full-width" [placeholder]="'Default Weight Class Selection'"
             [options]="weightClasses" [display]="'name'" [value]="'value'" [selectedOptions]="defaultWeightClass"
             [multiple]='false' ngDefaultControl name="defaultWeightClass"
@@ -78,8 +78,8 @@
         </div>
 
         <div>
-            <label>Default Customer Group</label>
-            &nbsp;
+          <label>Default Customer Group</label>
+          &nbsp;
           <mat-select-autocomplete class="full-width" [placeholder]="'defaultCustomerGroup'" [options]="customerGroups"
             [display]="'name'" [value]="'value'" [selectedOptions]="defaultCustomerGroup" [multiple]='false'
             ngDefaultControl name="defaultCustomerGroup" [formControl]="form.controls['defaultCustomerGroup']">
@@ -87,8 +87,8 @@
         </div>
 
         <div>
-            <label>Default Employee Group</label>
-            &nbsp;
+          <label>Default Employee Group</label>
+          &nbsp;
           <mat-select-autocomplete class="full-width" [placeholder]="'defaultEmployeeGroup'" [options]="employeeGroups"
             [display]="'name'" [value]="'value'" [selectedOptions]="defaultEmployeeGroup" [multiple]='false'
             ngDefaultControl name="defaultEmployeeGroup" [formControl]="form.controls['defaultEmployeeGroup']">
@@ -96,8 +96,8 @@
         </div>
 
         <div>
-            <label>Default User Group</label>
-            &nbsp;
+          <label>Default User Group</label>
+          &nbsp;
           <mat-select-autocomplete class="full-width" [placeholder]="'defaultUserGroup'" [options]="userGroups"
             [display]="'name'" [value]="'value'" [selectedOptions]="defaultUserGroup" [multiple]='false'
             ngDefaultControl name="defaultUserGroup" [formControl]="form.controls['defaultUserGroup']">
@@ -105,8 +105,8 @@
         </div>
 
         <div>
-            <label>Default Order Type</label>
-            &nbsp;
+          <label>Default Order Type</label>
+          &nbsp;
           <mat-select-autocomplete class="full-width" [placeholder]="'defaultOrderType'" [options]="orderTypes"
             [display]="'name'" [value]="'value'" [selectedOptions]="defaultOrderType" [multiple]='false'
             ngDefaultControl name="defaultOrderType" [formControl]="form.controls['defaultOrderType']">
@@ -114,8 +114,26 @@
         </div>
 
         <div>
-            <label>Default Purchase Type</label>
-            &nbsp;
+          <label>Pending Order Status</label>
+          &nbsp;
+          <mat-select-autocomplete class="full-width" [placeholder]="'pendingOrderStatus'" [options]="orderStatuses"
+            [display]="'name'" [value]="'value'" [selectedOptions]="pendingOrderStatus" [multiple]='false'
+            ngDefaultControl name="pendingOrderStatus" [formControl]="form.controls['pendingOrderStatus']">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <label>Complete Order Status</label>
+          &nbsp;
+          <mat-select-autocomplete class="full-width" [placeholder]="'completeOrderStatus'" [options]="orderStatuses"
+            [display]="'name'" [value]="'value'" [selectedOptions]="completeOrderStatus" [multiple]='false'
+            ngDefaultControl name="completeOrderStatus" [formControl]="form.controls['completeOrderStatus']">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <label>Default Purchase Type</label>
+          &nbsp;
           <mat-select-autocomplete class="full-width" [placeholder]="'defaultPurchaseType'" [options]="purchaseTypes"
             [display]="'name'" [value]="'value'" [selectedOptions]="defaultPurchaseType" [multiple]='false'
             ngDefaultControl name="defaultPurchaseType" [formControl]="form.controls['defaultPurchaseType']">
