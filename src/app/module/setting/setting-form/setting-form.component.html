@@ -130,6 +130,23 @@
             ngDefaultControl name="completeOrderStatus" [formControl]="form.controls['completeOrderStatus']">
           </mat-select-autocomplete>
         </div>
+        <div>
+          <label>Pending Purchase Status</label>
+          &nbsp;
+          <mat-select-autocomplete class="full-width" [placeholder]="'pendingPurchaseStatus'" [options]="purchaseStatuses"
+            [display]="'name'" [value]="'value'" [selectedOptions]="pendingPurchaseStatus" [multiple]='false'
+            ngDefaultControl name="pendingPurchaseStatus" [formControl]="form.controls['pendingPurchaseStatus']">
+          </mat-select-autocomplete>
+        </div>
+
+        <div>
+          <label>Complete Purchase Status</label>
+          &nbsp;
+          <mat-select-autocomplete class="full-width" [placeholder]="'completePurchaseStatus'" [options]="purchaseStatuses"
+            [display]="'name'" [value]="'value'" [selectedOptions]="completePurchaseStatus" [multiple]='false'
+            ngDefaultControl name="completePurchaseStatus" [formControl]="form.controls['completePurchaseStatus']">
+          </mat-select-autocomplete>
+        </div>
 
         <div>
           <label>Default Purchase Type</label>
