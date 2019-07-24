@@ -21,7 +21,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class PurchaseFormComponent implements OnInit {
 
-
   public pageHeading = 'Purchase Form';
   public data: any;
   public status: any;
@@ -47,12 +46,6 @@ export class PurchaseFormComponent implements OnInit {
   comment;
 
 
-  productId;
-  product: { id: any; name: any; };
-  quantity;
-  price;
-  tax;
-
   public formErrors = {
     vendorId: '',
     vendor: '',
@@ -61,14 +54,10 @@ export class PurchaseFormComponent implements OnInit {
     purchaseStatusId: '',
     purchaseStatus: '',
     comment: '',
-    product: '',
-    quantity: '',
-    price: '',
-    tax: '',
   };
 
   firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+
 
   constructor(
     public masterService: PurchaseService,
@@ -173,38 +162,10 @@ export class PurchaseFormComponent implements OnInit {
   }
 
 
-  getProductAutocomplete() {
-    const constant = new Constant();
-    this.secondFormGroup
-      .get('product')
-      .valueChanges.pipe(
-        startWith(''),
-        debounceTime(1000),
-        tap(() => (this.isLoading = true)),
-        switchMap(value =>
-          this.productService
-            .list({
-              search: value,
-              pageSize: constant.autocompleteListSize,
-              pageIndex: 0,
-              sort_by: 'name'
-            })
-            .pipe(finalize(() => (this.isLoading = false)))
-        )
-      )
-      .subscribe(res => {
-        if (res.status) {
-          this.products = res.data;
-        }
-      });
-  }
-
   onAutoSelectionChanged(autoId, event: MatAutocompleteSelectedEvent) {
     this.firstFormGroup.controls[`${autoId}`].setValue(event.option.value.id);
   }
-  onSecondAutoSelectionChanged(autoId, event: MatAutocompleteSelectedEvent) {
-    this.secondFormGroup.controls[`${autoId}`].setValue(event.option.value.id);
-  }
+
 
   displayFn(data: any): string {
     return data ? data.name : data;
@@ -218,11 +179,7 @@ export class PurchaseFormComponent implements OnInit {
       this.formErrors,
       false
     );
-    this.formErrors = this.formService.validateForm(
-      this.secondFormGroup,
-      this.formErrors,
-      false
-    );
+
   }
 
   ngOnInit() {
@@ -240,25 +197,17 @@ export class PurchaseFormComponent implements OnInit {
       comment: [this.comment, Validators.required],
     });
 
-    this.secondFormGroup = this.formBuilder.group({
-      productId: [this.productId, Validators.required],
-      product: [this.product, Validators.required],
-      quantity: [this.quantity, Validators.required],
-      price: [this.price, Validators.required],
-      tax: [this.tax, Validators.required],
-    });
 
     this.getpurchaseStatusAutocomplete();
     this.getpurchaseTypeAutocomplete();
     this.getVendorAutocomplete();
-    this.getProductAutocomplete();
+
 
     this.setErrors();
   }
 
   markFormGroupTouched() {
     this.formService.markFormGroupTouched(this.firstFormGroup);
-    this.formService.markFormGroupTouched(this.secondFormGroup);
   }
 
   isFormValid() {
@@ -307,13 +256,7 @@ export class PurchaseFormComponent implements OnInit {
   }
 
   nextProcess() {
-    this.getCarts();
-  }
 
-  getCarts() {
-    this.purchaseCartService.list({ vendorId: this.vendorId }).subscribe(response => {
-      this.carts = response.data;
-    });
   }
 
   addCart(cartData) {
@@ -339,59 +282,6 @@ export class PurchaseFormComponent implements OnInit {
         console.error(err);
       }
     );
-  }
-
-  deleteCart(data) {
-    this.purchaseCartService.delete(data.id).subscribe(
-      response => {
-        this.getCarts();
-        this.snackBar.open(response.message, 'X', {
-          duration: 2000,
-        });
-      },
-      err => {
-        console.error(err);
-      }
-    );
-  }
-
-  onCartSubmit() {
-    // mark all fields as touched
-    this.markFormGroupTouched();
-
-    if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
-      this.spinner.show();
-      const data = {
-        vendorId: this.firstFormGroup.value.vendorId,
-        productId: this.secondFormGroup.value.productId,
-        quantity: this.secondFormGroup.value.quantity,
-        price: this.secondFormGroup.value.price,
-        tax: this.secondFormGroup.value.tax,
-      };
-
-      this.purchaseCartService.save(data, 'new').subscribe(
-        response => {
-          if (!response.status) {
-            if (response.result) {
-              response.result.forEach((element: { id: any; text: any; }) => {
-                this.formErrors[`${element.id}`] = element.text;
-              });
-            }
-          }
-          this.getCarts();
-          this.spinner.hide();
-          this.snackBar.open(response.message, 'X', {
-            duration: 2000,
-          });
-        },
-        err => {
-          console.error(err);
-        }
-      );
-
-    } else {
-      this.setErrors();
-    }
   }
 
   onSubmit() {

@@ -17,10 +17,12 @@
                         <ng-template matStepLabel>Basic</ng-template>
 
                         <mat-form-field class="full-width">
-                            <input matInput placeholder="vendor" formControlName="vendor" required [matAutocomplete]="vendorAuto" [(ngModel)]="vendor">
+                            <input matInput placeholder="vendor" formControlName="vendor" required
+                                [matAutocomplete]="vendorAuto" [(ngModel)]="vendor">
                             <input type="hidden" formControlName="vendorId" [(ngModel)]="vendorId">
                             <mat-error *ngIf="formErrors.vendor">{{formErrors.vendor}}</mat-error>
-                            <mat-autocomplete #vendorAuto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onAutoSelectionChanged('vendorId',$event)">
+                            <mat-autocomplete #vendorAuto="matAutocomplete" [displayWith]="displayFn"
+                                (optionSelected)="onAutoSelectionChanged('vendorId',$event)">
                                 <mat-option *ngIf="isLoading" class="is-loading">
                                     <mat-spinner diameter="50"></mat-spinner>
                                 </mat-option>
@@ -34,10 +36,12 @@
 
 
                         <mat-form-field class="full-width">
-                            <input matInput placeholder="purchase Type" formControlName="purchaseType" required [matAutocomplete]="purchaseTypeAuto" [(ngModel)]="purchaseType">
+                            <input matInput placeholder="purchase Type" formControlName="purchaseType" required
+                                [matAutocomplete]="purchaseTypeAuto" [(ngModel)]="purchaseType">
                             <input type="hidden" formControlName="purchaseTypeId" [(ngModel)]="purchaseTypeId">
                             <mat-error *ngIf="formErrors.purchaseType">{{formErrors.purchaseType}}</mat-error>
-                            <mat-autocomplete #purchaseTypeAuto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onAutoSelectionChanged('purchaseTypeId',$event)">
+                            <mat-autocomplete #purchaseTypeAuto="matAutocomplete" [displayWith]="displayFn"
+                                (optionSelected)="onAutoSelectionChanged('purchaseTypeId',$event)">
                                 <mat-option *ngIf="isLoading" class="is-loading">
                                     <mat-spinner diameter="50"></mat-spinner>
                                 </mat-option>
@@ -50,10 +54,12 @@
                         </mat-form-field>
 
                         <mat-form-field class="full-width">
-                            <input matInput placeholder="purchase Status" formControlName="purchaseStatus" required [matAutocomplete]="purchaseStatusAuto" [(ngModel)]="purchaseStatus">
+                            <input matInput placeholder="purchase Status" formControlName="purchaseStatus" required
+                                [matAutocomplete]="purchaseStatusAuto" [(ngModel)]="purchaseStatus">
                             <input type="hidden" formControlName="purchaseStatusId" [(ngModel)]="purchaseStatusId">
                             <mat-error *ngIf="formErrors.purchaseStatus">{{formErrors.purchaseStatus}}</mat-error>
-                            <mat-autocomplete #purchaseStatusAuto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onAutoSelectionChanged('purchaseStatusId',$event)">
+                            <mat-autocomplete #purchaseStatusAuto="matAutocomplete" [displayWith]="displayFn"
+                                (optionSelected)="onAutoSelectionChanged('purchaseStatusId',$event)">
                                 <mat-option *ngIf="isLoading" class="is-loading">
                                     <mat-spinner diameter="50"></mat-spinner>
                                 </mat-option>
@@ -66,12 +72,14 @@
                         </mat-form-field>
 
                         <mat-form-field class="full-width">
-                            <textarea matInput placeholder="comment" formControlName="comment" [(ngModel)]="comment" required></textarea>
+                            <textarea matInput placeholder="comment" formControlName="comment" [(ngModel)]="comment"
+                                required></textarea>
                             <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
                         </mat-form-field>
 
                         <div class="button-group">
-                            <button mat-raised-button matStepperNext color="primary" (click)="nextProcess()">Next</button>
+                            <button mat-raised-button matStepperNext color="primary"
+                                (click)="nextProcess()">Next</button>
                         </div>
                     </form>
                 </mat-step>
@@ -88,81 +96,7 @@
                         </mat-card-header>
                         <mat-card-content>
 
-                            <form [formGroup]="secondFormGroup">
-                                <mat-form-field class="full-width">
-                                    <input matInput placeholder="product" formControlName="product" required [matAutocomplete]="productAuto" [(ngModel)]="product">
-                                    <input type="hidden" formControlName="productId" [(ngModel)]="productId">
-                                    <mat-error *ngIf="formErrors.product">{{formErrors.product}}</mat-error>
-                                    <mat-autocomplete #productAuto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSecondAutoSelectionChanged('productId',$event)">
-                                        <mat-option *ngIf="isLoading" class="is-loading">
-                                            <mat-spinner diameter="50"></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let option of products" [value]="option">
-                                                {{option.name}}
-                                            </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
-                                </mat-form-field>
-
-                                <mat-form-field class="full-width">
-                                    <input matInput placeholder="price" formControlName="price" [(ngModel)]="price" required>
-                                    <mat-error *ngIf="formErrors.price">{{formErrors.price}}</mat-error>
-                                </mat-form-field>
-                                <mat-form-field class="full-width">
-                                    <input matInput placeholder="quantity" formControlName="quantity" [(ngModel)]="quantity" required>
-                                    <mat-error *ngIf="formErrors.quantity">{{formErrors.quantity}}</mat-error>
-                                </mat-form-field>
-                                <mat-form-field class="full-width">
-                                    <input matInput placeholder="tax" formControlName="tax" [(ngModel)]="tax" required>
-                                    <mat-error *ngIf="formErrors.tax">{{formErrors.tax}}</mat-error>
-                                </mat-form-field>
-
-                                <button mat-raised-button (click)="onCartSubmit()" color="primary">Add</button>
-                            </form>
-
-                            <!-- cart list -->
-                            <table mat-table [dataSource]="carts">
-                                <ng-container matColumnDef="product">
-                                    <th mat-header-cell *matHeaderCellDef>product</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.product}} </td>
-                                </ng-container>
-                                <ng-container matColumnDef="product_image">
-                                    <th mat-header-cell *matHeaderCellDef>image</th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <img width="50" height="50" src="{{element.product_image}}" />
-                                    </td>
-                                </ng-container>
-                                <ng-container matColumnDef="quantity">
-                                    <th mat-header-cell *matHeaderCellDef>quantity</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
-                                </ng-container>
-                                <ng-container matColumnDef="price">
-                                    <th mat-header-cell *matHeaderCellDef>price</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-                                </ng-container>
-                                <ng-container matColumnDef="tax">
-                                    <th mat-header-cell *matHeaderCellDef>tax</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.tax}} </td>
-                                </ng-container>
-                                <ng-container matColumnDef="total">
-                                    <th mat-header-cell *matHeaderCellDef>total</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.total}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="action">
-                                    <th mat-header-cell *matHeaderCellDef>Action</th>
-                                    <td mat-cell *matCellDef="let row">
-                                        <button mat-button (click)="deleteCart(row)">
-                                            <i class="material-icons">delete</i>
-                                        </button>
-                                    </td>
-                                </ng-container>
-                                <tr mat-header-row *matHeaderRowDef="cartDisplayedColumns"></tr>
-                                <tr mat-row *matRowDef="let row; columns: cartDisplayedColumns;"></tr>
-                            </table>
-                            <!-- end cart list -->
-
+                            <app-purchase-cart-list [vendorId]="vendorId"></app-purchase-cart-list>
 
                         </mat-card-content>
                     </mat-card>

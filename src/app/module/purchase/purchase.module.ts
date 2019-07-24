@@ -9,9 +9,10 @@ import { PurchaseTypeListComponent } from './purchase-type/purchase-type-list/pu
 import { PurchaseTypeFormComponent } from './purchase-type/purchase-type-form/purchase-type-form.component';
 import { PurchaseStatusListComponent } from './purchase-status/purchase-status-list/purchase-status-list.component';
 import { PurchaseStatusFormComponent } from './purchase-status/purchase-status-form/purchase-status-form.component';
+import { PurchaseCartListComponent } from './purchase/purchase-cart-list/purchase-cart-list.component';
 
 @NgModule({
-  declarations: [PurchaseListComponent, PurchaseFormComponent, PurchaseTypeListComponent, PurchaseTypeFormComponent, PurchaseStatusListComponent, PurchaseStatusFormComponent],
+  declarations: [PurchaseListComponent, PurchaseFormComponent, PurchaseTypeListComponent, PurchaseTypeFormComponent, PurchaseStatusListComponent, PurchaseStatusFormComponent, PurchaseCartListComponent],
   imports: [
     CommonModule,
     AppMaterialModule,
