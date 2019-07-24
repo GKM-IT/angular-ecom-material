@@ -105,6 +105,7 @@ export class ProductService {
     this.formData.append('minimum', data.minimum);
     this.formData.append('shipping', data.shipping);
     this.formData.append('inventory', data.inventory);
+    this.formData.append('stock', data.stock);
     this.formData.append('categories', JSON.stringify(data.categories));
     this.formData.append('relatedProducts', JSON.stringify(data.relatedProducts));
     this.formData.append('attributes', JSON.stringify(data.productAttributes));

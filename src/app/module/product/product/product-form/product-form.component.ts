@@ -81,6 +81,7 @@ export class ProductFormComponent implements OnInit {
   minimum: any;
   shipping: boolean;
   inventory: boolean;
+  stock: any;
   isLoading = false;
 
   public formErrors = {
@@ -106,6 +107,7 @@ export class ProductFormComponent implements OnInit {
     minimum: '',
     shipping: '',
     inventory: '',
+    stock: '',
   };
 
   firstFormGroup: FormGroup;
@@ -230,6 +232,7 @@ export class ProductFormComponent implements OnInit {
       minimum: [this.minimum, Validators.required],
       shipping: [this.shipping, Validators.required],
       inventory: [this.inventory, Validators.required],
+      stock: [this.inventory],
     });
 
     this.secondFormGroup = this.formBuilder.group({
@@ -530,6 +533,7 @@ export class ProductFormComponent implements OnInit {
           };
           this.weight = response.data.weight;
           this.minimum = response.data.minimum;
+          this.stock = response.data.stock;
           this.shipping = response.data.shipping ? true : false;
           this.inventory = response.data.inventory ? true : false;
 
@@ -650,6 +654,7 @@ export class ProductFormComponent implements OnInit {
         minimum: this.firstFormGroup.value.minimum,
         shipping: this.firstFormGroup.value.shipping,
         inventory: this.firstFormGroup.value.inventory,
+        stock: this.firstFormGroup.value.stock,
 
         description: this.secondFormGroup.value.description,
         text: this.secondFormGroup.value.text,
