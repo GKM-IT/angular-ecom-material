@@ -130,6 +130,10 @@
                   <input matInput placeholder="mrp" formControlName="mrp" [(ngModel)]="mrp" required>
                   <mat-error *ngIf="formErrors.mrp">{{formErrors.mrp}}</mat-error>
                 </mat-form-field>
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="margin" formControlName="margin" [(ngModel)]="margin" (input)="calculatePrice()" required>
+                  <mat-error *ngIf="formErrors.margin">{{formErrors.margin}}</mat-error>
+                </mat-form-field>
 
                 <mat-form-field class="full-width">
                   <mat-label>price type</mat-label>
@@ -333,6 +337,10 @@
                             </mat-form-field>
 
 
+                            <mat-form-field class="full-width">
+                              <input matInput placeholder="discount" formControlName="discount" (input)="calculateSpecialPrice(control)" required>
+                              <mat-error *ngIf="formErrors.discount">{{formErrors.discount}}</mat-error>
+                            </mat-form-field>
                             <mat-form-field class="full-width">
                               <input matInput placeholder="price" formControlName="price" required>
                               <mat-error *ngIf="formErrors.price">{{formErrors.price}}</mat-error>

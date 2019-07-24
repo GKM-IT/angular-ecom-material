@@ -60,6 +60,7 @@ export class ProductFormComponent implements OnInit {
   priceTypes: { value: string; text: string; }[];
   price: any;
   mrp: any;
+  margin: any;
   image: any;
   imageThumb: any;
   selectedFile: ImageSnippet;
@@ -95,6 +96,7 @@ export class ProductFormComponent implements OnInit {
     priceType: '',
     price: '',
     mrp: '',
+    margin: '',
     description: '',
     text: '',
     taxClass: '',
@@ -108,6 +110,7 @@ export class ProductFormComponent implements OnInit {
     shipping: '',
     inventory: '',
     stock: '',
+    discount: '',
   };
 
   firstFormGroup: FormGroup;
@@ -120,9 +123,10 @@ export class ProductFormComponent implements OnInit {
     return (this.fourthFormGroup.get('productPrices') as FormArray).controls;
   }
 
-  createPrice(customerGroupId, price, start, end): FormGroup {
+  createPrice(customerGroupId, discount, price, start, end): FormGroup {
     return this.formBuilder.group({
       customerGroupId: new FormControl(customerGroupId),
+      discount: new FormControl(discount),
       price: new FormControl(price),
       start: new FormControl(new Date(start)),
       end: new FormControl(new Date(end)),
@@ -131,13 +135,19 @@ export class ProductFormComponent implements OnInit {
 
   addPrice(): void {
     this.productPrices = <FormArray>this.fourthFormGroup.controls['productPrices'];
-    this.productPrices.push(this.createPrice('', '', '', ''));
+    this.productPrices.push(this.createPrice('', '', '', '', ''));
   }
 
   delPrice(index: number): void {
     const arrayControl = <FormArray>this.fourthFormGroup.controls['productPrices'];
     arrayControl.removeAt(index);
   }
+
+  calculateSpecialPrice(control) {
+    const discount = (this.price - ((this.price * control.controls.discount.value) / 100));
+    control.controls.price.setValue(discount);
+  }
+
   // end product prices
 
   // product attributes
@@ -161,6 +171,8 @@ export class ProductFormComponent implements OnInit {
     const arrayControl = <FormArray>this.fourthFormGroup.controls['productAttributes'];
     arrayControl.removeAt(index);
   }
+
+
 
   // end product attributes
 
@@ -227,6 +239,7 @@ export class ProductFormComponent implements OnInit {
       priceType: [this.priceType, Validators.required],
       price: [this.price, Validators.required],
       mrp: [this.mrp, Validators.required],
+      margin: [this.margin, Validators.required],
       taxClass: [this.taxClass, Validators.required],
       taxClassId: [this.taxClassId, Validators.required],
       minimum: [this.minimum, Validators.required],
@@ -511,6 +524,7 @@ export class ProductFormComponent implements OnInit {
           this.priceType = response.data.price_type;
           this.price = response.data.price;
           this.mrp = response.data.mrp;
+          this.margin = response.data.margin;
           this.description = response.data.description;
           this.text = response.data.text;
           this.taxClassId = response.data.tax_class_id;
@@ -566,6 +580,7 @@ export class ProductFormComponent implements OnInit {
               this.productPrices.push(
                 this.createPrice(
                   element.customer_group_id,
+                  element.discount,
                   element.price,
                   element.start,
                   element.end,
@@ -632,6 +647,7 @@ export class ProductFormComponent implements OnInit {
         this.fourthFormGroup.value.productPrices.forEach(element => {
           prices.push({
             customerGroupId: element.customerGroupId,
+            discount: element.discount,
             price: element.price,
             start: dateformat.dateConvert(element.start),
             end: dateformat.dateConvert(element.end),
@@ -650,6 +666,7 @@ export class ProductFormComponent implements OnInit {
         priceType: this.firstFormGroup.value.priceType,
         price: this.firstFormGroup.value.price,
         mrp: this.firstFormGroup.value.mrp,
+        margin: this.firstFormGroup.value.margin,
         taxClassId: this.firstFormGroup.value.taxClassId,
         minimum: this.firstFormGroup.value.minimum,
         shipping: this.firstFormGroup.value.shipping,
@@ -699,5 +716,11 @@ export class ProductFormComponent implements OnInit {
       this.setErrors();
     }
   }
+
+
+  calculatePrice() {
+    this.price = (this.mrp - ((this.mrp * this.margin) / 100));
+  }
+
 
 }

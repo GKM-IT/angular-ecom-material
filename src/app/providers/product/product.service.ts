@@ -93,6 +93,7 @@ export class ProductService {
     this.formData.append('price_type', data.priceType);
     this.formData.append('price', data.price);
     this.formData.append('mrp', data.mrp);
+    this.formData.append('margin', data.margin);
     this.formData.append('description', data.description);
     this.formData.append('text', data.text);
     this.formData.append('tax_class_id', data.taxClassId);
