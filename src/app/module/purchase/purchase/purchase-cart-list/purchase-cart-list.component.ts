@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PurchaseCartService } from 'src/app/providers/purchase/purchase-cart.service';
 import { ProductService } from 'src/app/providers/product/product.service';
@@ -15,7 +15,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
   templateUrl: './purchase-cart-list.component.html',
   styleUrls: ['./purchase-cart-list.component.css']
 })
-export class PurchaseCartListComponent implements OnInit, AfterViewInit {
+export class PurchaseCartListComponent implements OnInit {
   public pageHeading = 'Purchase Cart';
   public data: any;
   public status: any;
@@ -61,6 +61,7 @@ export class PurchaseCartListComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    console.log('ngOnInit');
     this.form = this.formBuilder.group({
       productId: [this.productId, Validators.required],
       product: [this.product, Validators.required],
@@ -68,14 +69,8 @@ export class PurchaseCartListComponent implements OnInit, AfterViewInit {
       price: [this.price, Validators.required],
       tax: [this.tax, Validators.required],
     });
-
-
     this.getProductAutocomplete();
-
     this.setErrors();
-  }
-
-  ngAfterViewInit() {
     this.getCarts();
   }
 

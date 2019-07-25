@@ -13,8 +13,10 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { OrderCartService } from 'src/app/providers/order/order-cart.service';
 import { ProductService } from 'src/app/providers/product/product.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { OrderCartListComponent } from '../order-cart-list/order-cart-list.component';
 
 @Component({
+  providers: [OrderCartListComponent],
   selector: 'app-order-form',
   templateUrl: './order-form.component.html',
   styleUrls: ['./order-form.component.css']
@@ -76,7 +78,8 @@ export class OrderFormComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private orderCartListComponent: OrderCartListComponent
   ) { }
 
   getId() {
@@ -298,7 +301,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   nextProcess() {
-
+    this.orderCartListComponent.ngOnInit();
   }
 
   addCart(cartData) {

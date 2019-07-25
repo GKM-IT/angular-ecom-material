@@ -102,7 +102,9 @@
         </mat-step>
 
         <mat-step>
-          <ng-template matStepLabel>Products</ng-template>
+          <ng-template matStepLabel>
+            <span (click)="nextProcess()">Products</span>
+          </ng-template>
 
 
           <mat-card>

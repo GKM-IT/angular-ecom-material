@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ProductService } from 'src/app/providers/product/product.service';
 import { OrderCartService } from 'src/app/providers/order/order-cart.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -14,7 +14,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
   templateUrl: './order-cart-list.component.html',
   styleUrls: ['./order-cart-list.component.css']
 })
-export class OrderCartListComponent implements OnInit, AfterViewInit {
+export class OrderCartListComponent implements OnInit {
   public pageHeading = 'Order Cart List';
   public data: any;
   public status: any;
@@ -115,10 +115,6 @@ export class OrderCartListComponent implements OnInit, AfterViewInit {
       quantity: [this.quantity, Validators.required],
     });
     this.getProductAutocomplete();
-    this.getCarts();
-  }
-
-  ngAfterViewInit() {
     this.getCarts();
   }
 

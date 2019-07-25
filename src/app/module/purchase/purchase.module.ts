@@ -18,7 +18,7 @@ import { PurchaseCartListComponent } from './purchase/purchase-cart-list/purchas
     AppMaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ]
 })
 export class PurchaseModule { }

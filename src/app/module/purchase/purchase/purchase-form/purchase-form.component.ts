@@ -13,8 +13,10 @@ import { Constant } from 'src/app/helper/constant';
 import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PurchaseCartListComponent } from '../purchase-cart-list/purchase-cart-list.component';
 
 @Component({
+  providers: [PurchaseCartListComponent],
   selector: 'app-purchase-form',
   templateUrl: './purchase-form.component.html',
   styleUrls: ['./purchase-form.component.css']
@@ -71,7 +73,8 @@ export class PurchaseFormComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private purchaseCartListComponent: PurchaseCartListComponent
   ) { }
 
   getId() {
@@ -256,7 +259,7 @@ export class PurchaseFormComponent implements OnInit {
   }
 
   nextProcess() {
-
+    this.purchaseCartListComponent.ngOnInit();
   }
 
   addCart(cartData) {
