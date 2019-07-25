@@ -41,8 +41,7 @@ export class OrderCartListComponent implements OnInit {
 
   form: FormGroup;
 
-  @Input()
-  customerId;
+  @Input() customerId;
 
   constructor(
     public productService: ProductService,
@@ -108,6 +107,7 @@ export class OrderCartListComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('ngOnInit');
     this.form = this.formBuilder.group({
       customerId: [this.customerId, Validators.required],
       productId: [this.productId, Validators.required],
@@ -119,6 +119,8 @@ export class OrderCartListComponent implements OnInit {
   }
 
   getCarts() {
+    console.log('getCarts');
+    console.log('this.customerId', this.customerId);
     this.orderCartService.list({ customerId: this.customerId }).subscribe(response => {
       this.carts = response.data;
       this.cartTotals = response.totals;

@@ -301,6 +301,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   nextProcess() {
+    console.log('this.customerId', this.customerId);
     this.orderCartListComponent.ngOnInit();
   }
 

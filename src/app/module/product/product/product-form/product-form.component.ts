@@ -82,6 +82,7 @@ export class ProductFormComponent implements OnInit {
   minimum: any;
   shipping: boolean;
   inventory: boolean;
+  featured: boolean;
   stock: any;
   isLoading = false;
 
@@ -109,6 +110,7 @@ export class ProductFormComponent implements OnInit {
     minimum: '',
     shipping: '',
     inventory: '',
+    featured: '',
     stock: '',
     discount: '',
   };
@@ -245,7 +247,8 @@ export class ProductFormComponent implements OnInit {
       minimum: [this.minimum, Validators.required],
       shipping: [this.shipping, Validators.required],
       inventory: [this.inventory, Validators.required],
-      stock: [this.inventory],
+      featured: [this.featured, Validators.required],
+      stock: [this.stock],
     });
 
     this.secondFormGroup = this.formBuilder.group({
@@ -550,6 +553,7 @@ export class ProductFormComponent implements OnInit {
           this.stock = response.data.stock;
           this.shipping = response.data.shipping ? true : false;
           this.inventory = response.data.inventory ? true : false;
+          this.featured = response.data.featured ? true : false;
 
           // tslint:disable-next-line: prefer-for-of
           for (let index = 0; index < response.data.categories.length; index++) {
@@ -671,6 +675,7 @@ export class ProductFormComponent implements OnInit {
         minimum: this.firstFormGroup.value.minimum,
         shipping: this.firstFormGroup.value.shipping,
         inventory: this.firstFormGroup.value.inventory,
+        featured: this.firstFormGroup.value.featured,
         stock: this.firstFormGroup.value.stock,
 
         description: this.secondFormGroup.value.description,

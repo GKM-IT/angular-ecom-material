@@ -36,7 +36,7 @@ export class OrderCartService {
     if (data.sort_dir) {
       this.formData.append('sort_dir', data.sort_dir);
     }
-    if (data.customerId) {
+    if (data.customerId && data.customerId !== { undefined }) {
       this.formData.append('customer_id', data.customerId);
     }
 
