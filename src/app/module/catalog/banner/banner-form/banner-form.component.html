@@ -1,107 +1,158 @@
 <div class="main-div">
 
-  <mat-card class="z-depth center" flex="50">
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
-      <mat-card-header>
-        <mat-card-title>
-          <button mat-button (click)="goBack()">
-            <i class="material-icons">keyboard_backspace</i>
-          </button>
-          {{pageHeading}}
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="type" formControlName="type" required [matAutocomplete]="auto"
-              [(ngModel)]="type">
-            <input type="hidden" formControlName="typeId" [(ngModel)]="typeId">
-            <mat-error *ngIf="formErrors.type">{{formErrors.type}}</mat-error>
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-              (optionSelected)="onSelectionChanged($event)">
-              <mat-option *ngIf="isLoading" class="is-loading">
-                <mat-spinner diameter="50"></mat-spinner>
-              </mat-option>
-              <ng-container *ngIf="!isLoading">
-                <mat-option *ngFor="let option of types" [value]="option">
-                  {{option.name}}
+  <mat-card class="z-depth content-fluid" flex="100">
+
+    <mat-card-header>
+      <mat-card-title>
+        <button mat-button (click)="goBack()">
+          <i class="material-icons">keyboard_backspace</i>
+        </button>
+        {{pageHeading}}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <mat-horizontal-stepper [linear]="false" #stepper>
+        <mat-step [stepControl]="form">
+          <ng-template matStepLabel>Basic</ng-template>
+          <form [formGroup]="form">
+
+            <mat-form-field class="full-width">
+              <input matInput placeholder="type" formControlName="type" required [matAutocomplete]="auto"
+                [(ngModel)]="type">
+              <input type="hidden" formControlName="typeId" [(ngModel)]="typeId">
+              <mat-error *ngIf="formErrors.type">{{formErrors.type}}</mat-error>
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                (optionSelected)="onSelectionChanged($event)">
+                <mat-option *ngIf="isLoading" class="is-loading">
+                  <mat-spinner diameter="50"></mat-spinner>
                 </mat-option>
-              </ng-container>
-            </mat-autocomplete>
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
-            <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
-          </mat-form-field>
-        </p>
+                <ng-container *ngIf="!isLoading">
+                  <mat-option *ngFor="let option of types" [value]="option">
+                    {{option.name}}
+                  </mat-option>
+                </ng-container>
+              </mat-autocomplete>
+            </mat-form-field>
 
-        <p>
-          <button type="button" mat-button (click)="addImage()">
-            <i class="material-icons">add</i>
-            Add Image
-          </button>
-        </p>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="name" formControlName="name" [(ngModel)]="name" required>
+              <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+            </mat-form-field>
 
-
-        <div class="images-section" formArrayName="images">
-
-          <mat-card *ngFor="let control of formData; let i = index;">
-            <div [formGroupName]="i">
-
-              <mat-card-header>
-                <mat-card-title>
-
-                </mat-card-title>
-              </mat-card-header>
-
-              <mat-card-content>
-                <div (click)="imageInput.click()">
-                  <img [src]="control.value.image_thumb" width="100" height="100" />
-                  <input #imageInput type="file" accept="image/*" (change)="uploadImage($event,control)"
-                    style="display:none">
-                </div>
-
-                <mat-form-field class="full-width">
-                  <input matInput placeholder="image" formControlName="image" [(ngModel)]="control.value.image"
-                    required>
-                  <mat-error *ngIf="formErrors.image">{{formErrors.image}}</mat-error>
-                </mat-form-field>
-
-                <mat-form-field class="full-width">
-                  <input matInput placeholder="name" formControlName="name" required>
-                  <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
-                </mat-form-field>
-
-                <mat-form-field class="full-width">
-                  <input matInput placeholder="link" formControlName="link" required>
-                  <mat-error *ngIf="formErrors.link">{{formErrors.link}}</mat-error>
-                </mat-form-field>
-
-                <mat-form-field class="full-width">
-                  <input matInput placeholder="sort_order" formControlName="sort_order" required>
-                  <mat-error *ngIf="formErrors.sort_order">{{formErrors.sort_order}}</mat-error>
-                </mat-form-field>
-
-
-              </mat-card-content>
-
-              <mat-card-actions>
-                <button type="button" mat-button (click)="delImage(i)">
-                  <i class="material-icons">delete</i>
-                </button>
-              </mat-card-actions>
-
+            <div>
+              <label>Reference Type</label>
+              &nbsp;
+              <mat-select-autocomplete class="full-width" [placeholder]="'Reference Type'" [options]="referenceTypes"
+                [display]="'name'" [value]="'value'" [selectedOptions]="reference" [multiple]='false' ngDefaultControl
+                name="reference" [formControl]="form.controls['reference']"
+                (selectionChange)="onReferenceChange($event)">
+              </mat-select-autocomplete>
             </div>
-          </mat-card>
-        </div>
+            <div *ngIf="references?.length">
+              <label>Reference</label>
+              &nbsp;
+              <mat-select-autocomplete class="full-width" [placeholder]="'Reference'" [options]="references"
+                [display]="'name'" [value]="'value'" [selectedOptions]="referenceId" [multiple]='false' ngDefaultControl
+                name="referenceId" [formControl]="form.controls['referenceId']">
+              </mat-select-autocomplete>
+            </div>
 
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button type="submit" color="primary">Save</button>
-      </mat-card-actions>
-    </form>
+
+            <div class="button-group">
+              <button mat-raised-button matStepperNext color="primary">Next</button>
+            </div>
+
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="imageForm">
+          <ng-template matStepLabel>
+            <span>Image</span>
+          </ng-template>
+
+
+          <p>
+            <button type="button" mat-button (click)="addImage()">
+              <i class="material-icons">add</i>
+              Add Image
+            </button>
+          </p>
+
+
+          <form [formGroup]="imageForm">
+            <div class="images-section" formArrayName="images">
+
+              <mat-card *ngFor="let control of formData; let i = index;">
+                <div [formGroupName]="i">
+
+                  <mat-card-header>
+                    <mat-card-title>
+
+                    </mat-card-title>
+                  </mat-card-header>
+
+                  <mat-card-content>
+                    <div (click)="imageInput.click()">
+                      <img [src]="control.value.image_thumb" width="100" height="100" />
+                      <input #imageInput type="file" accept="image/*" (change)="uploadImage($event,control)"
+                        style="display:none">
+                    </div>
+
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="image" formControlName="image" [(ngModel)]="control.value.image"
+                        required>
+                      <mat-error *ngIf="formErrors.image">{{formErrors.image}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="name" formControlName="name" required>
+                      <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="link" formControlName="link" required>
+                      <mat-error *ngIf="formErrors.link">{{formErrors.link}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="sort_order" formControlName="sort_order" required>
+                      <mat-error *ngIf="formErrors.sort_order">{{formErrors.sort_order}}</mat-error>
+                    </mat-form-field>
+
+
+                  </mat-card-content>
+
+                  <mat-card-actions>
+                    <button type="button" mat-button (click)="delImage(i)">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </mat-card-actions>
+
+                </div>
+              </mat-card>
+            </div>
+
+          </form>
+
+          <div class="button-group">
+            <button mat-raised-button matStepperPrevious color="light">Back</button>
+            <button mat-raised-button matStepperNext color="primary">Next</button>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          You are now done.
+          <div class="button-group">
+            <button mat-raised-button matStepperPrevious color="light">Back</button>
+            <button mat-raised-button type="submit" color="primary" (click)="onSubmit()">Save</button>
+          </div>
+        </mat-step>
+
+
+      </mat-horizontal-stepper>
+
+
+    </mat-card-content>
   </mat-card>
-
 </div>

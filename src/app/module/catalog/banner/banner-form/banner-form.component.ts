@@ -21,6 +21,9 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { TypeService } from 'src/app/providers/catalog/type.service';
 import { Constant } from 'src/app/helper/constant';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ManufactureService } from 'src/app/providers/product/manufacture.service';
+import { ProductService } from 'src/app/providers/product/product.service';
+import { CategoryService } from 'src/app/providers/product/category.service';
 
 class ImageSnippet {
   constructor(public src: string, public file: File) { }
@@ -47,16 +50,26 @@ export class BannerFormComponent implements OnInit {
   type;
   typeId;
   types;
+  reference;
+  referenceId;
+  references = [];
+  referenceTypes = [];
   isLoading = false;
 
   public form: FormGroup;
+  public imageForm: FormGroup;
   public formErrors = {
     name: '',
-    type: ''
+    type: '',
+    reference: '',
+    referenceId: '',
   };
 
   constructor(
     public masterService: BannerService,
+    public manufactureService: ManufactureService,
+    public categoryService: CategoryService,
+    public productService: ProductService,
     public typeService: TypeService,
     private formBuilder: FormBuilder,
     private formService: FormService,
@@ -67,7 +80,7 @@ export class BannerFormComponent implements OnInit {
   ) { }
 
   get formData() {
-    return (this.form.get('images') as FormArray).controls;
+    return (this.imageForm.get('images') as FormArray).controls;
   }
 
   getId() {
@@ -92,28 +105,100 @@ export class BannerFormComponent implements OnInit {
   }
 
   addImage(): void {
-    this.imageGroup = <FormArray>this.form.controls['images'];
+    this.imageGroup = <FormArray>this.imageForm.controls['images'];
     this.imageGroup.push(this.createImage('', '', '', '', ''));
-
-    console.log(this.form.controls.images);
   }
 
   delImage(index: number): void {
-    const arrayControl = <FormArray>this.form.controls['images'];
+    const arrayControl = <FormArray>this.imageForm.controls['images'];
     arrayControl.removeAt(index);
+  }
+
+  onReferenceChange(value) {
+    if (value) {
+      this.reference = value;
+    }
+    this.getReference();
+  }
+
+
+  getReference() {
+    this.references = [];
+    if (this.reference === 'manufacture') {
+      this.manufactureService.list({}).subscribe(response => {
+        // tslint:disable-next-line: prefer-for-of
+        for (let index = 0; index < response.data.length; index++) {
+          this.references.push({
+            name: response.data[index].name,
+            value: response.data[index].id,
+          });
+        }
+      });
+    } else if (this.reference === 'category') {
+      this.categoryService.list({}).subscribe(response => {
+        // tslint:disable-next-line: prefer-for-of
+        for (let index = 0; index < response.data.length; index++) {
+          this.references.push({
+            name: response.data[index].name,
+            value: response.data[index].id,
+          });
+        }
+      });
+    } else if (this.reference === 'product') {
+      this.productService.list({}).subscribe(response => {
+        // tslint:disable-next-line: prefer-for-of
+        for (let index = 0; index < response.data.length; index++) {
+          this.references.push({
+            name: response.data[index].name,
+            value: response.data[index].id,
+          });
+        }
+      });
+    } else {
+      this.references = [];
+    }
+
   }
 
   ngOnInit() {
     if (this.getId() !== 'new') {
       this.getDetail(this.getId());
     }
+    this.referenceTypes.push(
+      {
+        name: 'Manufacture',
+        value: 'manufacture'
+      },
+      {
+        name: 'Category',
+        value: 'category'
+      },
+      {
+        name: 'Product',
+        value: 'product'
+      },
+      {
+        name: 'Featured Product',
+        value: 'featured_product'
+      },
+      {
+        name: 'Special Product',
+        value: 'special_product'
+      }
+    );
 
     this.form = this.formBuilder.group({
       name: [this.name, Validators.required],
       typeId: [this.typeId],
       type: [this.type, Validators.required],
+      reference: [this.reference],
+      referenceId: [this.referenceId],
+    });
+
+    this.imageForm = this.formBuilder.group({
       images: this.formBuilder.array([])
     });
+
 
     this.form.valueChanges.subscribe(data => {
       this.setErrors();
@@ -161,13 +246,16 @@ export class BannerFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.name = response.data.name;
+          this.reference = response.data.reference;
+          this.referenceId = response.data.reference_id;
+          this.getReference();
           this.type = {
             id: response.data.type_id,
             name: response.data.type
           };
           this.typeId = response.data.type_id;
 
-          this.imageGroup = this.form.get('images') as FormArray;
+          this.imageGroup = this.imageForm.get('images') as FormArray;
 
           if (response.data.images) {
             response.data.images.forEach(element => {
@@ -190,12 +278,32 @@ export class BannerFormComponent implements OnInit {
     );
   }
 
+  isFormValid() {
+    let status = false;
+    if (this.form.valid) {
+      status = true;
+    } else if (this.imageForm.valid) {
+      status = true;
+    }
+
+    return status;
+  }
+
   public onSubmit() {
     // mark all fields as touched
     this.formService.markFormGroupTouched(this.form);
-    if (this.form.valid) {
+    if (this.isFormValid()) {
       this.spinner.show();
-      this.masterService.save(this.form.value, this.getId()).subscribe(
+
+      const data = {
+        name: this.form.value.name,
+        typeId: this.form.value.typeId,
+        reference: this.form.value.reference,
+        referenceId: this.form.value.referenceId,
+        images: this.imageForm.value.images,
+      };
+
+      this.masterService.save(data, this.getId()).subscribe(
         response => {
           if (!response.status) {
             if (response.result) {
