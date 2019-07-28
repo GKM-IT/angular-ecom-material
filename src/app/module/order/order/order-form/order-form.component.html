@@ -132,7 +132,7 @@
           <ng-template matStepLabel>Coupon</ng-template>
           <app-coupon-apply-form [customerId]="customerId"></app-coupon-apply-form>
           <div class="button-group">
-            <button mat-raised-button matStepperPrevious color="light">Back</button>
+            <button mat-raised-button matStepperPrevious color="light" (click)="nextProcess()">Back</button>
             <button mat-raised-button matStepperNext color="primary">Next</button>
           </div>
         </mat-step>

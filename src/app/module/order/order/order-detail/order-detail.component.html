@@ -18,129 +18,61 @@
             Order Details
           </ng-template>
 
-          <table class="table table-border">
-            <thead>
-              <tr>
-                <td colspan="3">
 
-                  <table>
-                    <tr>
-                      <th>name</th>
-                      <td>{{name}}</td>
-                    </tr>
-                    <tr>
-                      <th>email</th>
-                      <td>{{email}}</td>
-                    </tr>
-                    <tr>
-                      <th>contact</th>
-                      <td>{{contact}}</td>
-                    </tr>
-
-                  </table>
-
-                </td>
-                <td colspan="3">
-
-                  <table>
-                    <tr>
-                      <th>Order Type</th>
-                      <td>{{orderType}}</td>
-                    </tr>
-                    <tr>
-                      <th>Order Status</th>
-                      <td>{{orderStatus}}</td>
-                    </tr>
-                    <tr>
-                      <th>Order Date</th>
-                      <td>{{createdAt}}</td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="3">
-                  <table>
-                    <tr>
-                      <th>Person Name</th>
-                      <td>{{personName}}</td>
-                    </tr>
-                    <tr>
-                      <th>Person Contact</th>
-                      <td>{{personContact}}</td>
-                    </tr>
-                    <tr>
-                      <th>Postcode</th>
-                      <td>{{postcode}}</td>
-                    </tr>
-                  </table>
-                </td>
-                <td colspan="3">
-                  <table>
-                    <tr>
-                      <th>Country</th>
-                      <td>{{country}}</td>
-                    </tr>
-                    <tr>
-                      <th>Zone</th>
-                      <td>{{zone}}</td>
-                    </tr>
-                    <tr>
-                      <th>City</th>
-                      <td>{{city}}</td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="3">
-                  <table>
-                    <tr>
-                      <th>address</th>
-                    </tr>
-                    <tr>
-                      <td>{{address}}</td>
-                    </tr>
-                  </table>
-                </td>
-                <td colspan="3">
-                  <table>
-                    <tr>
-                      <th>comment</th>
-                    </tr>
-                    <tr>
-                      <td>{{comment}}</td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>name</th>
-                <th>image</th>
-                <th>quantity</th>
-                <th>price</th>
-                <th>tax</th>
-                <th>total</th>
-              </tr>
-              <tr *ngFor="let product of products;">
-                <td>{{product.product}}</td>
-                <td><img width="50" height="50" src="{{product.product_image}}"></td>
-                <td>{{product.quantity}}</td>
-                <td>{{product.price}}</td>
-                <td>{{product.tax}}</td>
-                <td>{{product.total}}</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr *ngFor="let total of totals;">
-                <th>{{total.title}}</th>
-                <td>{{total.value}}</td>
-              </tr>
-            </tfoot>
+          <table class="mat-table">
+            <tr class="mat-header-row">
+              <th class="mat-header-cell">name</th>
+              <td class="mat-cell">{{name}}</td>
+              <th class="mat-header-cell">order type</th>
+              <td class="mat-cell">{{orderType}}</td>
+            </tr>
+            <tr class="mat-header-row">
+              <th class="mat-header-cell">email</th>
+              <td class="mat-cell">{{email}}</td>
+              <th class="mat-header-cell">order status</th>
+              <td class="mat-cell">{{orderStatus}}</td>
+            </tr>
+            <tr class="mat-header-row">
+              <th class="mat-header-cell">contact</th>
+              <td class="mat-cell">{{contact}}</td>
+              <th class="mat-header-cell">order date</th>
+              <td class="mat-cell">{{createdAt}}</td>
+            </tr>
+            <tr class="mat-header-row">
+              <th class="mat-header-cell">person name</th>
+              <td class="mat-cell">{{personName}}</td>
+              <th class="mat-header-cell">country</th>
+              <td class="mat-cell">{{country}}</td>
+            </tr>
+            <tr class="mat-header-row">
+              <th class="mat-header-cell">person contact</th>
+              <td class="mat-cell">{{personContact}}</td>
+              <th class="mat-header-cell">zone</th>
+              <td class="mat-cell">{{zone}}</td>
+            </tr>
+            <tr class="mat-header-row">
+              <th class="mat-header-cell">postcode</th>
+              <td class="mat-cell">{{postcode}}</td>
+              <th class="mat-header-cell">city</th>
+              <td class="mat-cell">{{city}}</td>
+            </tr>
           </table>
 
+
+          <table class="mat-table">
+            <tr class="mat-header-row">
+              <th class="mat-header-cell">address</th>
+              <th class="mat-header-cell">comment</th>
+            </tr>
+            <tr class="mat-row">
+              <td class="mat-cell">{{address}}</td>
+              <td class="mat-cell">{{comment}}</td>
+            </tr>
+          </table>
+
+
+          <app-order-product-list [products]="products"></app-order-product-list>
+          <app-order-total-list [totals]="totals"></app-order-total-list>
         </mat-step>
 
         <mat-step>

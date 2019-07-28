@@ -26,7 +26,7 @@ export class OrderCartListComponent implements OnInit {
 
   products: any = [];
   carts: any = [];
-  cartTotals: any = [];
+  totals: any = [];
   displayedColumns: string[] = ['product', 'product_image', 'quantity', 'totalFinalPrice', 'totalDiscount', 'total', 'action'];
 
   productId;
@@ -107,7 +107,6 @@ export class OrderCartListComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
     this.form = this.formBuilder.group({
       customerId: [this.customerId, Validators.required],
       productId: [this.productId, Validators.required],
@@ -119,11 +118,10 @@ export class OrderCartListComponent implements OnInit {
   }
 
   getCarts() {
-    console.log('getCarts');
-    console.log('this.customerId', this.customerId);
+    const me = this;
     this.orderCartService.list({ customerId: this.customerId }).subscribe(response => {
-      this.carts = response.data;
-      this.cartTotals = response.totals;
+      me.carts = response.data;
+      me.totals = response.totals;
     });
   }
 

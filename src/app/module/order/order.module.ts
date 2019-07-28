@@ -14,9 +14,11 @@ import { OrderDetailComponent } from './order/order-detail/order-detail.componen
 import { CouponApplyFormComponent } from './order/coupon-apply-form/coupon-apply-form.component';
 import { OrderCartListComponent } from './order/order-cart-list/order-cart-list.component';
 import { OrderHistoryComponent } from './order/order-history/order-history.component';
+import { OrderProductListComponent } from './order/order-product-list/order-product-list.component';
+import { OrderTotalListComponent } from './order/order-total-list/order-total-list.component';
 
 @NgModule({
-  declarations: [OrderListComponent, OrderFormComponent, OrderTypeListComponent, OrderTypeFormComponent, OrderStatusListComponent, OrderStatusFormComponent, OrderDetailComponent, CouponApplyFormComponent, OrderCartListComponent, OrderHistoryComponent],
+  declarations: [OrderListComponent, OrderFormComponent, OrderTypeListComponent, OrderTypeFormComponent, OrderStatusListComponent, OrderStatusFormComponent, OrderDetailComponent, CouponApplyFormComponent, OrderCartListComponent, OrderHistoryComponent, OrderProductListComponent, OrderTotalListComponent],
   imports: [
     CommonModule,
     AppMaterialModule,

@@ -36,7 +36,7 @@ export class OrderDetailComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private orderHistoryComponent: OrderHistoryComponent,    
+    private orderHistoryComponent: OrderHistoryComponent,
   ) { }
 
   ngOnInit() {
@@ -78,6 +78,7 @@ export class OrderDetailComponent implements OnInit {
           this.total = response.data.total;
           this.products = response.data.products;
           this.totals = response.data.totals;
+
         }
         this.spinner.hide();
       },
