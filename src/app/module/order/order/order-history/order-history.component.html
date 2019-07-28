@@ -1,3 +1,10 @@
+<div class="row">  
+  <div class="col-md-6">
+    <button mat-button (click)="delete()">
+      <i class="material-icons">delete</i>
+    </button>
+  </div>
+</div>
 <table mat-table [dataSource]="histories">
   <ng-container matColumnDef="order_status">
     <th mat-header-cell *matHeaderCellDef>order status</th>

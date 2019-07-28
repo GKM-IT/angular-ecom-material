@@ -65,6 +65,13 @@ export class OrderService {
     );
   }
 
+  public clearHistories(id: any) {
+    this.url = `${environment.url}order/orders/clear_history/${id}`;
+    return this.http.get<any>(this.url).pipe(
+      // retry(1), // retry a failed request up to 3 times
+      catchError(this.configService.handleError)
+    );
+  }
   public delete(id: any) {
     this.url = `${environment.url}order/orders/delete/${id}`;
     return this.http.get<any>(this.url).pipe(

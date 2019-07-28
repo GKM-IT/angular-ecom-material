@@ -27,7 +27,7 @@ export class OrderCartListComponent implements OnInit {
   products: any = [];
   carts: any = [];
   cartTotals: any = [];
-  cartDisplayedColumns: string[] = ['product', 'product_image', 'quantity', 'totalFinalPrice', 'totalDiscount', 'total', 'action'];
+  displayedColumns: string[] = ['product', 'product_image', 'quantity', 'totalFinalPrice', 'totalDiscount', 'total', 'action'];
 
   productId;
   product: { id: any; name: any; };

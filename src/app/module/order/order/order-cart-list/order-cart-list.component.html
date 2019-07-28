@@ -64,8 +64,8 @@
       </button>
     </td>
   </ng-container>
-  <tr mat-header-row *matHeaderRowDef="cartDisplayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: cartDisplayedColumns;"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
 <!-- cart total -->
