@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/providers/order/order.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { OrderHistoryComponent } from '../order-history/order-history.component';
 @Component({
+  providers: [OrderHistoryComponent],
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent implements OnInit {
   public pageHeading = 'Order Details';
-
+  orderId;
   orderType;
   orderStatus;
   name;
@@ -33,12 +35,15 @@ export class OrderDetailComponent implements OnInit {
     public masterService: OrderService,
     private router: Router,
     public activatedRoute: ActivatedRoute,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private orderHistoryComponent: OrderHistoryComponent,
+
   ) { }
 
   ngOnInit() {
     if (this.getId() !== 'new') {
       this.getDetail(this.getId());
+      this.getHistory();
     }
   }
 
@@ -56,6 +61,7 @@ export class OrderDetailComponent implements OnInit {
     this.masterService.detail(id).subscribe(
       response => {
         if (response.status) {
+          this.orderId = response.data.id;
           this.orderType = response.data.order_type;
           this.orderStatus = response.data.order_status;
           this.name = response.data.name;
@@ -81,5 +87,9 @@ export class OrderDetailComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  getHistory() {
+    this.orderHistoryComponent.ngOnInit();
   }
 }
