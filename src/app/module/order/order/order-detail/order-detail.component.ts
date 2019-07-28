@@ -36,14 +36,12 @@ export class OrderDetailComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private orderHistoryComponent: OrderHistoryComponent,
-
+    private orderHistoryComponent: OrderHistoryComponent,    
   ) { }
 
   ngOnInit() {
     if (this.getId() !== 'new') {
       this.getDetail(this.getId());
-      this.getHistory();
     }
   }
 
