@@ -104,7 +104,7 @@ export class TaxRateFormComponent implements OnInit {
   }
 
   onSelectionChanged(event: MatAutocompleteSelectedEvent) {
-    this.form.controls.typeId.setValue(event.option.value.id);
+    this.form.controls.taxClassId.setValue(event.option.value.id);
   }
 
   displayFn(data: any): string {
