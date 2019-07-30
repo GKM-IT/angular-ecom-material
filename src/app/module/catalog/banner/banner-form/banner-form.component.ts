@@ -208,6 +208,10 @@ export class BannerFormComponent implements OnInit {
     this.getAutocomplete();
   }
 
+  onSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    this.form.controls.typeId.setValue(event.option.value.id);
+  }
+
   getAutocomplete() {
     const constant = new Constant();
     this.form
