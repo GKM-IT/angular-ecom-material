@@ -40,23 +40,6 @@
               <mat-error *ngIf="formErrors.name">{{formErrors.name}}</mat-error>
             </mat-form-field>
 
-            <div>
-              <label>Reference Type</label>
-              &nbsp;
-              <mat-select-autocomplete class="full-width" [placeholder]="'Reference Type'" [options]="referenceTypes"
-                [display]="'name'" [value]="'value'" [selectedOptions]="reference" [multiple]='false' ngDefaultControl
-                name="reference" [formControl]="form.controls['reference']"
-                (selectionChange)="onReferenceChange($event)">
-              </mat-select-autocomplete>
-            </div>
-            <div *ngIf="references?.length">
-              <label>Reference</label>
-              &nbsp;
-              <mat-select-autocomplete class="full-width" [placeholder]="'Reference'" [options]="references"
-                [display]="'name'" [value]="'value'" [selectedOptions]="referenceId" [multiple]='false' ngDefaultControl
-                name="referenceId" [formControl]="form.controls['referenceId']">
-              </mat-select-autocomplete>
-            </div>
 
 
             <div class="button-group">
@@ -118,6 +101,33 @@
                       <input matInput placeholder="sort_order" formControlName="sort_order" required>
                       <mat-error *ngIf="formErrors.sort_order">{{formErrors.sort_order}}</mat-error>
                     </mat-form-field>
+
+                    <div>
+                      <label>Reference Type</label>
+                      &nbsp;
+                      <mat-select-autocomplete class="full-width" [placeholder]="'Reference Type'"
+                        [options]="referenceTypes" [display]="'name'" [value]="'value'" [selectedOptions]="reference"
+                        [multiple]='false' ngDefaultControl name="reference"
+                        [formControl]="control.controls['reference']" (selectionChange)="onReferenceChange($event,i)">
+                      </mat-select-autocomplete>
+                    </div>
+
+                    <ng-template [ngIf]="references[i]?.length" [ngIfElse]="referenceInput">
+                      <label>Reference</label>
+                      &nbsp;
+                      <mat-select-autocomplete class="full-width" [placeholder]="'Reference'" [options]="references[i]"
+                        [display]="'name'" [value]="'value'" [selectedOptions]="referenceId" [multiple]='false'
+                        ngDefaultControl name="referenceId" [formControl]="control.controls['referenceId']">
+                      </mat-select-autocomplete>
+                    </ng-template>
+
+                    <ng-template #referenceInput>
+                      <mat-form-field class="full-width">
+                        <input matInput placeholder="reference" formControlName="referenceId" required>
+                        <mat-error *ngIf="formErrors.referenceId">{{formErrors.referenceId}}</mat-error>
+                      </mat-form-field>
+                    </ng-template>
+
 
 
                   </mat-card-content>

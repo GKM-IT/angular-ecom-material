@@ -94,8 +94,11 @@ export class BannerFormComponent implements OnInit {
     this.router.navigate(['/banners']);
   }
 
-  createImage(name, image, imageThumb, link, sortOrder): FormGroup {
+  createImage(name, image, imageThumb, link, sortOrder, reference, referenceId): FormGroup {
+    this.references.push({});
     return this.formBuilder.group({
+      reference: new FormControl(reference),
+      referenceId: new FormControl(referenceId),
       name: new FormControl(name),
       image: new FormControl(image),
       image_thumb: new FormControl(imageThumb),
@@ -105,59 +108,59 @@ export class BannerFormComponent implements OnInit {
   }
 
   addImage(): void {
-    this.imageGroup = <FormArray>this.imageForm.controls['images'];
-    this.imageGroup.push(this.createImage('', '', '', '', ''));
+    this.imageGroup = <FormArray>this.imageForm.controls.images;
+    this.imageGroup.push(this.createImage('', '', '', '', '', '', ''));
   }
 
   delImage(index: number): void {
-    const arrayControl = <FormArray>this.imageForm.controls['images'];
+    const arrayControl = <FormArray>this.imageForm.controls.images;
     arrayControl.removeAt(index);
   }
 
-  onReferenceChange(value) {
-    if (value) {
-      this.reference = value;
+  onReferenceChange(value, index) {
+    if (typeof value === 'string') {
+      this.getReference(value, index);
     }
-    this.getReference();
   }
 
 
-  getReference() {
-    this.references = [];
-    if (this.reference === 'manufacture') {
+  getReference(reference, refIndex) {
+    let referenceArray = [];
+    if (reference === 'manufacture') {
       this.manufactureService.list({}).subscribe(response => {
         // tslint:disable-next-line: prefer-for-of
         for (let index = 0; index < response.data.length; index++) {
-          this.references.push({
+          referenceArray.push({
             name: response.data[index].name,
             value: response.data[index].id,
           });
         }
       });
-    } else if (this.reference === 'category') {
+    } else if (reference === 'category') {
       this.categoryService.list({}).subscribe(response => {
         // tslint:disable-next-line: prefer-for-of
         for (let index = 0; index < response.data.length; index++) {
-          this.references.push({
+          referenceArray.push({
             name: response.data[index].name,
             value: response.data[index].id,
           });
         }
       });
-    } else if (this.reference === 'product') {
+    } else if (reference === 'product') {
       this.productService.list({}).subscribe(response => {
         // tslint:disable-next-line: prefer-for-of
         for (let index = 0; index < response.data.length; index++) {
-          this.references.push({
+          referenceArray.push({
             name: response.data[index].name,
             value: response.data[index].id,
           });
         }
       });
     } else {
-      this.references = [];
+      referenceArray = [];
     }
 
+    this.references[refIndex] = referenceArray;
   }
 
   ngOnInit() {
@@ -191,8 +194,6 @@ export class BannerFormComponent implements OnInit {
       name: [this.name, Validators.required],
       typeId: [this.typeId],
       type: [this.type, Validators.required],
-      reference: [this.reference],
-      referenceId: [this.referenceId],
     });
 
     this.imageForm = this.formBuilder.group({
@@ -233,10 +234,6 @@ export class BannerFormComponent implements OnInit {
       });
   }
 
-  onSelectionChanged(event: MatAutocompleteSelectedEvent) {
-    this.form.controls.typeId.setValue(event.option.value.id);
-  }
-
   displayFn(data: any): string {
     return data ? data.name : data;
   }
@@ -246,9 +243,6 @@ export class BannerFormComponent implements OnInit {
       response => {
         if (response.status) {
           this.name = response.data.name;
-          this.reference = response.data.reference;
-          this.referenceId = response.data.reference_id;
-          this.getReference();
           this.type = {
             id: response.data.type_id,
             name: response.data.type
@@ -258,14 +252,17 @@ export class BannerFormComponent implements OnInit {
           this.imageGroup = this.imageForm.get('images') as FormArray;
 
           if (response.data.images) {
-            response.data.images.forEach(element => {
+            response.data.images.forEach((element, index) => {
+              this.onReferenceChange(element.type, index);
               this.imageGroup.push(
                 this.createImage(
                   element.name,
                   element.image,
                   element.image_thumb,
                   element.link,
-                  element.sort_order
+                  element.sort_order,
+                  element.type,
+                  element.type_id,
                 )
               );
             });
@@ -298,10 +295,10 @@ export class BannerFormComponent implements OnInit {
       const data = {
         name: this.form.value.name,
         typeId: this.form.value.typeId,
-        reference: this.form.value.reference,
-        referenceId: this.form.value.referenceId,
         images: this.imageForm.value.images,
       };
+
+      console.log(data);
 
       this.masterService.save(data, this.getId()).subscribe(
         response => {

@@ -84,8 +84,6 @@ export class BannerService {
     }
     this.formData.append('name', data.name);
     this.formData.append('type_id', data.typeId);
-    this.formData.append('reference', data.reference);
-    this.formData.append('reference_id', data.referenceId);
     this.formData.append('images', JSON.stringify(data.images));
     return this.http.post<any>(this.url, this.formData).pipe(
       // retry(1), // retry a failed request up to 3 times
